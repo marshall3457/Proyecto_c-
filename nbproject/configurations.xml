@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>Empleado.h</itemPath>
+      <itemPath>Estadia.h</itemPath>
+      <itemPath>Exception.h</itemPath>
+      <itemPath>Habitacion.h</itemPath>
+      <itemPath>Hotel.h</itemPath>
+      <itemPath>Huesped.h</itemPath>
+      <itemPath>Parqueadero.h</itemPath>
+      <itemPath>Persona.h</itemPath>
+      <itemPath>Servicios.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>Empleado.cpp</itemPath>
+      <itemPath>Estadia.cpp</itemPath>
+      <itemPath>Exception.cpp</itemPath>
+      <itemPath>Habitacion.cpp</itemPath>
+      <itemPath>Hotel.cpp</itemPath>
+      <itemPath>Huesped.cpp</itemPath>
+      <itemPath>Parqueadero.cpp</itemPath>
+      <itemPath>Persona.cpp</itemPath>
+      <itemPath>Servicios.cpp</itemPath>
+      <itemPath>main.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+      </compileType>
+      <item path="Empleado.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Empleado.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Estadia.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Estadia.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Exception.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Exception.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Habitacion.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Habitacion.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hotel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hotel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Huesped.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Huesped.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Parqueadero.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Parqueadero.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Persona.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Persona.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Servicios.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Servicios.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="Empleado.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Empleado.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Estadia.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Estadia.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Exception.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Exception.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Habitacion.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Habitacion.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hotel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hotel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Huesped.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Huesped.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Parqueadero.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Parqueadero.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Persona.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Persona.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Servicios.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Servicios.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
