@@ -175,7 +175,7 @@ int main(){
                         cout<<"Digite los datos del empleado"<<endl;
                         cout<<"Nombre: "<<endl;
                         getline(cin, nombreE);
-                        cin.ignore();
+                        fflush(stdin);
                         cout<<"Genero: ";
                         getline(cin, generoE);
                         cin.ignore();
@@ -185,10 +185,11 @@ int main(){
                         cout<<"Cargo: "<<endl;cin>>cargoE;
                         getline(cin, cargoE);
                         cin.ignore();
+                        fflush(stdin);
                         cout<<"Edad: "<<endl;cin>>edad; 
                         fflush(stdin);
                         cout<<"Sueldo: "<<endl;cin>>sueldo;
-                        
+                        fflush(stdin);
                         
                         //Empleado(Persona* nuevaPersona, string cargo, int sueldo)
                         //Persona(string nombre, int edad, string genero, string DNI) :
