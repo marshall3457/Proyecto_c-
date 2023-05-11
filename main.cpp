@@ -166,10 +166,10 @@ int main(){
                     if(accion == 2){
                         string nombreE;
                         string generoE;
-                        string DNIE = "190";
+                        string DNIE;
                         string cargoE;
-                        int edad = 18;
-                        int sueldo = 19000;
+                        int edad;
+                        int sueldo;
                         
                         /*se llena el buffer cuando ingreso un numero largo entonces creo que lo mejor seria utilizar el cin.getline()*/
                         
@@ -180,9 +180,14 @@ int main(){
                         getline(cin, nombreE); 
                         cout<<"Genero: "<<endl;
                         cin>>generoE;
-                        fflush(stdin);
+                        cout<<"DNI: "<<endl;
+                        cin>>DNIE;
                         cout<<"Cargo: "<<endl;
                         cin>>cargoE;
+                        cout<<"Edad: "<<endl;
+                        cin>>edad;
+                        cout<<"Sueldo: "<<endl;
+                        cin>>sueldo;
 
 
                         
