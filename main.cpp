@@ -166,30 +166,25 @@ int main(){
                     if(accion == 2){
                         string nombreE;
                         string generoE;
-                        string DNIE;
+                        string DNIE = "190";
                         string cargoE;
-                        int edad;
-                        int sueldo;
+                        int edad = 18;
+                        int sueldo = 19000;
                         
                         /*se llena el buffer cuando ingreso un numero largo entonces creo que lo mejor seria utilizar el cin.getline()*/
+                        
                         cout<<"Digite los datos del empleado"<<endl;
                         cout<<"Nombre: "<<endl;
-                        getline(cin, nombreE);
+                        cin.ignore(); // Ignorar el carácter de nueva línea pendiente en el búfer
+                        cin.clear(); // Limpiar cualquier error en el búfer
+                        getline(cin, nombreE); 
+                        cout<<"Genero: "<<endl;
+                        cin>>generoE;
                         fflush(stdin);
-                        cout<<"Genero: ";
-                        getline(cin, generoE);
-                        cin.ignore();
-                        cout<<"DNI: "<<endl;
-                        getline(cin, DNIE);    
-                        cin.ignore();
-                        cout<<"Cargo: "<<endl;cin>>cargoE;
-                        getline(cin, cargoE);
-                        cin.ignore();
-                        fflush(stdin);
-                        cout<<"Edad: "<<endl;cin>>edad; 
-                        fflush(stdin);
-                        cout<<"Sueldo: "<<endl;cin>>sueldo;
-                        fflush(stdin);
+                        cout<<"Cargo: "<<endl;
+                        cin>>cargoE;
+
+
                         
                         //Empleado(Persona* nuevaPersona, string cargo, int sueldo)
                         //Persona(string nombre, int edad, string genero, string DNI) :

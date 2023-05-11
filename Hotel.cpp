@@ -25,16 +25,8 @@ string Hotel::GetNombreHotel() {
 }
 
 void Hotel::adiccionarEmpleado(Empleado * empleado){
-    list<Empleado *>::iterator it = this->listaEmpleados->begin();
-    Empleado * e = NULL;
-    while(it != this->listaEmpleados->end()){
-        e= (* it);
-        
-        if(empleado->GetNuevaPersona()->GetDNI() == e->GetNuevaPersona()->GetDNI()){
-            throw new Exception("El empleado ya se encuentra registrado");
-        }it++;
-    }
-    
+
+
     this->listaEmpleados->push_back(empleado);
     
 }
