@@ -49,22 +49,6 @@ void Hotel::adiccionarEstadia(Estadia* estadia){
 }
 
 
-list<Empleado*> * Hotel::ObtenerEmpleados(string cargo){
-    list<Empleado *> * resultados =new list<Empleado*>();
-    
-    list<Empleado *>::iterator it = this->listaEmpleados->begin();
-    Empleado * e;
-    
-    for(;it != this->listaEmpleados->end();it++){
-        e = *it;
-        if(e->GetCargo() == cargo){
-            resultados->push_back(e); 
-        }
-            
-    }
-    return resultados;
-
-}
     
 list<Estadia *> * Hotel::obtenerEstadiasHechas(string DNI){
     list<Estadia *> * resultados = new list<Estadia*>();
@@ -113,16 +97,40 @@ Estadia * Hotel::BuscarEstadia(string numeroEstadia){
 
 //agregar algo que lanze un error si el empleado no se encuentra;
 
-void Hotel::EliminarEmpleado(string nombre){
-    list<Empleado*>::iterator it = this->listaEmpleados->begin();
-    
-    Empleado * e = NULL;
-    
-    for(; it != this->listaEmpleados->end(); it++){
-        e = *it;
-        if(e->GetNuevaPersona()->GetNombre() == nombre){
-            listaEmpleados->remove(e);
+void Hotel::EliminarEmpleado(string DNI) {
+    list<Empleado *>::iterator it = this->listaEmpleados->begin();
+    for(;it != this->listaEmpleados->end(); it++) {
+        if((*it)->GetNuevaPersona()->GetDNI() == DNI) {
+            delete *it;  // Elimina el objeto apuntado por el puntero, para eliminar espacio;
+            it = this->listaEmpleados->erase(it);  // Elimina el elemento de la lista y actualiza el iterador
+            break;
         }
     }
-   
 }
+
+list<Empleado *> * Hotel::ObtenerEmpleadosArea(string area){
+    list<Empleado*> * resultados = new list<Empleado *>();
+    list<Empleado *>::iterator it = this->listaEmpleados->begin();
+    Empleado * e;
+    for(; it != this->listaEmpleados->end();it++){
+        e = *it;
+        if(e->GetCargo() == area){
+            resultados->push_back(e);
+        }
+ 
+    }
+    return resultados;
+}
+
+
+list<Empleado *> * Hotel::obtenerListaEmpleado(){
+    list<Empleado *> * resultados = new list<Empleado*>();
+    list<Empleado *>::iterator it = this->listaEmpleados->begin();
+    Empleado * e;
+    for(; it != this->listaEmpleados->end();it++){
+        e = *it;
+        resultados->push_back(e);
+    }
+    return resultados;
+}
+

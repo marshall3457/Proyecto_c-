@@ -198,6 +198,32 @@ int main(){
                         nuevoHotel->adiccionarEmpleado(nuevoEmpleadoE);
                         cout<<"\n\nEl empleado fue registrado"<<endl;
                         system("pause");
+                    }if(accion == 3){
+                        string DNI;
+                        cout<<"Digite el DNI del empleado a eliminar"<<endl;
+                        cin>>DNI;
+                        cout<<"El empleado "<<nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetNombre()<<" fue eliminado"<<endl;
+                        nuevoHotel->EliminarEmpleado(DNI);
+
+                        system("pause");
+                    }if(accion == 4){
+                        int Area;
+                        cout<<"Elija el area"<<endl;
+                        cout<<"1- Aseo"<<endl;
+                        cout<<"2- Servicio a la habitacion"<<endl;
+                        cin>>Area;
+                        if(Area == 1){
+                                cout<<"HOla";
+                                list<Empleado *> * empleadosArea  = nuevoHotel->ObtenerEmpleadosArea("Aseo");
+
+                                list<Empleado *>::iterator it = empleadosArea->begin();
+                                Empleado * est;
+                                for(;it != empleadosArea->end();it++){
+                                    est = *it;
+                                    cout<<est->GetNuevaPersona()->GetNombre()<<endl;
+                                }
+                                system("pause"); 
+                        }
                     }
                     system("cls");
                 //Para que se salga del if;

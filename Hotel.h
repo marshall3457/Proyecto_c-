@@ -36,13 +36,14 @@ public:
     
     string GetNombreHotel();
     
-    list<Empleado*> * ObtenerEmpleados(string cargo);
-    list<Estadia *> * obtenerEstadiasHechas(string DNI);
+    list<Estadia *> * obtenerEstadiasHechas(string);
     void adiccionarEmpleado(Empleado * empleado);
     void adiccionarEstadia(Estadia* estadia);
-    Empleado * BuscarEmpleado(string DNI);
-    Estadia * BuscarEstadia(string numeroEstadia);
-    void EliminarEmpleado(string nombre);
+    Empleado * BuscarEmpleado(string);
+    Estadia * BuscarEstadia(string);
+    void EliminarEmpleado(string);
+    list<Empleado *> * ObtenerEmpleadosArea(string area);
+    list<Empleado *> * obtenerListaEmpleado();
 
 };
 
