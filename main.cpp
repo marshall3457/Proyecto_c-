@@ -11,6 +11,8 @@
 #include "Habitacion.h"
 
 using namespace std;
+void areaEmpleado(string area); //debemos definir la funcion afuera del main para que sea de tipo global;
+Hotel * nuevoHotel = new Hotel("Carmelo");
 
 //Utilizar git para guardar una version del programa(tag) y despues utilizar windows y por utilmo utilizar mysql;
 int main(){
@@ -19,11 +21,12 @@ int main(){
     //Depronto agregar algo mas a la clase huesped como seria el numero de acompanantes;
     
     //Empleado(Persona* nuevaPersona, string cargo, int sueldo) :
-    //Persona(string nombre, int edad, string genero, string DNI) :
-    
-        Hotel * nuevoHotel = new Hotel("Carmelo");
+    //Persona(string nombre, int edad, string genero, string DNI) :void areaEmpleado(string area){
+       
+
+        
         Persona * nuevaPersona1 = new Persona("Carlos", 21, "Masculino", "12");
-        Empleado * nuevoEmpleado1 =  new Empleado(nuevaPersona1,"Recepcionista",1200000);
+        Empleado * nuevoEmpleado1 =  new Empleado(nuevaPersona1,"Servicio a la habitacion",1200000);
 
         Persona * nuevaPersona2 = new Persona("Juan", 29, "Masculino", "24");
         Empleado * nuevoEmpleado2 =  new Empleado(nuevaPersona2,"Aseo",900000);
@@ -212,18 +215,23 @@ int main(){
                         cout<<"1- Aseo"<<endl;
                         cout<<"2- Servicio a la habitacion"<<endl;
                         cin>>Area;
-                        if(Area == 1){
-                                cout<<"HOla";
-                                list<Empleado *> * empleadosArea  = nuevoHotel->ObtenerEmpleadosArea("Aseo");
 
-                                list<Empleado *>::iterator it = empleadosArea->begin();
-                                Empleado * est;
-                                for(;it != empleadosArea->end();it++){
-                                    est = *it;
-                                    cout<<est->GetNuevaPersona()->GetNombre()<<endl;
-                                }
-                                system("pause"); 
+                        switch(Area){
+                            case 1:    
+                                areaEmpleado("Aseo");
+                                system("pause");
+                                break;
+                            case 2: 
+                                areaEmpleado("Servicio a la habitacion");
+                                system("pause");
+                                break;
                         }
+
+                    }
+                    
+                    if(accion == 5){
+                        cout<<"Los empleados registrados son: "<<endl;
+                        
                     }
                     system("cls");
                 //Para que se salga del if;
@@ -334,7 +342,21 @@ int main(){
     hacer que el propio usuario eliga los servicios y dar un estimado del cobro total;*/
     /*crear una interfaz para cada una de las clases como si fuera una pagina, con su respectivos metodos y variedad de propiedades
     como seria en empleado y una funcion para saber cuantos empleados hay actualmente o cual es el que recibe mejor sueldo*/
+        
     return 0;
+
+}
+
+
+void areaEmpleado(string area){ //siempre debemos hacer la implementación de estas funciones fuera del main o dentro de una clase tambien vale;
+    list<Empleado *> * empleadosArea = nuevoHotel->ObtenerEmpleadosArea(area);
+
+    list<Empleado *>::iterator it = empleadosArea->begin();
+    Empleado * est;
+    for(; it != empleadosArea->end(); it++){
+        est = *it;
+        cout << est->GetNuevaPersona()->GetNombre() << endl;
+    }
 }
 
 
@@ -343,24 +365,3 @@ int main(){
 
 
 
-
-/*Un hotel es un establecimiento que ofrece alojamiento temporal a los viajeros y turistas. Los servicios y comodidades que ofrece un hotel pueden variar dependiendo del tipo de hotel, su ubicación y su categoría, pero algunas características comunes incluyen:
-Habitaciones equipadas con camas, ropa de cama, muebles, televisión, teléfono, baño privado y suministros básicos de aseo personal.
-Servicio de limpieza y cambio de sábanas y toallas.
-Servicio de recepción y atención al cliente las 24 horas del día.
-Servicio de restaurante y bar, que puede ofrecer desayuno, almuerzo, cena y bebidas.
-Servicios adicionales como piscina, spa, gimnasio, centro de negocios, salas de reuniones y conferencias.
-Servicio de transporte y traslado al aeropuerto o a lugares de interés cercanos.
-Wi-Fi gratuito en las áreas comunes y en las habitaciones.
-Seguridad y vigilancia las 24 horas del día.
-Estacionamiento gratuito o de pago.
-Es importante mencionar que los servicios y comodidades pueden variar según el tipo de hotel y la categoría, por lo que es recomendable verificar los servicios ofrecidos al hacer una reserva. */
-
-/*Algunos de los gastos más comunes que realiza un huésped en un hotel incluyen:
-Tarifa de la habitación: este es el costo principal de alojamiento y suele ser el gasto más grande que realiza un huésped.
-Comida y bebida: los huéspedes pueden optar por comer en el restaurante del hotel o pedir servicio a la habitación. También pueden comprar bebidas en el minibar de la habitación.
-Servicios de spa y bienestar: algunos hoteles ofrecen servicios de spa y bienestar, como masajes y tratamientos de belleza, que los huéspedes pueden utilizar por un costo adicional.
-Lavandería: si los huéspedes necesitan lavar su ropa durante su estadía, pueden utilizar los servicios de lavandería y tintorería del hotel.
-Llamadas telefónicas: si los huéspedes utilizan el teléfono de la habitación para hacer llamadas, pueden incurrir en gastos adicionales
-Internet: algunos hoteles pueden cobrar una tarifa por el uso del servicio de internet en la habitación.
-Servicios de transporte: si los huéspedes necesitan transporte al aeropuerto u otros destinos, pueden optar por utilizar los servicios de transporte ofrecidos por el hotel por un costo adicional.*/
