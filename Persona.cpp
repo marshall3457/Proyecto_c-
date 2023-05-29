@@ -35,3 +35,19 @@ string Persona::GetGenero()  {
 string Persona::GetNombre()  {
     return nombre;
 }
+
+void Persona::SetDNI(string DNI) {
+    this->DNI = DNI;
+}
+
+void Persona::SetEdad(int edad) {
+    this->edad = edad;
+}
+
+void Persona::SetGenero(string genero) {
+    this->genero = genero;
+}
+
+void Persona::SetNombre(string nombre) {
+    this->nombre = nombre;
+}

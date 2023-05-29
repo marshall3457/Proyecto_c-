@@ -27,6 +27,12 @@ public:
     }
 
     
+    void SetCargo(string cargo);
+    //void SetEdad(int);        //lo que son de la clase persona no se permite modificar porque solo estoy ingresando con el metodo getter mas no cambiando su valor;
+    void SetSueldo(int sueldo);
+    void aplicarSueldo(int);
+    void aplicarSueldo(float,string);
+
     Empleado(const Empleado& orig);
     virtual ~Empleado();
     

@@ -10,6 +10,9 @@
 #include "Parqueadero.h"
 #include "Habitacion.h"
 
+//buscar con find despues
+//PAUSA
+
 using namespace std;
 void areaEmpleado(string area); //debemos definir la funcion afuera del main para que sea de tipo global;
 Hotel * nuevoHotel = new Hotel("Carmelo");
@@ -154,8 +157,9 @@ int main(){
                     cout<<"9- Calcular antiguedad del empleado"<<endl;
                     cout<<"10- Aplicar aumento"<<endl;
                     cout<<"11- Calcular vacaciones"<<endl; //calculalor en base de la antiguedad por ano seria 15 dias de vacaciones que se pueden acumular;
-                    cout<<"12- volver al menu principal"<<endl;
-                    cout<<"13- Salir del programa"<<endl;
+                    cout<<"12- ver informacion del empleado"<<endl;
+                    cout<<"13- volver al menu principal"<<endl;
+                    cout<<"14- Salir del programa"<<endl;
                     cout<<"Digite la accion: "<<endl;
                     cin>>accion;
                     cout<<endl;
@@ -166,6 +170,7 @@ int main(){
                         cout<<nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetNombre()<<endl;
                         system("pause");
                     }
+                    
                     if(accion == 2){
                         string nombreE;
                         string generoE;
@@ -200,8 +205,10 @@ int main(){
                         Empleado * nuevoEmpleadoE = new Empleado(nuevaPersonaEmple, cargoE, sueldo);
                         nuevoHotel->adiccionarEmpleado(nuevoEmpleadoE);
                         cout<<"\n\nEl empleado fue registrado"<<endl;
-                        system("pause");
-                    }if(accion == 3){
+                        system("pause");                        
+                    }
+                    
+                    if(accion == 3){
                         string DNI;
                         cout<<"Digite el DNI del empleado a eliminar"<<endl;
                         cin>>DNI;
@@ -209,7 +216,9 @@ int main(){
                         nuevoHotel->EliminarEmpleado(DNI);
 
                         system("pause");
-                    }if(accion == 4){
+                    }
+                    
+                    if(accion == 4){
                         int Area;
                         cout<<"Elija el area"<<endl;
                         cout<<"1- Aseo"<<endl;
@@ -231,11 +240,229 @@ int main(){
                     
                     if(accion == 5){
                         cout<<"Los empleados registrados son: "<<endl;
+                        list<Empleado *> * resultado = nuevoHotel->obtenerListaEmpleado();
+                        list<Empleado *>::iterator it = resultado->begin();
+                        
+                        Empleado * e = NULL;
+                        for(; it != resultado->end();it++){
+                            e = *it;
+                            cout<<e->GetNuevaPersona()->GetNombre()<<" trabaja en: "<<e->GetCargo()<<endl;
+                        }
+                        system("pause");
+                    }
+                    
+                    if(accion == 6){
+                        cout<<"El sueldo de todos los empleados es: "<<endl;
+                        list<Empleado *> * resultado = nuevoHotel->obtenerListaEmpleado();
+                        list<Empleado *>::iterator it = resultado->begin();
+                        
+                        Empleado * e = NULL;
+                        for(; it != resultado->end();it++){
+                            e = *it;
+                            cout<<e->GetNuevaPersona()->GetNombre()<<" su sueldo es: "<<e->GetSueldo()<<endl;
+                        }
+                        system("pause");
+                    }
+                    
+                    if(accion == 7){ //EN PAUSA
+                        
+                    //Experiencia y habilidades: Por lo general, las personas con mayor experiencia y habilidades específicas en un campo particular tienden a recibir sueldos más altos. La demanda de ciertas habilidades y conocimientos puede aumentar el valor que un empleador está dispuesto a pagar.
+
+                    //Nivel educativo: En muchos casos, un nivel educativo más alto, como un título universitario o posgrado, puede conducir a sueldos más altos. La educación adicional a menudo se asocia con una mayor especialización y conocimientos en un área determinada.
+
+                    //Responsabilidades y nivel de puesto: Los empleados que tienen un mayor nivel de responsabilidad en su trabajo, como supervisores, gerentes o ejecutivos, suelen recibir salarios más altos en comparación con aquellos en puestos de nivel inferior.
+
+                    //Industria y ubicación: El sector o la industria en la que trabajes puede afectar tu salario. Algunas industrias, como la tecnología o las finanzas, tienden a ofrecer salarios más altos en comparación con otras. Además, la ubicación geográfica también puede influir en el nivel salarial, ya que los costos de vida y las condiciones económicas varían en diferentes regiones y países.
+
+                    //Tamaño y tipo de empresa: El tamaño y el tipo de empresa también pueden ser factores determinantes. Las grandes empresas o corporaciones a menudo tienen más recursos financieros y pueden ofrecer salarios más altos en comparación con las pequeñas y medianas empresas. Además, las empresas en sectores altamente competitivos o en crecimiento pueden estar dispuestas a pagar más para atraer y retener talento.
+
+                    //Negociación y habilidades de comunicación: La capacidad de negociar y comunicar eficazmente tu valor como empleado puede influir en tu sueldo. Aquellos que son capaces de demostrar su valía y argumentar de manera persuasiva pueden tener más éxito al negociar un salario más alto.
+                       
+                        string DNI;
+                        cout<<"Informacion del sueldo del empleado";
+                        cout<<"Ingrese el DNI";
+                        cin>>DNI;
+                        cout<<nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetNombre();
                         
                     }
+                    
+                    if(accion == 8){ //metodos setters
+                        int accion;
+                        string DNI;
+                        cout<<"Actualizar informacion"<<endl;
+                        cout<<"Ingrese el DNI del empleado"<<endl;
+                        cin>>DNI;
+                        cout<<"Que campo desea actualizar"<<endl;
+                        cout<<"1- Nombre"<<endl;
+                        cout<<"2- Edad"<<endl;
+                        cout<<"3- Genero"<<endl;
+                        cout<<"4- DNI"<<endl;
+                        cout<<"5- Sueldo"<<endl;
+                        cout<<"6- Cargo"<<endl;
+                        cin>>accion;
+                        //depronto meter metodo para salirse y ingresar otro DNI;
+                        if(accion == 1){
+                            string nombre;
+                            string nombreAntiguo = nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetNombre();
+                            cout<<"Ingrese el nuevo nombre"<<endl;
+                            cin>>nombre;
+                            nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->SetNombre(nombre);
+                            cout<<"Informacion actualizada de "<<nombreAntiguo<<" a "<<nombre<<endl;
+                            system("pause");
+                        }
+                        
+                        if(accion == 2){
+                            int edad;
+                            int edadAntigua  = nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetEdad();
+                            cout<<"Ingrese la nueva edad"<<endl;
+                            cin>>edad;
+                            nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->SetEdad(edad);
+                            cout<<"Informacion actualizada de "<<edadAntigua<<" a "<<edad<<endl;
+                            system("pause");
+
+                        }
+                        if(accion == 3){
+                            string genero;
+                            string generoAntiguo =  nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetGenero();
+                            
+                            cout<<"Ingrese el nuevo genero"<<endl;
+                            cin>>genero;
+                            nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->SetGenero(genero);    
+                            cout<<"Informacion actualizada de "<<generoAntiguo<<" a "<<genero<<endl;
+                            system("pause");
+
+                        }
+                        if(accion == 4){
+                            string DNI;
+                            string dniAntiguo = nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetDNI();
+                            cout<<"Ingrese el nuevo DNI"<<endl;
+                            cin>>DNI;
+                            nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->SetDNI(DNI);
+                            cout<<"Informacion actualizada de "<<dniAntiguo<<" a "<<DNI<<endl;
+                            system("pause");
+                        }
+                        if(accion == 5){
+                            int sueldo;
+                            int sueldoAntiguo = nuevoHotel->BuscarEmpleado(DNI)->GetSueldo();
+                            cout<<"Ingrese el sueldo"<<endl;
+                            cin>>sueldo;
+                            nuevoHotel->BuscarEmpleado(DNI)->SetSueldo(sueldo);
+                            
+                            cout<<"Informacion actualizada de "<<sueldoAntiguo<<" a "<<sueldo<<endl;
+                            system("pause");
+                        }
+                        if(accion == 6){
+                            string cargo;
+                            string cargoAntiguo = nuevoHotel->BuscarEmpleado(DNI)->GetCargo();
+                            cout<<"Ingrese el nombre"<<endl;
+                            cin>>cargo;
+                            nuevoHotel->BuscarEmpleado(DNI)->SetCargo(cargo);
+                            
+                            cout<<"Informacion actualizada de "<<cargoAntiguo<<" a "<<cargo<<endl;
+                            system("pause");
+                        }
+                        
+                        
+                    }
+                    
+                    if(accion == 9){
+                        //EN PAUSA;
+                    }
+                    
+                    if(accion == 10){
+                        string DNI;
+                        int opcion;
+                        string porcentaje = "%";
+                        cout<<"Digite el DNI del empleado"<<endl;
+                        cin>>DNI;
+                        float aumento;
+                        cout<<"Elija la opcion de aumento"<<endl;
+                        cout<<"1- por dinero agregado"<<endl;
+                        cout<<"2- por porcentaje agregado"<<endl;
+                        cin>>opcion;
+                        
+                        cout<<"\nDigite el aumento a realizar"<<endl;
+                        cin>>aumento;
+                        switch(opcion){
+                            case 1:
+                                nuevoHotel->BuscarEmpleado(DNI)->aplicarSueldo(aumento);
+                                cout<<"El aumento por dinero fue agregado exitosamente"<<endl;
+                                system("pause");
+                                break;
+                            case 2:
+                                nuevoHotel->BuscarEmpleado(DNI)->aplicarSueldo(aumento,porcentaje);
+                                cout<<"El aumento por dinero fue agregado exitosamente"<<endl;
+                                system("pause");
+                                break;                              
+                                
+                        }
+                    }if(accion == 11){
+                        //EN PAUSA
+                    }
+                    if(accion == 12){
+                        system("cls");
+                        int opcion;
+                        string DNI;
+                        cout<<"Digite el DNI del empleado"<<endl;
+                        cin>>DNI;
+                        do{ 
+                          
+                            cout<<"Que informacion desea ver: "<<endl;
+                            cout<<"1- Nombre"<<endl;
+                            cout<<"2- Edad"<<endl;
+                            cout<<"3- Genero"<<endl;
+                            cout<<"4- Sueldo"<<endl;
+                            cout<<"5- Cargo"<<endl;
+                            cout<<"6- Ver toda la informacion"<<endl;
+                            cout<<"7- salir"<<endl;
+                            cin>>opcion;
+                            switch(opcion){
+                                case 1:   
+                                    cout<<"El nombre del empleado es: "<<nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetNombre()<<endl;
+                                    system("pause");
+                                    break;
+                                case 2:
+                                    cout<<"La edad del empleado es: "<<nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetEdad()<<endl;
+                                    system("pause");
+                                    break;
+                                case 3:
+                                    cout<<"El genero del empleado es: "<<nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetGenero()<<endl;
+                                    system("pause");
+                                    break;
+                                case 4:
+                                    cout<<"El sueldo del empleado es: "<<nuevoHotel->BuscarEmpleado(DNI)->GetSueldo()<<endl;
+                                    system("pause");
+                                    break;
+                                case 5:
+                                    cout<<"El cargo del empleado es: "<<nuevoHotel->BuscarEmpleado(DNI)->GetCargo()<<endl;
+                                    system("pause");
+                                    break;
+                                case 6:
+                                    cout<<"Datos del empleado: "<<endl;
+                                    cout<<"Nombre: "<<nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetNombre()<<endl;
+                                    cout<<"Edad: "<<nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetEdad()<<endl;
+                                    cout<<"DNI: "<<nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetDNI()<<endl;
+                                    cout<<"Genero: "<<nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetGenero()<<endl;
+                                    cout<<"Sueldo: "<<nuevoHotel->BuscarEmpleado(DNI)->GetSueldo()<<endl;
+                                    cout<<"Cargo: "<<nuevoHotel->BuscarEmpleado(DNI)->GetCargo()<<endl;                                     
+                                    system("pause");
+                                    break;
+                            }
+                            system("cls");
+
+                        }while(opcion != 7);
+                    
+                    }
+                    
                     system("cls");
                 //Para que se salga del if;
-                }while(accion != 12);
+                    if(accion == 14){
+                        cout<<"----FIN DEL PROGRAMA------";
+                        exit(0);
+                    }
+                }while(accion != 13);
+                
+
             }
             
             if(opcion == 3){

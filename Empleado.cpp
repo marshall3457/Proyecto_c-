@@ -30,3 +30,19 @@ Persona* Empleado::GetNuevaPersona() {
 int Empleado::GetSueldo() {
     return sueldo;
 }
+
+void Empleado::SetCargo(string cargo) {
+    this->cargo = cargo;
+}
+
+void Empleado::SetSueldo(int sueldo) {
+    this->sueldo = sueldo;
+}
+
+void Empleado::aplicarSueldo(float aumento, string porcentaje){
+    if(porcentaje == "%") this->sueldo += sueldo * aumento;
+}
+
+void Empleado::aplicarSueldo(int dinero){
+    this->sueldo += dinero;
+}

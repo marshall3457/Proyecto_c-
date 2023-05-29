@@ -30,6 +30,11 @@ public:
     Persona(const Persona& orig);
     virtual ~Persona();
     
+    void SetDNI(string DNI);
+    void SetEdad(int edad);
+    void SetGenero(string genero);
+    void SetNombre(string nombre);
+    
     
     string GetDNI();
     int GetEdad();
