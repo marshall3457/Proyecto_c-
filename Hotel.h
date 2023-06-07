@@ -41,9 +41,12 @@ public:
     void adiccionarEstadia(Estadia* estadia);
     Empleado * BuscarEmpleado(string);
     Estadia * BuscarEstadia(string);
+    Estadia * BuscarEstadia(string,string);
     void EliminarEmpleado(string);
+    void EliminarEstadia(string);
     list<Empleado *> * ObtenerEmpleadosArea(string area);
     list<Empleado *> * obtenerListaEmpleado();
+    list<Estadia *> * obtenerListaEstadia();
 
 };
 

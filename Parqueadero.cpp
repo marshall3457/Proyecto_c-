@@ -30,3 +30,8 @@ string Parqueadero::GetLugarEstacionamiento()  {
 int Parqueadero::GetTiempoEstacionado()  {
     return tiempoEstacionado;
 }
+
+int Parqueadero::costoTotalParqueadero(){
+    int iva = (this->costoDia * this->tiempoEstacionado) * 0.19;
+    return (this->costoDia * this->tiempoEstacionado) + iva;
+}

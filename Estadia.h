@@ -45,7 +45,8 @@ public:
     Servicios * GetServiciosUtilizados();
     string GetFecha();
     string GetNumeroEstadia();
-    
+    int costoTotalEstadia();
+    int costoTotalSinIva();
     int costoTotal();
     
 

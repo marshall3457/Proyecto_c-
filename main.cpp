@@ -88,6 +88,7 @@ int main(){
             cout<<"3- Estadias"<<endl;
             cout<<"4- Parqueadero"<<endl;
             cout<<"5- Salir"<<endl;
+            cout<<"6- Huesped"<<endl;
             cout<<"Digite la opcion a elegir"<<endl;
             cin>>opcion;
 
@@ -287,7 +288,7 @@ int main(){
                     }
                     
                     if(accion == 8){ //metodos setters
-                        int accion;
+                        int opcion;
                         string DNI;
                         cout<<"Actualizar informacion"<<endl;
                         cout<<"Ingrese el DNI del empleado"<<endl;
@@ -299,9 +300,9 @@ int main(){
                         cout<<"4- DNI"<<endl;
                         cout<<"5- Sueldo"<<endl;
                         cout<<"6- Cargo"<<endl;
-                        cin>>accion;
+                        cin>>opcion;
                         //depronto meter metodo para salirse y ingresar otro DNI;
-                        if(accion == 1){
+                        if(opcion == 1){
                             string nombre;
                             string nombreAntiguo = nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetNombre();
                             cout<<"Ingrese el nuevo nombre"<<endl;
@@ -311,7 +312,7 @@ int main(){
                             system("pause");
                         }
                         
-                        if(accion == 2){
+                        if(opcion == 2){
                             int edad;
                             int edadAntigua  = nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetEdad();
                             cout<<"Ingrese la nueva edad"<<endl;
@@ -321,7 +322,7 @@ int main(){
                             system("pause");
 
                         }
-                        if(accion == 3){
+                        if(opcion == 3){
                             string genero;
                             string generoAntiguo =  nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetGenero();
                             
@@ -332,7 +333,7 @@ int main(){
                             system("pause");
 
                         }
-                        if(accion == 4){
+                        if(opcion == 4){
                             string DNI;
                             string dniAntiguo = nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetDNI();
                             cout<<"Ingrese el nuevo DNI"<<endl;
@@ -341,7 +342,7 @@ int main(){
                             cout<<"Informacion actualizada de "<<dniAntiguo<<" a "<<DNI<<endl;
                             system("pause");
                         }
-                        if(accion == 5){
+                        if(opcion == 5){
                             int sueldo;
                             int sueldoAntiguo = nuevoHotel->BuscarEmpleado(DNI)->GetSueldo();
                             cout<<"Ingrese el sueldo"<<endl;
@@ -351,7 +352,7 @@ int main(){
                             cout<<"Informacion actualizada de "<<sueldoAntiguo<<" a "<<sueldo<<endl;
                             system("pause");
                         }
-                        if(accion == 6){
+                        if(opcion == 6){
                             string cargo;
                             string cargoAntiguo = nuevoHotel->BuscarEmpleado(DNI)->GetCargo();
                             cout<<"Ingrese el nombre"<<endl;
@@ -467,37 +468,187 @@ int main(){
             
             if(opcion == 3){
                 system("cls");
-                int accion;
+                int opcion;
                 do{
-                cout<<"1- Buscar Estadia"<<endl;
-                cout<<"2- Buscar Estadia por parte del DNI del huesped"<<endl;
-                cout<<"3- Ver todas las estadias"<<endl;
-                cout<<"4- Valor de costo de todas las estadias"<<endl; //cuestionable funcion;
-                cout<<"5- Agregar Estadia"<<endl;
-                cout<<"6- Cancelar Estadia"<<endl;
-                cout<<"7- Generar Factura de todo"<<endl;
-                cout<<"8- Obtener tiempo de la estadia"<<endl;
-                cout<<"9- Volver al menu principal"<<endl;
-                cout<<"10- Salir del programa"<<endl;
-                cout<<"Digite la accion: "<<endl;
-                cin>>accion;
-                switch(accion){
-                    case 1:
+                    cout<<"1- Buscar huesped"<<endl;
+                    cout<<"2- Buscar Estadia por parte del DNI del huesped"<<endl;
+                    cout<<"3- Ver todas las estadias"<<endl;
+                    cout<<"4- Valor de costo de todas las estadias"<<endl; //cuestionable funcion;
+                    cout<<"5- Agregar Estadia"<<endl;
+                    cout<<"6- Cancelar Estadia"<<endl;
+                    cout<<"7- Generar Factura de todo"<<endl;
+                    cout<<"8- Obtener tiempo de la estadia"<<endl;
+                    cout<<"9- Ver toda la informacion de una estadia"<<endl;
+                    cout<<"10- ver si la estadia esta ocupada"<<endl;
+                    cout<<"11- Buscar Huesped por parte del numero de la habitacion"<<endl;
+                    cout<<"12- Volver al menu principal"<<endl;
+                    cout<<"13- Salir del programa"<<endl;
+                    cout<<"Digite la accion: "<<endl;
+                    cin>>opcion;
+                    if(opcion == 1){
+                        string numeroEstadia;
+                        cout<<"Digite el numero de la estadia"<<endl;
+                        cin>>numeroEstadia;
+                        cout<<"El nombre del huesped de la estadia es: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevoHuesped()->GetNuevaPersona()->GetNombre()<<endl;
+                        system("pause");                
+                    }
+
+                    if(opcion == 2){
+                        string DNI;
+                        cout<<"Digite el DNI del huesped"<<endl;
+                        cin>>DNI;
+                        cout<<"El numero de la estadia es: "<<nuevoHotel->BuscarEstadia(DNI,"si")->GetNumeroEstadia()<<" y el huesped es: "<<nuevoHotel->BuscarEstadia(DNI,"si")->GetNuevoHuesped()->GetNuevaPersona()->GetNombre()<<endl;
+                        system("pause");
+                    }
+
+                    if(opcion == 3){
+                        cout<<"Todas las estadias activas: "<<endl;
+
+                        cout<<"Los empleados registrados son: "<<endl;
+                        list<Estadia *> * resultado = nuevoHotel->obtenerListaEstadia();
+                        list<Estadia *>::iterator it = resultado->begin();
+
+                        Estadia * e = NULL;
+                        for(; it != resultado->end();it++){
+                            e = *it;
+                            cout<<"Numero de la estadia: "<<e->GetNumeroEstadia()<<" nombre del huesped "<<e->GetNuevoHuesped()->GetNuevaPersona()->GetNombre()<<" numero de habitacion: "<<e->GetNuevaHabitacion()->GetNumeroHabitacion()<<endl;
+                        }
+                        system("pause");
+                    }              
+                    
+                    if(opcion == 4){
+                        int suma = 0;
+                        cout<<"Valor de costo total de todas las estadias"<<endl;
+                        list<Estadia *> * resultado = nuevoHotel->obtenerListaEstadia();
+                        list<Estadia *>::iterator it = resultado->begin();
+
+                        Estadia * e = NULL;
+                        for(; it != resultado->end();it++){
+                            e = *it;
+                            suma += e->costoTotal();
+                        }
+                        
+                        cout<<suma<<endl;
+                        system("pause");
+                    }
+                    
+                    if(opcion == 5){
+                        string nombre,genero, DNI, lugarEstacionamiento,fecha,numeroEstadia;
+                        int edad, costoNoche, numeroHabitacion, numeroCamas, tiempoEstacionado,duracionDias,costoDia;
+                        int Spa = 0, ServicioAHabitacion = 0,wifi = 0,lavanderia = 0,llamadaTelefonica = 0;
+                        cout<<"Digite los datos de la estadia a agregar"<<endl;
+                        
+                        cout<<"\nDatos Personales: "<<endl;
+                        cout<<"Nombre: "<<endl;
+                        cin.ignore(); // Ignorar el carácter de nueva línea pendiente en el búfer
+                        cin.clear(); // Limpiar cualquier error en el búfer
+                        getline(cin, nombre);
+                        cout<<"Edad: "<<endl;
+                        cin>>edad;
+                        cout<<"Genero: "<<endl;
+                        cin>>genero;
+                        cout<<"DNI: "<<endl;
+                        cin>>DNI;
+                        
+                        cout<<"\nDatos de la habitacion: "<<endl;
+                        cout<<"Costo noche "<<endl;
+                        cin>>costoNoche;
+                        cout<<"Numero de la habitacion: "<<endl;
+                        cin>>numeroHabitacion;
+                        cout<<"Numero de camas: "<<endl;
+                        cin>>numeroCamas;
+                        
+                        cout<<"\nDatos del estacionamiento: "<<endl;
+                        cout<<"Costo Dia: "<<endl;
+                        cin>>costoDia;
+                        cout<<"Lugar de estacionamiento"<<endl;
+                        cin>>lugarEstacionamiento;
+                        cout<<"Dias que va a pasar estacionado: "<<endl;
+                        cin>>tiempoEstacionado;
+                        
+                        cout<<"\nDatos de la estadia: "<<endl;
+                        cout<<"Dias que va a pasar en el hotel: "<<endl;
+                        cin>>duracionDias;
+                        cout<<"Fecha actual de hoy (formato: dia/mes/ano)";
+                        cin>>fecha;
+                        cout<<"Numero de registro de la estadia"<<endl;
+                        cin>>numeroEstadia;
+                        
+                        //Esto no tiene mucho sentido totalmente lo tendria que poner despues, creo que si pudiera inicializar la variables por predeterminado en el constructor seria mejor
+                        
+                                               
+                        //Persona(string nombre, int edad, string genero, string DNI) :
+                        //Huesped(Persona* nuevaPersona) :
+                        //Habitacion(int costoNoche, int numeroHabitacion, int numeroCamas) :
+                        //Parqueadero(int costoDia, string lugarEstacionamiento, int tiempoEstacionado) :
+                        //Servicios(int Spa, int ServicioAHabitacion, int wifi, int lavanderia, int llamadaTelefonica) :
+
+                        Persona * personaRegistro = new Persona(nombre,edad,genero,DNI);
+                        Huesped * nuevoHuespedRegistro =  new Huesped(personaRegistro);
+                        Habitacion * nuevaHabitacionRegistrado = new Habitacion(costoNoche, numeroHabitacion, numeroCamas);
+                        Parqueadero * nuevoParqueaderoResgistrado = new Parqueadero(costoDia, lugarEstacionamiento, tiempoEstacionado);
+                        Servicios * nuevoServicioRegistrado = new Servicios(Spa, ServicioAHabitacion, wifi,lavanderia, llamadaTelefonica);
+                        Estadia * nuevaEstadiaRegistrado = new Estadia(nuevoHuespedRegistro, nuevaHabitacionRegistrado,nuevoParqueaderoResgistrado,nuevoServicioRegistrado,duracionDias,fecha,numeroEstadia);
+
+                        //Estadia(Huesped* nuevoHuesped, Habitacion* nuevaHabitacion, Parqueadero* nuevoParqueadero, Servicios* serviciosUtilizados, int duracionDias, string fecha, string numeroEstadia) :
+                        
+                        nuevoHotel->adiccionarEstadia(nuevaEstadiaRegistrado);
+                        cout<<"La estadia fue agregada con exito"<<endl;
+                        system("pause");
+                    }
+                    if(opcion == 6){
+                        string numeroEstadia;
+                        cout<<"Digite el numero de la estadia a cancelar"<<endl;
+                        cin>>numeroEstadia;
+                        
+                        nuevoHotel->EliminarEstadia(numeroEstadia);
+                        cout<<"La estadia: "<<numeroEstadia<<" a sido eliminada"<<endl;
+                      
+                        system("pause");
+                    }
+                    if(opcion == 7){
+                        string numeroEstadia;
+                        cout<<"Digite el numero de la estadia del huesped"<<endl;
+                        cin>>numeroEstadia;
+                        
+                        cout<<"\nDatos personales: "<<endl;
+                        cout<<"Nombre: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevoHuesped()->GetNuevaPersona()->GetNombre()<<endl;
+                        cout<<"Edad: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevoHuesped()->GetNuevaPersona()->GetEdad()<<endl;
+                        cout<<"DNI: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevoHuesped()->GetNuevaPersona()->GetDNI()<<endl;
+                        
+                        cout<<"\nCosto total del estacionamiento"<<endl;
+                        cout<<"Total sin iva: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevoParqueadero()->costoTotalParqueadero()<<endl;
+                      
+                        cout<<"\nCosto total servicios"<<endl;
+                        cout<<"Total sin iva: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetServiciosUtilizados()->costoTotalServicios()<<endl;
+                        
+                        cout<<"\nCosto total estadia"<<endl;
+                        cout<<"Dias en el hotel: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetDuracionDias()<<endl;
+                        cout<<"Costo noche: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevaHabitacion()->GetCostoNoche()<<endl;
+                        cout<<"Total sin iva: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->costoTotalEstadia()<<endl;
+                        
+                        cout<<"\nCosto total de la estadia sin iva"<<endl;                      
+                        cout<<nuevoHotel->BuscarEstadia(numeroEstadia)->costoTotalSinIva()<<endl;
+                        
+                        cout<<"\nCosto total de la estadia con iva"<<endl;
+                        cout<<nuevoHotel->BuscarEstadia(numeroEstadia)->costoTotal()<<endl;
                         
                         system("pause");
-                        break;
-                    case 2:
+                                
+                    }
+                    if(opcion == 8){
+                        string numeroEstadia;
+                        cout<<"Ingrese el numero de la estadia del huesped"<<endl;
+                        cin>>numeroEstadia;
+                        
+                        cout<<"El tiempo de la estadia en dias es: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetDuracionDias()<<endl;
                         system("pause");
-                        break;
-                    case 3:
-                        system("pause");
-                        break;
-                    case 4:
-                        system("pause");
-                        break;
-                    case 5:
-                        system("pause");
-                        break;
+                    }
+                    
+                    if(opcion == 9){
+                        string numeroEstadia;
+                        cout<<"Ingrese el numero de la estadia del huesped"<<endl;
+                        cin>>numeroEstadia;
                     }
                     system("cls");
                 }while(accion != 9);

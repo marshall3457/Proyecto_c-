@@ -35,6 +35,7 @@ public:
     int GetCostoDia();
     string GetLugarEstacionamiento();
     int GetTiempoEstacionado();
+    int costoTotalParqueadero();
 
 
     //metodo para calcular el costo del estacionamiento;

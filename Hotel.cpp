@@ -94,7 +94,20 @@ Estadia * Hotel::BuscarEstadia(string numeroEstadia){
     
 }
 
+//corregir;
+Estadia * Hotel::BuscarEstadia(string DNI, string identificacion){
+    if(identificacion == "si"){
+        list<Estadia *>::iterator it = this->listaEstadias->begin();
 
+        Estadia * e = NULL;
+
+        for(; it != this->listaEstadias->end(); it++){
+            e = *it;
+            if(e->GetNuevoHuesped()->GetNuevaPersona()->GetDNI() == DNI)
+                return e;
+        }
+    }
+}
 //agregar algo que lanze un error si el empleado no se encuentra;
 
 void Hotel::EliminarEmpleado(string DNI) {
@@ -103,6 +116,17 @@ void Hotel::EliminarEmpleado(string DNI) {
         if((*it)->GetNuevaPersona()->GetDNI() == DNI) {
             delete *it;  // Elimina el objeto apuntado por el puntero, para eliminar espacio;
             it = this->listaEmpleados->erase(it);  // Elimina el elemento de la lista y actualiza el iterador
+            break;
+        }
+    }
+}
+
+void Hotel::EliminarEstadia(string numeroEstadia) {
+    list<Estadia *>::iterator it = this->listaEstadias->begin();
+    for(;it != this->listaEstadias->end(); it++) {
+        if((*it)->GetNumeroEstadia() == numeroEstadia) {
+            delete *it;  // Elimina el objeto apuntado por el puntero, para eliminar espacio;
+            it = this->listaEstadias->erase(it);  // Elimina el elemento de la lista y actualiza el iterador
             break;
         }
     }
@@ -128,6 +152,17 @@ list<Empleado *> * Hotel::obtenerListaEmpleado(){
     list<Empleado *>::iterator it = this->listaEmpleados->begin();
     Empleado * e;
     for(; it != this->listaEmpleados->end();it++){
+        e = *it;
+        resultados->push_back(e);
+    }
+    return resultados;
+}
+
+list<Estadia *> * Hotel::obtenerListaEstadia(){
+    list<Estadia *> * resultados = new list<Estadia*>();
+    list<Estadia *>::iterator it = this->listaEstadias->begin();
+    Estadia * e;
+    for(; it != this->listaEstadias->end();it++){
         e = *it;
         resultados->push_back(e);
     }

@@ -47,15 +47,21 @@ Servicios * Estadia::GetServiciosUtilizados(){
     return serviciosUtilizados;
 }
 
-
+int Estadia::costoTotalEstadia(){
+    return this->duracionDias * this->nuevaHabitacion->GetCostoNoche();
+}
 //ver si depsues funciona igualmete;
 //pero mi logica me lleva de que utilizando el objeto this y accediendo a el pues puedo acceder tambien ya que los getters son para fuera de la funcion;
 //y ya que los metodos getters devuelven eso mismo pues creo que es lo mismo, que con getters que con punteros de clase;
 //En el archivo de costo_llamada utilizo para calcular la duracionTotal el this para llamar claramente un objeto de la clase en vez de utilizar el getter;
 int Estadia::costoTotal(){
     //estudiar esto con mas claridad, entre getters y uso de los mismos objetos de la clases
-    int iva = (this->duracionDias * this->nuevaHabitacion->GetCostoNoche()  + this->serviciosUtilizados->costoTotalServicios()) * 0.19;
-    return (this->duracionDias * this->nuevaHabitacion->GetCostoNoche()  + this->serviciosUtilizados->costoTotalServicios()) + iva;// Iva;
+    int iva = (this->costoTotalEstadia() + this->serviciosUtilizados->costoTotalServicios() + this->nuevoParqueadero->costoTotalParqueadero()) * 0.19;
+    return (this->costoTotalEstadia() + this->serviciosUtilizados->costoTotalServicios() + this->nuevoParqueadero->costoTotalParqueadero()) + iva;// Iva;
+}
+
+int Estadia::costoTotalSinIva(){
+    return this->costoTotalEstadia() + this->serviciosUtilizados->costoTotalServicios() + this->nuevoParqueadero->costoTotalParqueadero();
 }
 
 
