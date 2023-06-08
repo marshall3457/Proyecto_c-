@@ -94,7 +94,7 @@ Estadia * Hotel::BuscarEstadia(string numeroEstadia){
     
 }
 
-//corregir;
+//SIN SENTIDO;
 Estadia * Hotel::BuscarEstadia(string DNI, string identificacion){
     if(identificacion == "si"){
         list<Estadia *>::iterator it = this->listaEstadias->begin();
