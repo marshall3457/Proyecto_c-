@@ -23,7 +23,7 @@ private:
     int llamadaTelefonica;
     
 public:
-
+    
     Servicios(int Spa, int ServicioAHabitacion, int wifi, int lavanderia, int llamadaTelefonica) :
     Spa(Spa), ServicioAHabitacion(ServicioAHabitacion), wifi(wifi), lavanderia(lavanderia), llamadaTelefonica(llamadaTelefonica) {
     }

@@ -26,12 +26,39 @@ int Parqueadero::GetCostoDia()  {
 string Parqueadero::GetLugarEstacionamiento()  {
     return lugarEstacionamiento;
 }
+int Parqueadero::GetEntrada(){
+    int convertidoDias = 0;
+    
+    convertidoDias += this->anio * 365;
+    convertidoDias += this->mes * 30;
+    convertidoDias += this->dia;
+    
+    return convertidoDias;
+}
 
-int Parqueadero::GetTiempoEstacionado()  {
-    return tiempoEstacionado;
+void Parqueadero::SetSalida(int dia,int mes, int anio){
+    this->dia = dia;
+    this->mes = mes;
+    this->anio = anio;
+            
+}
+
+int Parqueadero::tiempoEstacionado() {
+
+
 }
 
 int Parqueadero::costoTotalParqueadero(){
-    int iva = (this->costoDia * this->tiempoEstacionado) * 0.19;
-    return (this->costoDia * this->tiempoEstacionado) + iva;
+    int iva = (this->costoDia * tiempoEstacionado()) * 0.19;
+    return (this->costoDia * tiempoEstacionado()) + iva;
+}
+
+
+
+void Parqueadero::SetCostoDia(int costoDia) {
+    this->costoDia = costoDia;
+}
+
+void Parqueadero::SetLugarEstacionamiento(string lugarEstacionamiento) {
+    this->lugarEstacionamiento = lugarEstacionamiento;
 }

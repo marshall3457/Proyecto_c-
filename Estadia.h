@@ -13,10 +13,12 @@
 #ifndef ESTADIA_H
 #define ESTADIA_H
 #include <iostream>
+#include <list>
 #include "Huesped.h"
 #include "Habitacion.h"
 #include "Parqueadero.h"
 #include "Servicios.h"
+//asi esta bien totalmente todo lo relacionado esta con la estadia esto es porque es una relacion de uno a uno;
 
 using namespace std;
 
@@ -25,13 +27,16 @@ private:
     Huesped * nuevoHuesped;
     Habitacion * nuevaHabitacion;
     Parqueadero * nuevoParqueadero;
-    Servicios * serviciosUtilizados;
+    list<Servicios*> * listaServicios;
     int duracionDias;
     string fecha;
     string numeroEstadia;
 public:
-    Estadia(Huesped* nuevoHuesped, Habitacion* nuevaHabitacion, Parqueadero* nuevoParqueadero, Servicios* serviciosUtilizados, int duracionDias, string fecha, string numeroEstadia) :
-    nuevoHuesped(nuevoHuesped), nuevaHabitacion(nuevaHabitacion), nuevoParqueadero(nuevoParqueadero), serviciosUtilizados(serviciosUtilizados), duracionDias(duracionDias), fecha(fecha), numeroEstadia(numeroEstadia) {
+    //SI asi esta bien porque en si solo se creara un objeto de tipo estadia con una unica lista de servicios;
+    Estadia(Huesped* nuevoHuesped, Habitacion* nuevaHabitacion, Parqueadero* nuevoParqueadero, int duracionDias, string fecha, string numeroEstadia) :
+    nuevoHuesped(nuevoHuesped), nuevaHabitacion(nuevaHabitacion), nuevoParqueadero(nuevoParqueadero), duracionDias(duracionDias), fecha(fecha), numeroEstadia(numeroEstadia) 
+    {
+        listaServicios = new list<Servicios*>();   
     }
 
     
@@ -42,7 +47,8 @@ public:
     Huesped* GetNuevoHuesped();
     Habitacion * GetNuevaHabitacion();
     Parqueadero * GetNuevoParqueadero();
-    Servicios * GetServiciosUtilizados();
+    list<Servicios *> * getListaServicios();
+    void adiccionarServicios(Servicios * servicios);
     string GetFecha();
     string GetNumeroEstadia();
     int costoTotalEstadia();

@@ -13,7 +13,8 @@
 //buscar con find despues
 //PAUSA
 //SIN SENTIDO
-
+//DO
+//DESPUES
 
 using namespace std;
 void areaEmpleado(string area); //debemos definir la funcion afuera del main para que sea de tipo global;
@@ -24,9 +25,10 @@ int main(){
     
     //PROGRAMA PARA LA ADMINISTRACION DE UN HOTEL;
     //Depronto agregar algo mas a la clase huesped como seria el numero de acompanantes;
-    
 
-        
+
+
+        //EMPLEADOS
         Persona * nuevaPersona1 = new Persona("Carlos", 21, "Masculino", "12");
         Empleado * nuevoEmpleado1 =  new Empleado(nuevaPersona1,"Servicio a la habitacion",1200000);
 
@@ -39,41 +41,49 @@ int main(){
         nuevoHotel->adiccionarEmpleado(nuevoEmpleado2);
         nuevoHotel->adiccionarEmpleado(nuevoEmpleado3);
 
-
+//--------------------------------------------------------------------------------------------------------------
+        
         //La estadian van desde el P1 hasta el P100 contando el hotel con 100 habitaciones;
+        
+        
+        //ESTADIAS
         Persona * PersonaHotel1 = new Persona("Rodriguez", 45, "Masculino", "9");
         Huesped * nuevoHuesped1 = new Huesped(PersonaHotel1);
         Habitacion * nuevaHabitacion1 = new Habitacion(35000, 72, 2);
-        Parqueadero * nuevoParqueadero1 = new Parqueadero(5000,"A12",20);
-        Servicios * serviciosRealizados1 = new Servicios(30000,20000,15000,10000,2000);
-        Estadia * nuevaEstadia1 =  new Estadia(nuevoHuesped1,nuevaHabitacion1,nuevoParqueadero1,serviciosRealizados1,20,"12/07/2003","P90");
+        Parqueadero * nuevoParqueadero1 = new Parqueadero(5000,"A12",1999,12,2);
+        Estadia * nuevaEstadia1 =  new Estadia(nuevoHuesped1,nuevaHabitacion1,nuevoParqueadero1,20,"12/07/2003","P90");
+        Servicios * serviciosEstadia1 = new Servicios(30000,20000,9000,0,0); //DESPUES: creo que podria llenarlo de objeto como la clase wifi con sus atributos tiempo y valor y diferentes opciones de mega pero eso mejor despues
+        nuevaEstadia1->adiccionarServicios(serviciosEstadia1);
         //Bueno aplicando esa logica los dias de que se quede el huesped van a ser tambien los dias que se quede en el parqueadero;
+        
         Persona * PersonaHotel2 = new Persona("Juana", 24, "Femenino", "19");
         Huesped * nuevoHuesped2 = new Huesped(PersonaHotel2);
         Habitacion * nuevaHabitacion2 = new Habitacion(95000, 100, 3);
-        Parqueadero * nuevoParqueadero2 = new Parqueadero(3000,"B34",12);
-        Servicios * serviciosRealizados2 = new Servicios(30000,0,0,10000,2000);
-        Estadia * nuevaEstadia2 =  new Estadia(nuevoHuesped2,nuevaHabitacion2,nuevoParqueadero2,serviciosRealizados2,12,"11/02/2012","P20");
+        Parqueadero * nuevoParqueadero2 = new Parqueadero(3000,"B34",1993,12,9);
+        Estadia * nuevaEstadia2 =  new Estadia(nuevoHuesped2,nuevaHabitacion2,nuevoParqueadero2,12,"11/02/2012","P20");
+        Servicios * serviciosEstadia2 = new Servicios(20000,2000,10000,0,0);
+        nuevaEstadia1->adiccionarServicios(serviciosEstadia2);
 
         Persona * PersonaHotel3 = new Persona("Carlos", 31, "Masculino", "28");
         Huesped * nuevoHuesped3 = new Huesped(PersonaHotel3);
         Habitacion * nuevaHabitacion3 = new Habitacion(40000, 92, 3);
-        Parqueadero * nuevoParqueadero3 = new Parqueadero(3000,"B95",9);
-        Servicios * serviciosRealizados3 = new Servicios(30000,20000,0,0,10000);
-        Estadia * nuevaEstadia3 =  new Estadia(nuevoHuesped3,nuevaHabitacion3,nuevoParqueadero3,serviciosRealizados3,9,"15/08/2005","P35");
-        
+        Parqueadero * nuevoParqueadero3 = new Parqueadero(3000,"B95",2000,3,12);
+        Estadia * nuevaEstadia3 =  new Estadia(nuevoHuesped3,nuevaHabitacion3,nuevoParqueadero3,9,"15/08/2005","P35");
+        Servicios * serviciosEstadia3 = new Servicios(20000,5000,2000,7000,1000);
+        nuevaEstadia1->adiccionarServicios(serviciosEstadia3);
         //Estadia vacia sin huesped
         Persona * PersonaHotel4 = new Persona("", 0, "", "");
         Huesped * nuevoHuesped4 = new Huesped(PersonaHotel4);
         Habitacion * nuevaHabitacion4 = new Habitacion(0, 0, 0);
-        Parqueadero * nuevoParqueadero4 = new Parqueadero(0,"0",0);
-        Servicios * serviciosRealizados4 = new Servicios(0,0,0,0,0);
-        Estadia * nuevaEstadia4 =  new Estadia(nuevoHuesped4,nuevaHabitacion4,nuevoParqueadero4,serviciosRealizados4,0,"","P19"); 
+        Parqueadero * nuevoParqueadero4 = new Parqueadero(0,"0",0,0,0);
+        Estadia * nuevaEstadia4 =  new Estadia(nuevoHuesped4,nuevaHabitacion4,nuevoParqueadero4,0,"","P19"); 
+        
         
         nuevoHotel->adiccionarEstadia(nuevaEstadia1);
         nuevoHotel->adiccionarEstadia(nuevaEstadia2);
         nuevoHotel->adiccionarEstadia(nuevaEstadia3);
         nuevoHotel->adiccionarEstadia(nuevaEstadia4);
+//--------------------------------------------------------------------------------------------------------------
 
 /*
         list<Empleado *> * listaEmpleadosCargo = nuevoHotel->ObtenerEmpleados("Aseo");
@@ -96,8 +106,9 @@ int main(){
             cout<<"2- Empleados"<<endl;
             cout<<"3- Estadias"<<endl;
             cout<<"4- Parqueadero"<<endl;
-            cout<<"5- Salir"<<endl;
-            cout<<"6- Huesped"<<endl;
+            cout<<"5- Huesped"<<endl;
+            cout<<"6- Salir"<<endl;
+
             cout<<"Digite la opcion a elegir"<<endl;
             cin>>opcion;
 
@@ -178,7 +189,6 @@ int main(){
                         cout<<"Digite el DNI del empleado a buscar"<<endl;
                         cin>>DNI;
                         cout<<nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetNombre()<<endl;
-                        system("pause");
                     }
                     
                     if(accion == 2){
@@ -215,7 +225,6 @@ int main(){
                         Empleado * nuevoEmpleadoE = new Empleado(nuevaPersonaEmple, cargoE, sueldo);
                         nuevoHotel->adiccionarEmpleado(nuevoEmpleadoE);
                         cout<<"\n\nEl empleado fue registrado"<<endl;
-                        system("pause");                        
                     }
                     
                     if(accion == 3){
@@ -225,10 +234,10 @@ int main(){
                         cout<<"El empleado "<<nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetNombre()<<" fue eliminado"<<endl;
                         nuevoHotel->EliminarEmpleado(DNI);
 
-                        system("pause");
                     }
                     
                     if(accion == 4){
+                        //DO
                         int Area;
                         cout<<"Elija el area"<<endl;
                         cout<<"1- Aseo"<<endl;
@@ -238,13 +247,12 @@ int main(){
                         switch(Area){
                             case 1:    
                                 areaEmpleado("Aseo");
-                                system("pause");
                                 break;
                             case 2: 
                                 areaEmpleado("Servicio a la habitacion");
-                                system("pause");
                                 break;
                         }
+                        
 
                     }
                     
@@ -258,7 +266,6 @@ int main(){
                             e = *it;
                             cout<<e->GetNuevaPersona()->GetNombre()<<" trabaja en: "<<e->GetCargo()<<endl;
                         }
-                        system("pause");
                     }
                     
                     if(accion == 6){
@@ -271,7 +278,6 @@ int main(){
                             e = *it;
                             cout<<e->GetNuevaPersona()->GetNombre()<<" su sueldo es: "<<e->GetSueldo()<<endl;
                         }
-                        system("pause");
                     }
                     
                     if(accion == 7){ //EN PAUSA
@@ -297,7 +303,7 @@ int main(){
                     }
                     
                     if(accion == 8){ //metodos setters
-                        int opcion;
+                        int campo;
                         string DNI;
                         cout<<"Actualizar informacion"<<endl;
                         cout<<"Ingrese el DNI del empleado"<<endl;
@@ -309,29 +315,27 @@ int main(){
                         cout<<"4- DNI"<<endl;
                         cout<<"5- Sueldo"<<endl;
                         cout<<"6- Cargo"<<endl;
-                        cin>>opcion;
+                        cin>>campo;
                         //depronto meter metodo para salirse y ingresar otro DNI;
-                        if(opcion == 1){
+                        if(campo == 1){
                             string nombre;
                             string nombreAntiguo = nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetNombre();
                             cout<<"Ingrese el nuevo nombre"<<endl;
                             cin>>nombre;
                             nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->SetNombre(nombre);
                             cout<<"Informacion actualizada de "<<nombreAntiguo<<" a "<<nombre<<endl;
-                            system("pause");
                         }
                         
-                        if(opcion == 2){
+                        if(campo == 2){
                             int edad;
                             int edadAntigua  = nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetEdad();
                             cout<<"Ingrese la nueva edad"<<endl;
                             cin>>edad;
                             nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->SetEdad(edad);
                             cout<<"Informacion actualizada de "<<edadAntigua<<" a "<<edad<<endl;
-                            system("pause");
 
                         }
-                        if(opcion == 3){
+                        if(campo == 3){
                             string genero;
                             string generoAntiguo =  nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetGenero();
                             
@@ -339,19 +343,17 @@ int main(){
                             cin>>genero;
                             nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->SetGenero(genero);    
                             cout<<"Informacion actualizada de "<<generoAntiguo<<" a "<<genero<<endl;
-                            system("pause");
 
                         }
-                        if(opcion == 4){
+                        if(campo == 4){
                             string DNI;
                             string dniAntiguo = nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetDNI();
                             cout<<"Ingrese el nuevo DNI"<<endl;
                             cin>>DNI;
                             nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->SetDNI(DNI);
                             cout<<"Informacion actualizada de "<<dniAntiguo<<" a "<<DNI<<endl;
-                            system("pause");
                         }
-                        if(opcion == 5){
+                        if(campo == 5){
                             int sueldo;
                             int sueldoAntiguo = nuevoHotel->BuscarEmpleado(DNI)->GetSueldo();
                             cout<<"Ingrese el sueldo"<<endl;
@@ -359,9 +361,8 @@ int main(){
                             nuevoHotel->BuscarEmpleado(DNI)->SetSueldo(sueldo);
                             
                             cout<<"Informacion actualizada de "<<sueldoAntiguo<<" a "<<sueldo<<endl;
-                            system("pause");
                         }
-                        if(opcion == 6){
+                        if(campo == 6){
                             string cargo;
                             string cargoAntiguo = nuevoHotel->BuscarEmpleado(DNI)->GetCargo();
                             cout<<"Ingrese el nombre"<<endl;
@@ -369,10 +370,9 @@ int main(){
                             nuevoHotel->BuscarEmpleado(DNI)->SetCargo(cargo);
                             
                             cout<<"Informacion actualizada de "<<cargoAntiguo<<" a "<<cargo<<endl;
-                            system("pause");
                         }
                         
-                        
+
                     }
                     
                     if(accion == 9){
@@ -397,12 +397,10 @@ int main(){
                             case 1:
                                 nuevoHotel->BuscarEmpleado(DNI)->aplicarSueldo(aumento);
                                 cout<<"El aumento por dinero fue agregado exitosamente"<<endl;
-                                system("pause");
                                 break;
                             case 2:
                                 nuevoHotel->BuscarEmpleado(DNI)->aplicarSueldo(aumento,porcentaje);
                                 cout<<"El aumento por dinero fue agregado exitosamente"<<endl;
-                                system("pause");
                                 break;                              
                                 
                         }
@@ -424,28 +422,23 @@ int main(){
                             cout<<"4- Sueldo"<<endl;
                             cout<<"5- Cargo"<<endl;
                             cout<<"6- Ver toda la informacion"<<endl;
-                            cout<<"7- salir"<<endl;
+                            cout<<"7- volver al menu anterior"<<endl;
                             cin>>opcion;
                             switch(opcion){
                                 case 1:   
                                     cout<<"El nombre del empleado es: "<<nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetNombre()<<endl;
-                                    system("pause");
                                     break;
                                 case 2:
                                     cout<<"La edad del empleado es: "<<nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetEdad()<<endl;
-                                    system("pause");
                                     break;
                                 case 3:
                                     cout<<"El genero del empleado es: "<<nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetGenero()<<endl;
-                                    system("pause");
                                     break;
                                 case 4:
                                     cout<<"El sueldo del empleado es: "<<nuevoHotel->BuscarEmpleado(DNI)->GetSueldo()<<endl;
-                                    system("pause");
                                     break;
                                 case 5:
                                     cout<<"El cargo del empleado es: "<<nuevoHotel->BuscarEmpleado(DNI)->GetCargo()<<endl;
-                                    system("pause");
                                     break;
                                 case 6:
                                     cout<<"Datos del empleado: "<<endl;
@@ -455,15 +448,15 @@ int main(){
                                     cout<<"Genero: "<<nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetGenero()<<endl;
                                     cout<<"Sueldo: "<<nuevoHotel->BuscarEmpleado(DNI)->GetSueldo()<<endl;
                                     cout<<"Cargo: "<<nuevoHotel->BuscarEmpleado(DNI)->GetCargo()<<endl;                                     
-                                    system("pause");
                                     break;
                             }
+                            system("pause");
                             system("cls");
 
                         }while(opcion != 7);
                     
                     }
-                    
+                    system("pause");
                     system("cls");
                 //Para que se salga del if;
                     if(accion == 14){
@@ -498,7 +491,6 @@ int main(){
                         cout<<"Digite el numero de la estadia"<<endl;
                         cin>>numeroEstadia;
                         cout<<"El nombre del huesped de la estadia es: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevoHuesped()->GetNuevaPersona()->GetNombre()<<endl;
-                        system("pause");                
                     }
 
                     if(accion == 2){
@@ -506,7 +498,6 @@ int main(){
                         cout<<"Digite el DNI del huesped"<<endl;
                         cin>>DNI;
                         cout<<"El numero de la estadia es: "<<nuevoHotel->BuscarEstadia(DNI,"si")->GetNumeroEstadia()<<" y el huesped es: "<<nuevoHotel->BuscarEstadia(DNI,"si")->GetNuevoHuesped()->GetNuevaPersona()->GetNombre()<<endl;
-                        system("pause");
                     }
 
                     if(accion == 3){
@@ -521,7 +512,6 @@ int main(){
                             e = *it;
                             cout<<"Numero de la estadia: "<<e->GetNumeroEstadia()<<" nombre del huesped "<<e->GetNuevoHuesped()->GetNuevaPersona()->GetNombre()<<" numero de habitacion: "<<e->GetNuevaHabitacion()->GetNumeroHabitacion()<<endl;
                         }
-                        system("pause");
                     }              
                     
                     if(accion == 4){
@@ -537,12 +527,11 @@ int main(){
                         }
                         
                         cout<<suma<<endl;
-                        system("pause");
                     }
                     
                     if(accion == 5){
                         string nombre,genero, DNI, lugarEstacionamiento,fecha,numeroEstadia;
-                        int edad, costoNoche, numeroHabitacion, numeroCamas, tiempoEstacionado,duracionDias,costoDia;
+                        int edad, costoNoche, numeroHabitacion, numeroCamas, anio, mes, dia,duracionDias,costoDia;
                         int Spa = 0, ServicioAHabitacion = 0,wifi = 0,lavanderia = 0,llamadaTelefonica = 0;
                         cout<<"Digite los datos de la estadia a agregar"<<endl;
                         
@@ -571,8 +560,14 @@ int main(){
                         cin>>costoDia;
                         cout<<"Lugar de estacionamiento"<<endl;
                         cin>>lugarEstacionamiento;
-                        cout<<"Dias que va a pasar estacionado: "<<endl;
-                        cin>>tiempoEstacionado;
+                        cout<<"Fecha: "<<endl;
+                        cout<<"Año: "<<endl;
+                        cin>>anio;
+                        cout<<"Mes: "<<endl;
+                        cin>>mes;
+                        cout<<"Dia: "<<endl;
+                        cin>>dia;
+                        
                         
                         cout<<"\nDatos de la estadia: "<<endl;
                         cout<<"Dias que va a pasar en el hotel: "<<endl;
@@ -594,15 +589,13 @@ int main(){
                         Persona * personaRegistro = new Persona(nombre,edad,genero,DNI);
                         Huesped * nuevoHuespedRegistro =  new Huesped(personaRegistro);
                         Habitacion * nuevaHabitacionRegistrado = new Habitacion(costoNoche, numeroHabitacion, numeroCamas);
-                        Parqueadero * nuevoParqueaderoResgistrado = new Parqueadero(costoDia, lugarEstacionamiento, tiempoEstacionado);
-                        Servicios * nuevoServicioRegistrado = new Servicios(Spa, ServicioAHabitacion, wifi,lavanderia, llamadaTelefonica);
-                        Estadia * nuevaEstadiaRegistrado = new Estadia(nuevoHuespedRegistro, nuevaHabitacionRegistrado,nuevoParqueaderoResgistrado,nuevoServicioRegistrado,duracionDias,fecha,numeroEstadia);
+                        Parqueadero * nuevoParqueaderoResgistrado = new Parqueadero(costoDia, lugarEstacionamiento, anio,mes,dia);
+                        Estadia * nuevaEstadiaRegistrado = new Estadia(nuevoHuespedRegistro, nuevaHabitacionRegistrado,nuevoParqueaderoResgistrado,duracionDias,fecha,numeroEstadia);
 
                         //Estadia(Huesped* nuevoHuesped, Habitacion* nuevaHabitacion, Parqueadero* nuevoParqueadero, Servicios* serviciosUtilizados, int duracionDias, string fecha, string numeroEstadia) :
                         
                         nuevoHotel->adiccionarEstadia(nuevaEstadiaRegistrado);
                         cout<<"La estadia fue agregada con exito"<<endl;
-                        system("pause");
                     }
                     if(accion == 6){
                         string numeroEstadia;
@@ -612,7 +605,6 @@ int main(){
                         nuevoHotel->EliminarEstadia(numeroEstadia);
                         cout<<"La estadia: "<<numeroEstadia<<" a sido eliminada"<<endl;
                       
-                        system("pause");
                     }
                     if(accion == 7){
                         string numeroEstadia;
@@ -627,8 +619,9 @@ int main(){
                         cout<<"\nCosto total del estacionamiento"<<endl;
                         cout<<"Total sin iva: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevoParqueadero()->costoTotalParqueadero()<<endl;
                       
-                        cout<<"\nCosto total servicios"<<endl;
+                        /*cout<<"\nCosto total servicios"<<endl;
                         cout<<"Total sin iva: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetServiciosUtilizados()->costoTotalServicios()<<endl;
+                        */
                         
                         cout<<"\nCosto total estadia"<<endl;
                         cout<<"Dias en el hotel: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetDuracionDias()<<endl;
@@ -641,7 +634,6 @@ int main(){
                         cout<<"\nCosto total de la estadia con iva"<<endl;
                         cout<<nuevoHotel->BuscarEstadia(numeroEstadia)->costoTotal()<<endl;
                         
-                        system("pause");
                                 
                     }
                     if(accion == 8){
@@ -650,7 +642,6 @@ int main(){
                         cin>>numeroEstadia;
                         
                         cout<<"El tiempo de la estadia en dias es: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetDuracionDias()<<endl;
-                        system("pause");
                     }
                     
                     if(accion == 9){
@@ -669,6 +660,7 @@ int main(){
                         cout<<"numero de camas: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevaHabitacion()->GetNumeroCamas()<<endl;
                         cout<<"costo noche: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevaHabitacion()->GetCostoNoche()<<endl;
                         
+                        /* 
                         cout<<"\nDatos de los servicios:"<<endl;
                         cout<<"Wifi: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetServiciosUtilizados()->getWifi()<<" pesos"<<endl;
                         cout<<"Spa: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetServiciosUtilizados()->getSpa()<<" pesos"<<endl;
@@ -684,8 +676,7 @@ int main(){
                         cout<<"\nDatos estadia: "<<endl;
                         cout<<"Duracion de la estadia: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetDuracionDias()<<endl;
                         cout<<"Fecha de inicio de la estadia: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetFecha()<<endl;
-                        
-                        system("pause");
+                        */
                     }
                     
                     if(accion == 10){
@@ -701,7 +692,7 @@ int main(){
                             cout<<"La estadia no esta siendo ocupada"<<endl;
                         }
                         
-                        system("pause");
+                        
                     }
                     if(accion == 11){
                         int numeroHabitacion;
@@ -718,9 +709,9 @@ int main(){
                             }
                         }
                         
-                        system("pause");
                     }
                     
+                    system("pause");
                     system("cls");
                     if(accion == 13){
                         cout<<"------FIN DEL PROGRAMA------";
@@ -735,42 +726,24 @@ int main(){
                 system("cls");
                 int accion;
                 do{
-                cout<<"1- Registrar entrada";
-                cout<<"2- Registra salida";
-                cout<<"3- verificar disponibilidad";
-                cout<<"4- Calcular costo";
-                cout<<"5- generar reporte"<<endl; //Esto nos ayudara a saber todo sobre el vehiculo y su dueno;
-                cout<<"6- Verificar vehiculo"<<endl; //Este método podría verificar si un vehículo en particular está estacionado en el parqueadero, en función de su placa u otra información identificativa.
-                cout<<"7- actualizar estado"<<endl;
-                cout<<"8- volver al menu principal"<<endl;
-                cout<<"9- salir del programa"<<endl;
-                cout<<"Digite la accion: "<<endl;
-                cin>>accion;
-                switch(accion){
-                    case 1:
-                        system("pause");
-                        break;
-                    case 2:
-                        system("pause");
-                        break;
-                    case 3:
-                        system("pause");
-                        break;
-                    case 4:
-                        system("pause");
-                        break;
-                    case 5:
-                        system("pause");
-                        break;
-                    case 6:
-                        system("pause");
-                        break;
-                    }
-                    system("cls");
-                }while(accion != 8);
+                    cout<<"1- Registrar entrada"<<endl;
+                    cout<<"2- Registra salida"<<endl;
+                    cout<<"3- verificar disponibilidad"<<endl;
+                    cout<<"4- Calcular costo"<<endl;
+                    cout<<"5- generar reporte"<<endl; //Esto nos ayudara a saber todo sobre el vehiculo y su dueno;
+                    cout<<"6- Verificar vehiculo"<<endl; //Este método podría verificar si un vehículo en particular está estacionado en el parqueadero, en función de su placa u otra información identificativa.
+                    cout<<"7- actualizar estado"<<endl;
+                    cout<<"8- volver al menu principal"<<endl;
+                    cout<<"9- salir del programa"<<endl;
+                    cout<<"Digite la accion: "<<endl;
+                    cin>>accion;
+                    if(accion == 1){
 
+                    }
+                
+                }while(accion != 8);
+                system("cls");
             }
-            system("cls");
         }while(opcion != 5);
         cout<<"\n--------------FIN DEL PROGRAMA-----------------";    
        

@@ -15,16 +15,17 @@
 #include <list>
 #include "Estadia.h"
 #include "Empleado.h"
+#include "Parqueadero.h"
+#include "Servicios.h"
 #include <iostream>
 using namespace std;
 
 class Hotel {
-
+//asi esta bien totalmente todo lo relacionado esta con la estadia esto es porque es una relacion de uno a uno;
 private:
     string nombreHotel;
     list<Empleado*> *listaEmpleados;
     list<Estadia*> *listaEstadias;
-    
 public:
     Hotel(string nombreHotel): nombreHotel(nombreHotel){
         listaEstadias = new list<Estadia*>();

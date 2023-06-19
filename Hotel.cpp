@@ -169,3 +169,4 @@ list<Estadia *> * Hotel::obtenerListaEstadia(){
     return resultados;
 }
 
+

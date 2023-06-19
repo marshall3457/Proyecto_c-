@@ -17,26 +17,33 @@
 using namespace std;
 
 class Parqueadero {
-
+//remodelar parqueadero colocar el dia mes y ano de ingreso y igual de salida haci dejando a la maquina calcular los dias y si no ha salido pues poner de que no hay salido pero si se a modificado el setter
+//de que a salido.
+    
 private:
     int costoDia;
     string lugarEstacionamiento;
-    int tiempoEstacionado;
+    int anio;
+    int mes;
+    int dia;
 public:
-    
-    Parqueadero(int costoDia, string lugarEstacionamiento, int tiempoEstacionado) :
-    costoDia(costoDia), lugarEstacionamiento(lugarEstacionamiento), tiempoEstacionado(tiempoEstacionado) {
+    Parqueadero(int costoDia, string lugarEstacionamiento, int anio, int mes, int dia) :
+    costoDia(costoDia), lugarEstacionamiento(lugarEstacionamiento), anio(anio), mes(mes), dia(dia) {
     }
     
     Parqueadero(const Parqueadero& orig);
     virtual ~Parqueadero();
 
-    
     int GetCostoDia();
     string GetLugarEstacionamiento();
-    int GetTiempoEstacionado();
-    int costoTotalParqueadero();
+    int GetEntrada();
+    
+    void SetCostoDia(int);
+    void SetLugarEstacionamiento(string);
+    void SetSalida(int,int,int);
 
+    int tiempoEstacionado();
+    int costoTotalParqueadero();
 
     //metodo para calcular el costo del estacionamiento;
     
