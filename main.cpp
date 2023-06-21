@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <random>
 #include "Hotel.h"
 #include "Empleado.h"
 #include "Estadia.h"
@@ -44,6 +45,13 @@ int main(){
 //--------------------------------------------------------------------------------------------------------------
         
         //La estadian van desde el P1 hasta el P100 contando el hotel con 100 habitaciones;
+        //SERVICIOS
+        //que obtenga el tiempo de la estadia y lo multiple por el precio del servicio y asi obtenga el valor y le sume el iva
+        Servicios * servicioEstadias1 = new Servicios("Wifi",2000,19);
+        Servicios * servicioEstadias2 = new Servicios("Aseo",3000,19);
+        Servicios * servicioEstadias3 = new Servicios("Cable",4000,21);
+        Servicios * servicioEstadias4 = new Servicios("Refrigerador",2000,19);
+        Servicios * servicioEstadias5 = new Servicios("Piscina",5000,15);
         
         
         //ESTADIAS
@@ -52,8 +60,10 @@ int main(){
         Habitacion * nuevaHabitacion1 = new Habitacion(35000, 72, 2);
         Parqueadero * nuevoParqueadero1 = new Parqueadero(5000,"A12",1999,12,2);
         Estadia * nuevaEstadia1 =  new Estadia(nuevoHuesped1,nuevaHabitacion1,nuevoParqueadero1,20,"12/07/2003","P90");
-        Servicios * serviciosEstadia1 = new Servicios(30000,20000,9000,0,0); //DESPUES: creo que podria llenarlo de objeto como la clase wifi con sus atributos tiempo y valor y diferentes opciones de mega pero eso mejor despues
-        nuevaEstadia1->adiccionarServicios(serviciosEstadia1);
+        nuevaEstadia1->adiccionarServicios(servicioEstadias4);
+        nuevaEstadia1->adiccionarServicios(servicioEstadias3);
+        nuevaEstadia1->adiccionarServicios(servicioEstadias5);
+        //Cada objeto de estadia tiene su propia lista de servicios
         //Bueno aplicando esa logica los dias de que se quede el huesped van a ser tambien los dias que se quede en el parqueadero;
         
         Persona * PersonaHotel2 = new Persona("Juana", 24, "Femenino", "19");
@@ -61,16 +71,17 @@ int main(){
         Habitacion * nuevaHabitacion2 = new Habitacion(95000, 100, 3);
         Parqueadero * nuevoParqueadero2 = new Parqueadero(3000,"B34",1993,12,9);
         Estadia * nuevaEstadia2 =  new Estadia(nuevoHuesped2,nuevaHabitacion2,nuevoParqueadero2,12,"11/02/2012","P20");
-        Servicios * serviciosEstadia2 = new Servicios(20000,2000,10000,0,0);
-        nuevaEstadia1->adiccionarServicios(serviciosEstadia2);
+        nuevaEstadia2->adiccionarServicios(servicioEstadias2);
+        nuevaEstadia2->adiccionarServicios(servicioEstadias5);
 
         Persona * PersonaHotel3 = new Persona("Carlos", 31, "Masculino", "28");
         Huesped * nuevoHuesped3 = new Huesped(PersonaHotel3);
         Habitacion * nuevaHabitacion3 = new Habitacion(40000, 92, 3);
         Parqueadero * nuevoParqueadero3 = new Parqueadero(3000,"B95",2000,3,12);
         Estadia * nuevaEstadia3 =  new Estadia(nuevoHuesped3,nuevaHabitacion3,nuevoParqueadero3,9,"15/08/2005","P35");
-        Servicios * serviciosEstadia3 = new Servicios(20000,5000,2000,7000,1000);
-        nuevaEstadia1->adiccionarServicios(serviciosEstadia3);
+        nuevaEstadia3->adiccionarServicios(servicioEstadias5);
+        nuevaEstadia3->adiccionarServicios(servicioEstadias1);
+
         //Estadia vacia sin huesped
         Persona * PersonaHotel4 = new Persona("", 0, "", "");
         Huesped * nuevoHuesped4 = new Huesped(PersonaHotel4);
@@ -78,11 +89,13 @@ int main(){
         Parqueadero * nuevoParqueadero4 = new Parqueadero(0,"0",0,0,0);
         Estadia * nuevaEstadia4 =  new Estadia(nuevoHuesped4,nuevaHabitacion4,nuevoParqueadero4,0,"","P19"); 
         
-        
+
         nuevoHotel->adiccionarEstadia(nuevaEstadia1);
         nuevoHotel->adiccionarEstadia(nuevaEstadia2);
         nuevoHotel->adiccionarEstadia(nuevaEstadia3);
         nuevoHotel->adiccionarEstadia(nuevaEstadia4);
+        
+        
 //--------------------------------------------------------------------------------------------------------------
 
 /*

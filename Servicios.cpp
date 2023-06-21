@@ -19,29 +19,28 @@ Servicios::Servicios(const Servicios& orig) {
 Servicios::~Servicios() {
 }
 
-int Servicios::getSpa()  {
-    return Spa;
+int Servicios::getIva()  {
+    return iva;
 }
 
-int Servicios::getLavanderia()  {
-    return lavanderia;
+string Servicios::getNombreServicio()  {
+    return nombreServicio;
 }
 
-int Servicios::getLlamadaTelefonica()  {
-    return llamadaTelefonica;
+int Servicios::getPrecio()  {
+    return precio;
 }
 
-int Servicios::getWifi()  {
-    return wifi;
+void Servicios::setIva(int iva) {
+    this->iva = iva;
 }
 
-int Servicios::getServicioAHabitacion(){
-    return ServicioAHabitacion;
+void Servicios::setNombreServicio(string nombreServicio) {
+    this->nombreServicio = nombreServicio;
 }
 
-
-int Servicios::costoTotalServicios(){
-    return this->getLavanderia() + this->getLlamadaTelefonica() + this->getServicioAHabitacion()+ this->getSpa() + this->getWifi();
-    
+void Servicios::setPrecio(int precio) {
+    this->precio = precio;
 }
+
 

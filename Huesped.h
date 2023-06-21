@@ -13,24 +13,29 @@
 #ifndef HUESPED_H
 #define HUESPED_H
 #include <iostream>
+#include <list>
 #include "Persona.h"
+#include "Servicios.h"
 using namespace std;
 
 class Huesped {
 
 private:
-    Persona * nuevaPersona;
+    Persona * nuevaPersona;    
     
 public:
 
     Huesped(Persona* nuevaPersona) :
-    nuevaPersona(nuevaPersona) {
-    }
+    nuevaPersona(nuevaPersona) {  }
     
     Huesped(const Huesped& orig);
     virtual ~Huesped();
     
+    void adiccionarServicios(Servicios * servicios);
+
     Persona* GetNuevaPersona();
+    list<Servicios *> * getListaServicios();
+
 
 };
 

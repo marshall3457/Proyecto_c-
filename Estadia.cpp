@@ -12,7 +12,6 @@
 
 #include "Estadia.h"
 
-
 Estadia::Estadia(const Estadia& orig) {
 }
 
@@ -43,27 +42,26 @@ string Estadia::GetNumeroEstadia(){
     return numeroEstadia;
 }
 
-list<Servicios *> * Estadia::getListaServicios(){
-    list<Servicios *> * resultado = new list<Servicios*>();
-    list<Servicios *>::iterator it = this->listaServicios->begin();
-    
-    Servicios * e = NULL;
-    
-    for(;it != this->listaServicios->end(); it++){
-        e = *it;
-        resultado->push_back(e);
-    }
-    
-    return resultado;   
-}
-
-
 void Estadia::adiccionarServicios(Servicios * servicios){
 
 
     this->listaServicios->push_back(servicios);
     
 }
+
+int Estadia::costoTotalServicios(){
+    int suma = 0;
+    list<Servicios *>::iterator it = this->listaServicios->begin();
+    Servicios * e = NULL;
+    for(; it != this->listaServicios->end();it++){
+            e = *it;
+            suma += e->getPrecio();
+        }
+    
+    return suma;
+}
+    
+
 
 int Estadia::costoTotalEstadia(){
     return this->duracionDias * this->nuevaHabitacion->GetCostoNoche();
@@ -81,5 +79,6 @@ int Estadia::costoTotal(){
 int Estadia::costoTotalSinIva(){
     return this->costoTotalEstadia() + /*this->listaServicios->begin()->costoTotalServicios()*/ this->nuevoParqueadero->costoTotalParqueadero();
 }
+
 
 

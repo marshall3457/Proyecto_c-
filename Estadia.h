@@ -36,7 +36,7 @@ public:
     Estadia(Huesped* nuevoHuesped, Habitacion* nuevaHabitacion, Parqueadero* nuevoParqueadero, int duracionDias, string fecha, string numeroEstadia) :
     nuevoHuesped(nuevoHuesped), nuevaHabitacion(nuevaHabitacion), nuevoParqueadero(nuevoParqueadero), duracionDias(duracionDias), fecha(fecha), numeroEstadia(numeroEstadia) 
     {
-        listaServicios = new list<Servicios*>();   
+        listaServicios = new list<Servicios *>();
     }
 
     
@@ -47,10 +47,10 @@ public:
     Huesped* GetNuevoHuesped();
     Habitacion * GetNuevaHabitacion();
     Parqueadero * GetNuevoParqueadero();
-    list<Servicios *> * getListaServicios();
-    void adiccionarServicios(Servicios * servicios);
     string GetFecha();
     string GetNumeroEstadia();
+    void adiccionarServicios(Servicios * servicios);
+    int costoTotalServicios();
     int costoTotalEstadia();
     int costoTotalSinIva();
     int costoTotal();
