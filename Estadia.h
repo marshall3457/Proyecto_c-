@@ -49,7 +49,10 @@ public:
     Parqueadero * GetNuevoParqueadero();
     string GetFecha();
     string GetNumeroEstadia();
+    list<Servicios *> * GetListaServicios();
+    
     void adiccionarServicios(Servicios * servicios);
+    int costoTotalParqueadero();
     int costoTotalServicios();
     int costoTotalEstadia();
     int costoTotalSinIva();

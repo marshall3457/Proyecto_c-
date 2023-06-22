@@ -49,6 +49,12 @@ void Estadia::adiccionarServicios(Servicios * servicios){
     
 }
 
+list<Servicios *> * Estadia::GetListaServicios(){
+    list<Servicios *> * resultados = this->listaServicios;
+    
+    return resultados;
+}
+
 int Estadia::costoTotalServicios(){
     int suma = 0;
     list<Servicios *>::iterator it = this->listaServicios->begin();
@@ -61,6 +67,9 @@ int Estadia::costoTotalServicios(){
     return suma;
 }
     
+int Estadia::costoTotalParqueadero(){
+    return (this->nuevoParqueadero->GetCostoDia() * duracionDias);
+}
 
 
 int Estadia::costoTotalEstadia(){
@@ -72,12 +81,13 @@ int Estadia::costoTotalEstadia(){
 //En el archivo de costo_llamada utilizo para calcular la duracionTotal el this para llamar claramente un objeto de la clase en vez de utilizar el getter;
 int Estadia::costoTotal(){
     //estudiar esto con mas claridad, entre getters y uso de los mismos objetos de la clases
-    int iva = (this->costoTotalEstadia() + /*this->listaServicios->begin()->costoTotalServicios() +*/ this->nuevoParqueadero->costoTotalParqueadero()) * 0.19;
-    return (this->costoTotalEstadia() + /*this->listaServicios->begin()->costoTotalServicios()*/ this->nuevoParqueadero->costoTotalParqueadero()) + iva;// Iva;
+    int iva = (costoTotalEstadia() + costoTotalServicios() + costoTotalParqueadero()) * 0.19; //El parquedero esta elevando el precio demasiado y creo que tambien los servicios
+    return (costoTotalEstadia() + costoTotalServicios() + costoTotalParqueadero()) + iva;// Iva;
+    
 }
 
 int Estadia::costoTotalSinIva(){
-    return this->costoTotalEstadia() + /*this->listaServicios->begin()->costoTotalServicios()*/ this->nuevoParqueadero->costoTotalParqueadero();
+    return costoTotalEstadia() + costoTotalServicios() + costoTotalParqueadero();
 }
 
 

@@ -16,6 +16,7 @@
 //SIN SENTIDO
 //DO
 //DESPUES
+//IDEA
 
 using namespace std;
 void areaEmpleado(string area); //debemos definir la funcion afuera del main para que sea de tipo global;
@@ -58,7 +59,7 @@ int main(){
         Persona * PersonaHotel1 = new Persona("Rodriguez", 45, "Masculino", "9");
         Huesped * nuevoHuesped1 = new Huesped(PersonaHotel1);
         Habitacion * nuevaHabitacion1 = new Habitacion(35000, 72, 2);
-        Parqueadero * nuevoParqueadero1 = new Parqueadero(5000,"A12",1999,12,2);
+        Parqueadero * nuevoParqueadero1 = new Parqueadero(5000,"A12");
         Estadia * nuevaEstadia1 =  new Estadia(nuevoHuesped1,nuevaHabitacion1,nuevoParqueadero1,20,"12/07/2003","P90");
         nuevaEstadia1->adiccionarServicios(servicioEstadias4);
         nuevaEstadia1->adiccionarServicios(servicioEstadias3);
@@ -69,7 +70,7 @@ int main(){
         Persona * PersonaHotel2 = new Persona("Juana", 24, "Femenino", "19");
         Huesped * nuevoHuesped2 = new Huesped(PersonaHotel2);
         Habitacion * nuevaHabitacion2 = new Habitacion(95000, 100, 3);
-        Parqueadero * nuevoParqueadero2 = new Parqueadero(3000,"B34",1993,12,9);
+        Parqueadero * nuevoParqueadero2 = new Parqueadero(3000,"B34");
         Estadia * nuevaEstadia2 =  new Estadia(nuevoHuesped2,nuevaHabitacion2,nuevoParqueadero2,12,"11/02/2012","P20");
         nuevaEstadia2->adiccionarServicios(servicioEstadias2);
         nuevaEstadia2->adiccionarServicios(servicioEstadias5);
@@ -77,7 +78,7 @@ int main(){
         Persona * PersonaHotel3 = new Persona("Carlos", 31, "Masculino", "28");
         Huesped * nuevoHuesped3 = new Huesped(PersonaHotel3);
         Habitacion * nuevaHabitacion3 = new Habitacion(40000, 92, 3);
-        Parqueadero * nuevoParqueadero3 = new Parqueadero(3000,"B95",2000,3,12);
+        Parqueadero * nuevoParqueadero3 = new Parqueadero(3000,"B95");
         Estadia * nuevaEstadia3 =  new Estadia(nuevoHuesped3,nuevaHabitacion3,nuevoParqueadero3,9,"15/08/2005","P35");
         nuevaEstadia3->adiccionarServicios(servicioEstadias5);
         nuevaEstadia3->adiccionarServicios(servicioEstadias1);
@@ -86,8 +87,8 @@ int main(){
         Persona * PersonaHotel4 = new Persona("", 0, "", "");
         Huesped * nuevoHuesped4 = new Huesped(PersonaHotel4);
         Habitacion * nuevaHabitacion4 = new Habitacion(0, 0, 0);
-        Parqueadero * nuevoParqueadero4 = new Parqueadero(0,"0",0,0,0);
-        Estadia * nuevaEstadia4 =  new Estadia(nuevoHuesped4,nuevaHabitacion4,nuevoParqueadero4,0,"","P19"); 
+        Parqueadero * nuevoParqueadero4 = new Parqueadero(0,"0");
+        Estadia * nuevaEstadia4 =  new Estadia(nuevoHuesped4,nuevaHabitacion4,nuevoParqueadero4,0,"","P19");
         
 
         nuevoHotel->adiccionarEstadia(nuevaEstadia1);
@@ -98,18 +99,9 @@ int main(){
         
 //--------------------------------------------------------------------------------------------------------------
 
-/*
-        list<Empleado *> * listaEmpleadosCargo = nuevoHotel->ObtenerEmpleados("Aseo");
-        list<Empleado *>::iterator it = listaEmpleadosCargo->begin();
-        Empleado * est;
-        for(; it != listaEmpleadosCargo->end(); it++){
-            est = *it;
-            cout<<"El empleado que trabaja es: "<<est->GetNuevaPersona()->GetNombre()<<endl;
 
-        }
-        */
 
-            //Creo que puedo crear la aplicacion para los administrativo y para los clientes pero lo mejor sera no mezclar las dos cosas;
+        //Creo que puedo crear la aplicacion para los administrativo y para los clientes pero lo mejor sera no mezclar las dos cosas;
         int opcion;
         int accion;
         
@@ -124,59 +116,33 @@ int main(){
 
             cout<<"Digite la opcion a elegir"<<endl;
             cin>>opcion;
-
+            
+//----------------------------------------------------------------------------------------------------------------------------------------
             if(opcion == 1){
                 system("cls");
-                int accion;  // creo que esto podriar ir afuera
+                
                 do{
       
-                cout<<"1- Conocer servicios disponibles y precio"<<endl; //creo  que a lo ultimo lo mejor sera crear una lista para los servicios
-                cout<<"2- Agregar servicio"<<endl;
-                cout<<"3- Conocer veces pedidas de un servicio en especifico"<<endl;
-                cout<<"4- Conocer veces pedidas de todos los servicios"<<endl;
-                cout<<"5- Conocer costo total de una area de servicios"<<endl; /* Por ejemplo el de servicio a la habitacion para eso deberia asociarlo con los empleados y calcular otros costos para saber
-                cuanto le costara al hotel*/
-                cout<<"6- Conocer costo total de todos los servicios"<<endl;
-                cout<<"7- Generar factura"<<endl;
-                cout<<"8- verificar disponibilidad"<<endl; //para esto vamos a poner un limite a cada servicio;
-                cout<<"9- Volver al menu principal"<<endl;
-                cout<<"10- Salir del programa"<<endl;
+                    cout<<"1- Conocer servicios disponibles y precio"<<endl; //creo  que a lo ultimo lo mejor sera crear una lista para los servicios
+                    cout<<"2- Agregar servicio"<<endl;
+                    cout<<"3- Conocer veces pedidas de un servicio en especifico"<<endl;
+                    cout<<"4- Conocer veces pedidas de todos los servicios"<<endl;
+                    cout<<"5- Conocer costo total de una area de servicios"<<endl; /* Por ejemplo el de servicio a la habitacion para eso deberia asociarlo con los empleados y calcular otros costos para saber cuanto le costara al hotel*/
+                    cout<<"6- Conocer costo total de todos los servicios"<<endl;
+                    cout<<"7- Generar factura"<<endl;
+                    cout<<"8- verificar disponibilidad"<<endl; //para esto vamos a poner un limite a cada servicio;
+                    cout<<"9- Volver al menu principal"<<endl;
+                    cout<<"10- Salir del programa"<<endl;
+
+                    cout<<"Digite la accion: ";
+                    cin>>accion;
                 
-                cout<<"Digite la accion: ";
-                cin>>accion;
-                switch(accion){
-                    case 1:
-                        system("pause");
-                        break;
-                    case 2:
-                        system("pause");
-                        break;
-                    case 3:
-                        system("pause");
-                        break;
-                    case 4:
-                        system("pause");
-                        break;
-                    case 5:
-                        system("pause");
-                        break;
-                    case 6:
-                        system("pause");
-                        break;                       
-                    case 7:
-                        system("pause");
-                        break;
-                    case 8:
-                        system("pause");
-                        break; 
-                    }
-                    system("cls");
                 }while(accion != 9);
 
 
             }
 
-            
+//----------------------------------------------------------------------------------------------------------------------------------------           
             if(opcion == 2){   
                 system("cls");
                 do{
@@ -480,7 +446,7 @@ int main(){
                 
 
             }
-            
+//---------------------------------------------------------------------------------------------------------------------------------------- 
             if(opcion == 3){
                 system("cls");
                 do{
@@ -544,8 +510,7 @@ int main(){
                     
                     if(accion == 5){
                         string nombre,genero, DNI, lugarEstacionamiento,fecha,numeroEstadia;
-                        int edad, costoNoche, numeroHabitacion, numeroCamas, anio, mes, dia,duracionDias,costoDia;
-                        int Spa = 0, ServicioAHabitacion = 0,wifi = 0,lavanderia = 0,llamadaTelefonica = 0;
+                        int edad, costoNoche, numeroHabitacion, numeroCamas,duracionDias,costoDia;
                         cout<<"Digite los datos de la estadia a agregar"<<endl;
                         
                         cout<<"\nDatos Personales: "<<endl;
@@ -573,15 +538,8 @@ int main(){
                         cin>>costoDia;
                         cout<<"Lugar de estacionamiento"<<endl;
                         cin>>lugarEstacionamiento;
-                        cout<<"Fecha: "<<endl;
-                        cout<<"Año: "<<endl;
-                        cin>>anio;
-                        cout<<"Mes: "<<endl;
-                        cin>>mes;
-                        cout<<"Dia: "<<endl;
-                        cin>>dia;
-                        
-                        
+
+                                        
                         cout<<"\nDatos de la estadia: "<<endl;
                         cout<<"Dias que va a pasar en el hotel: "<<endl;
                         cin>>duracionDias;
@@ -591,18 +549,11 @@ int main(){
                         cin>>numeroEstadia;
                         
                         //Esto no tiene mucho sentido totalmente lo tendria que poner despues, creo que si pudiera inicializar la variables por predeterminado en el constructor seria mejor
-                        
-                                               
-                        //Persona(string nombre, int edad, string genero, string DNI) :
-                        //Huesped(Persona* nuevaPersona) :
-                        //Habitacion(int costoNoche, int numeroHabitacion, int numeroCamas) :
-                        //Parqueadero(int costoDia, string lugarEstacionamiento, int tiempoEstacionado) :
-                        //Servicios(int Spa, int ServicioAHabitacion, int wifi, int lavanderia, int llamadaTelefonica) :
 
                         Persona * personaRegistro = new Persona(nombre,edad,genero,DNI);
                         Huesped * nuevoHuespedRegistro =  new Huesped(personaRegistro);
                         Habitacion * nuevaHabitacionRegistrado = new Habitacion(costoNoche, numeroHabitacion, numeroCamas);
-                        Parqueadero * nuevoParqueaderoResgistrado = new Parqueadero(costoDia, lugarEstacionamiento, anio,mes,dia);
+                        Parqueadero * nuevoParqueaderoResgistrado = new Parqueadero(costoDia, lugarEstacionamiento);
                         Estadia * nuevaEstadiaRegistrado = new Estadia(nuevoHuespedRegistro, nuevaHabitacionRegistrado,nuevoParqueaderoResgistrado,duracionDias,fecha,numeroEstadia);
 
                         //Estadia(Huesped* nuevoHuesped, Habitacion* nuevaHabitacion, Parqueadero* nuevoParqueadero, Servicios* serviciosUtilizados, int duracionDias, string fecha, string numeroEstadia) :
@@ -630,11 +581,11 @@ int main(){
                         cout<<"DNI: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevoHuesped()->GetNuevaPersona()->GetDNI()<<endl;
                         
                         cout<<"\nCosto total del estacionamiento"<<endl;
-                        cout<<"Total sin iva: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevoParqueadero()->costoTotalParqueadero()<<endl;
+                        cout<<"Total sin iva: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->costoTotalParqueadero()<<endl;
                       
-                        /*cout<<"\nCosto total servicios"<<endl;
-                        cout<<"Total sin iva: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetServiciosUtilizados()->costoTotalServicios()<<endl;
-                        */
+                        cout<<"\nCosto total servicios"<<endl;
+                        cout<<"Total sin iva: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->costoTotalServicios()<<endl;
+                        
                         
                         cout<<"\nCosto total estadia"<<endl;
                         cout<<"Dias en el hotel: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetDuracionDias()<<endl;
@@ -673,23 +624,28 @@ int main(){
                         cout<<"numero de camas: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevaHabitacion()->GetNumeroCamas()<<endl;
                         cout<<"costo noche: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevaHabitacion()->GetCostoNoche()<<endl;
                         
-                        /* 
+                        
                         cout<<"\nDatos de los servicios:"<<endl;
-                        cout<<"Wifi: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetServiciosUtilizados()->getWifi()<<" pesos"<<endl;
-                        cout<<"Spa: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetServiciosUtilizados()->getSpa()<<" pesos"<<endl;
-                        cout<<"Lavanderia: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetServiciosUtilizados()->getLavanderia()<<" pesos"<<endl;
-                        cout<<"Llamadas telefonicas: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetServiciosUtilizados()->getLlamadaTelefonica()<<" pesos"<<endl;
-                        cout<<"Servicio a la habitacion: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetServiciosUtilizados()->getServicioAHabitacion()<<" pesos"<<endl;
+                        cout<<"Nombre de los servicios pedidos: "<<endl;
+                        //IDEA depronto crear una funcion en las fueras del main o en estadia para solo pasar la lista y que itere sobre ella para tener esto mas organizado
+                        list<Servicios *>::iterator it = nuevoHotel->BuscarEstadia(numeroEstadia)->GetListaServicios()->begin();
+                        
+                        Servicios * e = NULL;
+                        
+                        for(; it != nuevoHotel->BuscarEstadia(numeroEstadia)->GetListaServicios()->end();it++){
+                            e = *it;
+                                cout<<e->getNombreServicio()<<endl;
+                        }
+                        
                         
                         cout<<"\nDatos parqueadero:"<<endl;
                         cout<<"Lugar de estacionamiento: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevoParqueadero()->GetLugarEstacionamiento()<<endl;
-                        cout<<"Tiempo estacionado: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevoParqueadero()->GetTiempoEstacionado()<<endl;
                         cout<<"Costo dia: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevoParqueadero()->GetCostoDia()<<endl;
                         
                         cout<<"\nDatos estadia: "<<endl;
                         cout<<"Duracion de la estadia: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetDuracionDias()<<endl;
                         cout<<"Fecha de inicio de la estadia: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetFecha()<<endl;
-                        */
+                        
                     }
                     
                     if(accion == 10){
@@ -734,10 +690,9 @@ int main(){
                 }while(accion != 12);
 
             }
-
+//----------------------------------------------------------------------------------------------------------------------------------------
             if(opcion == 4){
                 system("cls");
-                int accion;
                 do{
                     cout<<"1- Registrar entrada"<<endl;
                     cout<<"2- Registra salida"<<endl;
@@ -748,6 +703,29 @@ int main(){
                     cout<<"7- actualizar estado"<<endl;
                     cout<<"8- volver al menu principal"<<endl;
                     cout<<"9- salir del programa"<<endl;
+                    cout<<"Digite la accion: "<<endl;
+                    cin>>accion;
+                    if(accion == 1){
+
+                    }
+                
+                }while(accion != 8);
+                system("cls");
+            }
+//----------------------------------------------------------------------------------------------------------------------------------------
+       
+            if(opcion == 5){
+                system("cls");
+                do{
+                    cout<<"1- "<<endl;
+                    cout<<"2- "<<endl;
+                    cout<<"3- "<<endl;
+                    cout<<"4- "<<endl;
+                    cout<<"5- "<<endl;;
+                    cout<<"6- "<<endl; 
+                    cout<<"7- "<<endl;
+                    cout<<"8- "<<endl;
+                    cout<<"9- "<<endl;
                     cout<<"Digite la accion: "<<endl;
                     cin>>accion;
                     if(accion == 1){

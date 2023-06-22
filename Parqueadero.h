@@ -23,27 +23,20 @@ class Parqueadero {
 private:
     int costoDia;
     string lugarEstacionamiento;
-    int anio;
-    int mes;
-    int dia;
+
 public:
-    Parqueadero(int costoDia, string lugarEstacionamiento, int anio, int mes, int dia) :
-    costoDia(costoDia), lugarEstacionamiento(lugarEstacionamiento), anio(anio), mes(mes), dia(dia) {
+    Parqueadero(int costoDia, string lugarEstacionamiento) :
+    costoDia(costoDia), lugarEstacionamiento(lugarEstacionamiento) {
     }
     
     Parqueadero(const Parqueadero& orig);
     virtual ~Parqueadero();
 
     int GetCostoDia();
-    string GetLugarEstacionamiento();
-    int GetEntrada();
-    
+    string GetLugarEstacionamiento();    
     void SetCostoDia(int);
     void SetLugarEstacionamiento(string);
-    void SetSalida(int,int,int);
 
-    int tiempoEstacionado();
-    int costoTotalParqueadero();
 
     //metodo para calcular el costo del estacionamiento;
     
