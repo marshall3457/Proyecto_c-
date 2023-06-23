@@ -111,7 +111,7 @@ int main(){
             cout<<"2- Empleados"<<endl;
             cout<<"3- Estadias"<<endl;
             cout<<"4- Parqueadero"<<endl;
-            cout<<"5- Huesped"<<endl;
+            cout<<"5- Huesped"<<endl; 
             cout<<"6- Salir"<<endl;
 
             cout<<"Digite la opcion a elegir"<<endl;
@@ -555,8 +555,6 @@ int main(){
                         Habitacion * nuevaHabitacionRegistrado = new Habitacion(costoNoche, numeroHabitacion, numeroCamas);
                         Parqueadero * nuevoParqueaderoResgistrado = new Parqueadero(costoDia, lugarEstacionamiento);
                         Estadia * nuevaEstadiaRegistrado = new Estadia(nuevoHuespedRegistro, nuevaHabitacionRegistrado,nuevoParqueaderoResgistrado,duracionDias,fecha,numeroEstadia);
-
-                        //Estadia(Huesped* nuevoHuesped, Habitacion* nuevaHabitacion, Parqueadero* nuevoParqueadero, Servicios* serviciosUtilizados, int duracionDias, string fecha, string numeroEstadia) :
                         
                         nuevoHotel->adiccionarEstadia(nuevaEstadiaRegistrado);
                         cout<<"La estadia fue agregada con exito"<<endl;
@@ -694,48 +692,182 @@ int main(){
             if(opcion == 4){
                 system("cls");
                 do{
-                    cout<<"1- Registrar entrada"<<endl;
-                    cout<<"2- Registra salida"<<endl;
-                    cout<<"3- verificar disponibilidad"<<endl;
-                    cout<<"4- Calcular costo"<<endl;
-                    cout<<"5- generar reporte"<<endl; //Esto nos ayudara a saber todo sobre el vehiculo y su dueno;
-                    cout<<"6- Verificar vehiculo"<<endl; //Este método podría verificar si un vehículo en particular está estacionado en el parqueadero, en función de su placa u otra información identificativa.
-                    cout<<"7- actualizar estado"<<endl;
-                    cout<<"8- volver al menu principal"<<endl;
-                    cout<<"9- salir del programa"<<endl;
+                    cout<<"1- verificar disponibilidad"<<endl;
+                    cout<<"2- Calcular costo"<<endl;
+                    cout<<"3- generar reporte"<<endl; //Esto nos ayudara a saber todo sobre el vehiculo y su dueno;
+                    cout<<"4- Verificar vehiculo"<<endl; //Este método podría verificar si un vehículo en particular está estacionado en el parqueadero, en función de su placa u otra información identificativa.
+                    cout<<"5- volver al menu principal"<<endl;
+                    cout<<"6- salir del programa"<<endl;
                     cout<<"Digite la accion: "<<endl;
                     cin>>accion;
                     if(accion == 1){
-
+                        string numeroLugar;
+                        bool lugar = true;
+                        cout<<"Digite el numero del lugar del parqueadero"<<endl;
+                        cin>>numeroLugar;
+                        
+                        
+                        list<Estadia *>::iterator it = nuevoHotel->obtenerListaEstadia()->begin();
+                        
+                        Estadia * e = NULL;
+                        
+                        for(;it != nuevoHotel->obtenerListaEstadia()->end();it++){
+                            e =  *it;
+                            if(e->GetNuevoParqueadero()->GetLugarEstacionamiento() == numeroLugar){
+                                lugar = false;
+                                break;             
+                            }
+                        }
+                        
+                        if(lugar){
+                            cout<<"El lugar esta disponible";
+                        }else{
+                            cout<<"El lugar esta ocupado";
+                        }
+                        
+                       
                     }
-                
-                }while(accion != 8);
-                system("cls");
+                    
+                    if(accion == 2){
+                        string numeroEstadia;
+                        cout<<"Digite el numero de la estadia"<<endl;
+                        cin>>numeroEstadia;
+                        
+                        cout<<"El costo total del parqueadero: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->costoTotalParqueadero();
+                        
+                    }
+                    if(accion == 3){
+                        string numeroEstadia;
+                        cout<<"Digite el numero de la estadia"<<endl;
+                        cin>>numeroEstadia;
+                        
+                        //IDEA agregar mas cosas como la matricula del carro y otra especificaciones;
+                        cout<<"\nDatos Parqueadero: "<<endl;
+                        cout<<"Nombre: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevoHuesped()->GetNuevaPersona()->GetNombre()<<endl;
+                        cout<<"DNI: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevoHuesped()->GetNuevaPersona()->GetDNI()<<endl;
+                        cout<<"Lugar de estacionamiento: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevoParqueadero()->GetLugarEstacionamiento()<<endl;
+                        cout<<"Costo por dia: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevoParqueadero()->GetCostoDia()<<endl;
+                    }
+                    if(accion == 4){
+                        
+                        //EN ESPERA no tengo el atributo matricula ni ninguna forma de rastrearlo
+                    }
+
+                    
+                    system("pause");
+                    system("cls");
+                    if(accion == 6){
+                        cout<<"------FIN DEL PROGRAMA------";
+                        exit(0);
+                    }
+                    
+                }while(accion != 5);
             }
 //----------------------------------------------------------------------------------------------------------------------------------------
        
             if(opcion == 5){
                 system("cls");
                 do{
-                    cout<<"1- "<<endl;
-                    cout<<"2- "<<endl;
-                    cout<<"3- "<<endl;
-                    cout<<"4- "<<endl;
-                    cout<<"5- "<<endl;;
-                    cout<<"6- "<<endl; 
-                    cout<<"7- "<<endl;
-                    cout<<"8- "<<endl;
-                    cout<<"9- "<<endl;
+                    cout<<"1- Ver todos los datos del huesped"<<endl;
+                    cout<<"2- Buscar un huesped por su DNI"<<endl;
+                    cout<<"3- Ver a todos los huespedes que se encuentran actualmente en el hotel"<<endl;
+                    cout<<"4- Cambiar datos"<<endl;
+                    cout<<"5- volver al menu principal"<<endl;
+                    cout<<"6- salir del programa"<<endl;
                     cout<<"Digite la accion: "<<endl;
                     cin>>accion;
                     if(accion == 1){
+                        string DNI;
+                        cout<<"Ingrese el DNI del huesped"<<endl;
+                        cin>>DNI;
+                        
+                        cout<<"Nombre: "<<nuevoHotel->BuscarEstadia(DNI, "cc")->GetNuevoHuesped()->GetNuevaPersona()->GetNombre()<<endl;
+                        cout<<"Edad: "<<nuevoHotel->BuscarEstadia(DNI, "cc")->GetNuevoHuesped()->GetNuevaPersona()->GetEdad()<<endl;
+                        cout<<"Genero: "<<nuevoHotel->BuscarEstadia(DNI, "cc")->GetNuevoHuesped()->GetNuevaPersona()->GetGenero()<<endl;
 
                     }
-                
-                }while(accion != 8);
-                system("cls");
+                    
+                    if(accion == 2){
+                        string DNI;
+                        cout<<"Ingrese el DNI del huesped"<<endl;
+                        cin>>DNI;
+                        
+                        cout<<"El nombre del huesped registrado es: "<<nuevoHotel->BuscarEstadia(DNI, "cc")->GetNuevoHuesped()->GetNuevaPersona()->GetNombre()<<endl;
+                    }
+                    
+                    
+                    if(accion == 3){
+                        cout<<"Huespedes en el hotel: "<<endl;
+                        
+                        list<Estadia* >::iterator it = nuevoHotel->obtenerListaEstadia()->begin();
+                        
+                        Estadia * e = NULL;
+                        for(; it != nuevoHotel->obtenerListaEstadia()->end();it++){
+                            cout<<e->GetNuevoHuesped()->GetNuevaPersona()->GetNombre()<<endl;
+                        }
+                        
+                    }
+                    
+                    
+                    if(accion == 4){
+                        string DNI;
+                        int cambio;
+                        cout<<"Ingrese el DNI del huesped"<<endl;
+                        cin>>DNI;
+                        cout<<"Digite el Dato a cambiar"<<endl;
+                        cin>>cambio;
+                        cout<<"Cambiar el nombre"<<endl;
+                        cout<<"Cambiar la edad"<<endl;
+                        cout<<"Cambiar el genero"<<endl;
+                        
+                        if(cambio == 1){
+                            string nombre;
+                            cout<<"Digite el nuevo nombre: "<<endl;
+                            cin>>nombre;
+                            
+                            nuevoHotel->BuscarEstadia(DNI, "cc")->GetNuevoHuesped()->GetNuevaPersona()->SetNombre(nombre);
+                            
+                            cout<<"El nombre a sido cambiado exitosamente"<<endl;
+
+   
+                        }
+                        
+                        if(cambio == 2){
+                            int edad;
+                            cout<<"Digite el nuevo nombre: "<<endl;
+                            cin>>edad;
+                            
+                            nuevoHotel->BuscarEstadia(DNI, "cc")->GetNuevoHuesped()->GetNuevaPersona()->SetEdad(edad);
+                            
+                            cout<<"La edad a sido cambiado exitosamente"<<endl;                       
+                        
+                        }
+                        if(cambio == 3){
+                            
+                            string genero;
+                            cout<<"Digite el nuevo nombre: "<<endl;
+                            cin>>genero;
+                            
+                            nuevoHotel->BuscarEstadia(DNI, "cc")->GetNuevoHuesped()->GetNuevaPersona()->SetGenero(genero);
+                            
+                            cout<<"El genero a sido cambiado exitosamente"<<endl;
+                        }
+                        
+                    }
+                    
+                    
+                    system("pause");
+                    system("cls");
+                    if(accion == 6){
+                        cout<<"------FIN DEL PROGRAMA------";
+                        exit(0);
+                    }
+                    
+                }while(accion != 5); 
             }
-        }while(opcion != 5);
+            
+        //FINAL DEL DO-WHILE        
+        }while(opcion != 6);
         cout<<"\n--------------FIN DEL PROGRAMA-----------------";    
        
            

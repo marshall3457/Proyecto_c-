@@ -50,7 +50,7 @@ void Hotel::adiccionarEstadia(Estadia* estadia){
 
 
     
-list<Estadia *> * Hotel::obtenerEstadiasHechas(string DNI){
+list<Estadia *> * Hotel::obtenerEstadiasHuesped(string DNI){
     list<Estadia *> * resultados = new list<Estadia*>();
     
     list<Estadia *>::iterator it = this->listaEstadias->begin();
@@ -94,9 +94,9 @@ Estadia * Hotel::BuscarEstadia(string numeroEstadia){
     
 }
 
-//SIN SENTIDO;
+//IDEA como segundo parametro le voy a pasar los acronimos de los tipos de identificacion;
 Estadia * Hotel::BuscarEstadia(string DNI, string identificacion){
-    if(identificacion == "si"){
+    if(identificacion == "cc"){
         list<Estadia *>::iterator it = this->listaEstadias->begin();
 
         Estadia * e = NULL;

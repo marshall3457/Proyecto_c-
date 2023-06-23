@@ -37,7 +37,7 @@ public:
     
     string GetNombreHotel();
     
-    list<Estadia *> * obtenerEstadiasHechas(string);
+    list<Estadia *> * obtenerEstadiasHuesped(string);
     void adiccionarEmpleado(Empleado * empleado);
     void adiccionarEstadia(Estadia* estadia);
     Empleado * BuscarEmpleado(string);
