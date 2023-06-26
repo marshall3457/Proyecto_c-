@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <random>
+#include <windows.h>
 #include "Hotel.h"
 #include "Empleado.h"
 #include "Estadia.h"
@@ -10,6 +11,8 @@
 #include "Servicios.h"
 #include "Parqueadero.h"
 #include "Habitacion.h"
+
+
 
 //buscar con find despues
 //PAUSA
@@ -137,9 +140,9 @@ int main(){
                     cout<<"5- Conocer costo total de todas las area de servicios en una estadia"<<endl; /*IDEA Por ejemplo el de servicio a la habitacion para eso deberia asociarlo con los empleados y calcular otros costos para saber cuanto le costara al hotel*/
                     cout<<"6- Conocer costo total de todos los servicios de una estadia"<<endl;
                     cout<<"7- Generar factura"<<endl;
-                    cout<<"8- verificar disponibilidad"<<endl; //para esto vamos a poner un limite a cada servicio;
-                    cout<<"9- Volver al menu principal"<<endl;
-                    cout<<"10- Salir del programa"<<endl;
+                    //cout<<"8- verificar disponibilidad"<<endl; IDEA
+                    cout<<"8- Volver al menu principal"<<endl;
+                    cout<<"9- Salir del programa"<<endl;
 
                     cout<<"Digite la accion: ";
                     cin>>accion;
@@ -292,21 +295,17 @@ int main(){
        
                         }
                     }
-                    if(accion == 8){
-                        //EN PAUSA
-                        
-                    }
                     
                     
                     system("pause");
                     system("cls");
                     //Para que se salga del if;
-                    if(accion == 10){
+                    if(accion == 9){
                         cout<<"------FIN DEL PROGRAMA------";
                         exit(0);
                     }
                     
-                }while(accion != 9);
+                }while(accion != 8);
 
 
             }
@@ -321,14 +320,13 @@ int main(){
                     cout<<"4- Ver empleados de un area"<<endl;
                     cout<<"5- Ver todos los empleados"<<endl;
                     cout<<"6- Ver sueldo de todos los empleados"<<endl; //mostrata los sueldo de todos los empleados
-                    cout<<"7- Calcular sueldo del empleado"<<endl; //mostrara los proceso que hace para obtener el sueldo, se tomaran en cuenta factores como el sueldo y otra cosas
+                    cout<<"7- ver sueldo del empleado"<<endl;
                     cout<<"8- Actualizar informacion del empleado"<<endl;
-                    cout<<"9- Calcular antiguedad del empleado"<<endl;
-                    cout<<"10- Aplicar aumento"<<endl;
-                    cout<<"11- Calcular vacaciones"<<endl; //calculalor en base de la antiguedad por ano seria 15 dias de vacaciones que se pueden acumular;
-                    cout<<"12- ver informacion del empleado"<<endl;
-                    cout<<"13- volver al menu principal"<<endl;
-                    cout<<"14- Salir del programa"<<endl;
+                    //cout<<"9- Calcular antiguedad del empleado"<<endl; IDEA
+                    cout<<"9- Aplicar aumento"<<endl;
+                    cout<<"10- ver informacion del empleado"<<endl;
+                    cout<<"11- volver al menu principal"<<endl;
+                    cout<<"12- Salir del programa"<<endl;
                     cout<<"Digite la accion: "<<endl;
                     cin>>accion;
                     cout<<endl;
@@ -385,7 +383,6 @@ int main(){
                     }
                     
                     if(accion == 4){
-                        //DO
                         int Area;
                         cout<<"Elija el area"<<endl;
                         cout<<"1- Aseo"<<endl;
@@ -428,25 +425,14 @@ int main(){
                         }
                     }
                     
-                    if(accion == 7){ //EN PAUSA
-                        
-                    //Experiencia y habilidades: Por lo general, las personas con mayor experiencia y habilidades específicas en un campo particular tienden a recibir sueldos más altos. La demanda de ciertas habilidades y conocimientos puede aumentar el valor que un empleador está dispuesto a pagar.
-
-                    //Nivel educativo: En muchos casos, un nivel educativo más alto, como un título universitario o posgrado, puede conducir a sueldos más altos. La educación adicional a menudo se asocia con una mayor especialización y conocimientos en un área determinada.
-
-                    //Responsabilidades y nivel de puesto: Los empleados que tienen un mayor nivel de responsabilidad en su trabajo, como supervisores, gerentes o ejecutivos, suelen recibir salarios más altos en comparación con aquellos en puestos de nivel inferior.
-
-                    //Industria y ubicación: El sector o la industria en la que trabajes puede afectar tu salario. Algunas industrias, como la tecnología o las finanzas, tienden a ofrecer salarios más altos en comparación con otras. Además, la ubicación geográfica también puede influir en el nivel salarial, ya que los costos de vida y las condiciones económicas varían en diferentes regiones y países.
-
-                    //Tamaño y tipo de empresa: El tamaño y el tipo de empresa también pueden ser factores determinantes. Las grandes empresas o corporaciones a menudo tienen más recursos financieros y pueden ofrecer salarios más altos en comparación con las pequeñas y medianas empresas. Además, las empresas en sectores altamente competitivos o en crecimiento pueden estar dispuestas a pagar más para atraer y retener talento.
-
-                    //Negociación y habilidades de comunicación: La capacidad de negociar y comunicar eficazmente tu valor como empleado puede influir en tu sueldo. Aquellos que son capaces de demostrar su valía y argumentar de manera persuasiva pueden tener más éxito al negociar un salario más alto.
-                       
+                    if(accion == 7){                   
                         string DNI;
-                        cout<<"Informacion del sueldo del empleado";
-                        cout<<"Ingrese el DNI";
+                        cout<<"Informacion del sueldo del empleado"<<endl;
+                        cout<<"Ingrese el DNI"<<endl;
                         cin>>DNI;
-                        cout<<nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetNombre();
+                        cout<<"Nombre: "<<nuevoHotel->BuscarEmpleado(DNI)->GetNuevaPersona()->GetNombre()<<endl;
+                        cout<<"Cargo: "<<nuevoHotel->BuscarEmpleado(DNI)->GetCargo()<<endl;
+                        cout<<"Sueldo: "<<nuevoHotel->BuscarEmpleado(DNI)->GetSueldo()<<endl;
                         
                     }
                     
@@ -523,11 +509,8 @@ int main(){
 
                     }
                     
-                    if(accion == 9){
-                        //EN PAUSA;
-                    }
                     
-                    if(accion == 10){
+                    if(accion == 9){
                         string DNI;
                         int opcion;
                         string porcentaje = "%";
@@ -552,10 +535,9 @@ int main(){
                                 break;                              
                                 
                         }
-                    }if(accion == 11){
-                        //EN PAUSA
                     }
-                    if(accion == 12){
+                    
+                    if(accion == 10){
                         system("cls");
                         int opcion;
                         string DNI;
@@ -607,11 +589,11 @@ int main(){
                     system("pause");
                     system("cls");
                 //Para que se salga del if;
-                    if(accion == 14){
+                    if(accion == 12){
                         cout<<"------FIN DEL PROGRAMA------";
                         exit(0);
                     }
-                }while(accion != 13);
+                }while(accion != 11);
                 
 
             }
@@ -1044,9 +1026,10 @@ int main(){
         cout<<"\n--------------FIN DEL PROGRAMA-----------------";    
        
            
+//-------------------------------------------------------------------------------------------------------------------
         
-
-
+    
+    
     
     
     
@@ -1065,9 +1048,9 @@ int main(){
     hacer que el propio usuario eliga los servicios y dar un estimado del cobro total;*/
     /*crear una interfaz para cada una de las clases como si fuera una pagina, con su respectivos metodos y variedad de propiedades
     como seria en empleado y una funcion para saber cuantos empleados hay actualmente o cual es el que recibe mejor sueldo*/
-        
+      
     return 0;
-
+    
 }
 
 
