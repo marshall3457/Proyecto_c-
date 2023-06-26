@@ -17,6 +17,7 @@
 //DO
 //DESPUES
 //IDEA
+//PROBLEMA SOLUCIONADO
 
 using namespace std;
 void areaEmpleado(string area); //debemos definir la funcion afuera del main para que sea de tipo global;
@@ -53,7 +54,13 @@ int main(){
         Servicios * servicioEstadias3 = new Servicios("Cable",4000,21);
         Servicios * servicioEstadias4 = new Servicios("Refrigerador",2000,19);
         Servicios * servicioEstadias5 = new Servicios("Piscina",5000,15);
-        
+
+        nuevoHotel->adiccionarServicios(servicioEstadias1);
+        nuevoHotel->adiccionarServicios(servicioEstadias2);
+        nuevoHotel->adiccionarServicios(servicioEstadias3);
+        nuevoHotel->adiccionarServicios(servicioEstadias4);
+        nuevoHotel->adiccionarServicios(servicioEstadias5);
+//-----------------------------------------------------------------------------------------------------------------
         
         //ESTADIAS
         Persona * PersonaHotel1 = new Persona("Rodriguez", 45, "Masculino", "9");
@@ -62,7 +69,7 @@ int main(){
         Parqueadero * nuevoParqueadero1 = new Parqueadero(5000,"A12");
         Estadia * nuevaEstadia1 =  new Estadia(nuevoHuesped1,nuevaHabitacion1,nuevoParqueadero1,20,"12/07/2003","P90");
         nuevaEstadia1->adiccionarServicios(servicioEstadias4);
-        nuevaEstadia1->adiccionarServicios(servicioEstadias3);
+        nuevaEstadia1->adiccionarServicios(servicioEstadias2);
         nuevaEstadia1->adiccionarServicios(servicioEstadias5);
         //Cada objeto de estadia tiene su propia lista de servicios
         //Bueno aplicando esa logica los dias de que se quede el huesped van a ser tambien los dias que se quede en el parqueadero;
@@ -127,8 +134,8 @@ int main(){
                     cout<<"2- Agregar servicio"<<endl;
                     cout<<"3- Conocer veces pedidas de un servicio en especifico"<<endl;
                     cout<<"4- Conocer veces pedidas de todos los servicios"<<endl;
-                    cout<<"5- Conocer costo total de una area de servicios"<<endl; /* Por ejemplo el de servicio a la habitacion para eso deberia asociarlo con los empleados y calcular otros costos para saber cuanto le costara al hotel*/
-                    cout<<"6- Conocer costo total de todos los servicios"<<endl;
+                    cout<<"5- Conocer costo total de todas las area de servicios en una estadia"<<endl; /*IDEA Por ejemplo el de servicio a la habitacion para eso deberia asociarlo con los empleados y calcular otros costos para saber cuanto le costara al hotel*/
+                    cout<<"6- Conocer costo total de todos los servicios de una estadia"<<endl;
                     cout<<"7- Generar factura"<<endl;
                     cout<<"8- verificar disponibilidad"<<endl; //para esto vamos a poner un limite a cada servicio;
                     cout<<"9- Volver al menu principal"<<endl;
@@ -136,7 +143,169 @@ int main(){
 
                     cout<<"Digite la accion: ";
                     cin>>accion;
-                
+                    
+                    if(accion == 1){
+                        //PROBLEMA SOLUCIONADO;
+                        //primero debemos crear un objeto tipo lista donde guarde la lista de la funcion ObtenerListaServiciosHotel() y despues asi poder iterar sobre ella:
+                        
+                        cout<<"Servicios: "<<endl;
+                        
+                        list<Servicios *> * resultado = new list<Servicios *>();
+                        resultado = nuevoHotel->ObtenerListaServiciosHotel();
+                        list<Servicios *>::iterator it = resultado->begin();
+                        
+                        Servicios * e;
+                        
+                        for(; it != resultado->end();it++){
+                            e = *it;
+                            cout<<e->getNombreServicio()<<endl;
+                        }
+                    }
+                    
+                    if(accion == 2){
+                        //IDEA si llego a utilizar base de datos pues incluirlo aqui y en vario lugares;
+                        string nombre;
+                        int precio, iva;
+                        
+                        cout<<"Ingrese los siguiente datos: "<<endl;
+                        cout<<"Nombre del servicio: "<<endl;
+                        cin>>nombre;
+                        cout<<"Precio del servicio: "<<endl;
+                        cin>>precio;
+                        cout<<"Iva del producto: "<<endl;
+                        cin>>iva;
+                        
+                        Servicios * servicioAgregar = new Servicios(nombre,precio,iva);
+                        nuevoHotel->adiccionarServicios(servicioAgregar); 
+                        
+                        cout<<"Servicio agregado exitosamente"<<endl;
+                    }
+                    if(accion == 3){
+                        string servicioPedido;
+                        int contador = 0;
+                        cout<<"ingrese el nombre del servicio: "<<endl;
+                        cin>>servicioPedido;
+                        list<Servicios * > * serviciosUtilizados = new list<Servicios *>();
+                        list<Estadia *> * resultado = new list<Estadia *>();
+                        resultado = nuevoHotel->obtenerListaEstadia();
+                        list<Estadia *>::iterator it = resultado->begin();
+                        
+                        Estadia * e;
+                        Servicios * a;
+                        for(; it != resultado->end();it++){
+                            e = *it;
+                            serviciosUtilizados = e->GetListaServicios();
+                            list<Servicios *>::iterator itServicios = serviciosUtilizados->begin();                     
+                            for(; itServicios != serviciosUtilizados->end(); itServicios++){
+                                a = *itServicios;
+                                if(a->getNombreServicio() == servicioPedido){
+                                    contador++;
+                                }
+                            }
+                        }
+                        cout<<"El numero de estadias utilizando el servicio "<<servicioPedido<<" es: "<<contador<<" veces"<<endl;
+                        
+                    }
+                    if(accion == 4){
+                        int Wifi = 0,Aseo = 0,Piscina = 0, Cable = 0, Refrigerador = 0;
+                        
+                        list<Servicios * > * serviciosUtilizados = new list<Servicios *>();
+                        list<Estadia *> * resultado = new list<Estadia *>();
+                        resultado = nuevoHotel->obtenerListaEstadia();
+                        list<Estadia *>::iterator it = resultado->begin();
+                        
+                        Estadia * e;
+                        Servicios * a;
+                        for(; it != resultado->end();it++){
+                            e = *it;
+                            serviciosUtilizados = e->GetListaServicios();
+                            list<Servicios *>::iterator itServicios = serviciosUtilizados->begin();                     
+                            for(; itServicios != serviciosUtilizados->end(); itServicios++){
+                                a = *itServicios;
+                                string nombreServicio = a->getNombreServicio();
+                                if (nombreServicio == "Wifi") {
+                                    Wifi++;
+                                } else if (nombreServicio == "Aseo") {
+                                    Aseo++;
+                                } else if (nombreServicio == "Piscina") {
+                                    Piscina++;
+                                } else if (nombreServicio == "Cable") {
+                                    Cable++;
+                                } else if (nombreServicio == "Refrigerador") {
+                                    Refrigerador++;
+                                }
+                            }
+                        }
+                        cout<<"El numero de estadias utilizando wifi son: "<<Wifi<<" veces"<<endl;
+                        cout<<"El numero de estadias utilizando aseo son: "<<Aseo<<" veces"<<endl;
+                        cout<<"El numero de estadias utilizando piscina son: "<<Piscina<<" veces"<<endl;
+                        cout<<"El numero de estadias utilizando cable son: "<<Cable<<" veces"<<endl;
+                        cout<<"El numero de estadias utilizando refrigerador son: "<<Refrigerador<<" veces"<<endl;
+                        
+                    }
+                    if(accion == 5){
+                        string numeroEstadia;
+                        cout<<"Ingrese el numero de la estadia: "<<endl;
+                        cin>>numeroEstadia;
+                        
+                        list<Servicios *> * resultado = new list<Servicios *>();
+                        resultado = nuevoHotel->BuscarEstadia(numeroEstadia)->GetListaServicios();
+                        list<Servicios *>::iterator it =  resultado->begin();
+                        
+                        Servicios * e = NULL;
+                        
+                        for(;it != resultado->end();it++){
+                            e = *it;
+                            cout<<"Servicio: "<<e->getNombreServicio()<<" total: "<<e->getPrecio()<<endl;
+       
+                        }
+
+                    }
+                    if(accion == 6){
+                        string numeroEstadia;
+                        cout<<"Ingrese el numero de la estadia"<<endl;
+                        cin>>numeroEstadia;
+                        
+                        cout<<"Costo total por servicios: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->costoTotalServicios()<<endl;
+                        
+                    }
+                    if(accion == 7){
+                        string numeroEstadia;
+                        cout<<"Ingrese el numero de la estadia"<<endl;
+                        cin>>numeroEstadia;
+                        
+                        cout<<"Nombre: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevoHuesped()->GetNuevaPersona()->GetNombre()<<endl;
+                        cout<<"Edad: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->GetNuevoHuesped()->GetNuevaPersona()->GetDNI()<<endl;
+                        
+                        cout<<"\nCoste servicios: "<<nuevoHotel->BuscarEstadia(numeroEstadia)->costoTotalServicios()<<endl;
+                        cout<<"Servicios utilizados: "<<endl;
+                        
+                        list<Servicios *> * resultado = new list<Servicios *>();
+                        resultado = nuevoHotel->BuscarEstadia(numeroEstadia)->GetListaServicios();
+                        list<Servicios *>::iterator it =  resultado->begin();
+                        
+                        Servicios * e = NULL;
+                        
+                        for(;it != resultado->end();it++){
+                            e = *it;
+                            cout<<e->getNombreServicio()<<" valor: "<<e->getPrecio()<<endl;
+       
+                        }
+                    }
+                    if(accion == 8){
+                        //EN PAUSA
+                        
+                    }
+                    
+                    
+                    system("pause");
+                    system("cls");
+                    //Para que se salga del if;
+                    if(accion == 10){
+                        cout<<"------FIN DEL PROGRAMA------";
+                        exit(0);
+                    }
+                    
                 }while(accion != 9);
 
 
@@ -799,11 +968,15 @@ int main(){
                     if(accion == 3){
                         cout<<"Huespedes en el hotel: "<<endl;
                         
-                        list<Estadia* >::iterator it = nuevoHotel->obtenerListaEstadia()->begin();
+                        list<Estadia*> * resultados = new list<Estadia *>();
+                        resultados = nuevoHotel->obtenerListaEstadia();
+                        list<Estadia* >::iterator it = resultados->begin();
                         
                         Estadia * e = NULL;
-                        for(; it != nuevoHotel->obtenerListaEstadia()->end();it++){
+                        for(; it != resultados->end();it++){
+                            e = *it;
                             cout<<e->GetNuevoHuesped()->GetNuevaPersona()->GetNombre()<<endl;
+                           
                         }
                         
                     }

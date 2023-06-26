@@ -26,10 +26,12 @@ private:
     string nombreHotel;
     list<Empleado*> *listaEmpleados;
     list<Estadia*> *listaEstadias;
+    list<Servicios*> * listaServicios; //El hotel en si tiene una lista de servicios para ofrecer a sus estadias;
 public:
     Hotel(string nombreHotel): nombreHotel(nombreHotel){
         listaEstadias = new list<Estadia*>();
         listaEmpleados = new list<Empleado*>();
+        listaServicios = new list<Servicios*>();
     }
 
     Hotel(const Hotel& orig);
@@ -40,12 +42,14 @@ public:
     list<Estadia *> * obtenerEstadiasHuesped(string);
     void adiccionarEmpleado(Empleado * empleado);
     void adiccionarEstadia(Estadia* estadia);
+    void adiccionarServicios(Servicios * servicios);
     Empleado * BuscarEmpleado(string);
     Estadia * BuscarEstadia(string);
     Estadia * BuscarEstadia(string,string);
     void EliminarEmpleado(string);
     void EliminarEstadia(string);
     list<Empleado *> * ObtenerEmpleadosArea(string area);
+    list<Servicios *> * ObtenerListaServiciosHotel();
     list<Empleado *> * obtenerListaEmpleado();
     list<Estadia *> * obtenerListaEstadia();
 

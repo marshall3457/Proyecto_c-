@@ -48,6 +48,11 @@ void Hotel::adiccionarEstadia(Estadia* estadia){
      
 }
 
+void Hotel::adiccionarServicios(Servicios * servicios){
+        this->listaServicios->push_back(servicios);
+
+}
+
 
     
 list<Estadia *> * Hotel::obtenerEstadiasHuesped(string DNI){
@@ -169,4 +174,15 @@ list<Estadia *> * Hotel::obtenerListaEstadia(){
     return resultados;
 }
 
+
+list<Servicios *> * Hotel::ObtenerListaServiciosHotel(){
+    list<Servicios *> * resultados = new list<Servicios*>();
+    list<Servicios *>::iterator it = this->listaServicios->begin();
+    Servicios * e;
+    for(; it != this->listaServicios->end();it++){
+        e = *it;
+        resultados->push_back(e);
+    }
+    return resultados;
+}
 
