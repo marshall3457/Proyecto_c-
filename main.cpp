@@ -22,7 +22,7 @@
 //IDEA
 //GIT
 //PROBLEMA SOLUCIONADO
-
+using namespace std;
 
 // Declaración de variables globales
 HWND hwndButton1;
@@ -76,12 +76,12 @@ HWND hwndButtonHuesped2;
 HWND hwndButtonHuesped3;
 HWND hwndButtonHuesped4;
 HWND hwndButtonHuesped5;
+//-------------------------
 
 
-// ... Declarar el resto de los botones aquí
+
 
 // Función de manejo de mensajes
-
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     if (msg == WM_CREATE) {
         // Crear los botones
@@ -94,39 +94,46 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             (HMENU) 1, // Identificador del botón
             NULL, NULL);
 
-        // Crear los demás botones aquí
         hwndButton2 = CreateWindow(
-            "BUTTON", // Clase del control
-            "Empleados", // Texto del botón
-            WS_VISIBLE | WS_CHILD, // Estilo del botón
-            300, 10, 200, 30, // Posición y tamaño del botón     
-            hwnd, // Ventana padre
-            (HMENU) 2, // Identificador del botón, con esto reconoce los casos
+            "BUTTON", 
+            "Empleados", 
+            WS_VISIBLE | WS_CHILD,
+            300, 10, 200, 30, 
+            hwnd, 
+            (HMENU) 2, 
             NULL, NULL);
         hwndButton3 = CreateWindow(
-            "BUTTON", // Clase del control
-            "Estadias", // Texto del botón
-            WS_VISIBLE | WS_CHILD, // Estilo del botón
-            520, 10, 200, 30, // Posición y tamaño del botón                                     //x, y
-            hwnd, // Ventana padre
-            (HMENU) 3, // Identificador del botón, con esto reconoce los casos           
+            "BUTTON",
+            "Estadias",
+            WS_VISIBLE | WS_CHILD,
+            520, 10, 200, 30,                               
+            hwnd, 
+            (HMENU) 3,          
             NULL, NULL);
         hwndButton4 = CreateWindow(
-            "BUTTON", // Clase del control
-            "Parqueadero", // Texto del botón
-            WS_VISIBLE | WS_CHILD, // Estilo del botón
-            740, 10, 200, 30, // Posición y tamaño del botón
-            hwnd, // Ventana padre
-            (HMENU) 4, // Identificador del botón, con esto reconoce los casos
+            "BUTTON", 
+            "Parqueadero", 
+            WS_VISIBLE | WS_CHILD,
+            740, 10, 200, 30, 
+            hwnd, 
+            (HMENU) 4, 
             NULL, NULL);
         hwndButton5 = CreateWindow(
-            "BUTTON", // Clase del control
-            "Huesped", // Texto del botón
-            WS_VISIBLE | WS_CHILD, // Estilo del botón
-            1000, 10, 200, 30, // Posición y tamaño del botón
-            hwnd, // Ventana padre
-            (HMENU) 5, // Identificador del botón, con esto reconoce los casos
+            "BUTTON",
+            "Huesped",
+            WS_VISIBLE | WS_CHILD,
+            1000, 10, 200, 30, 
+            hwnd,
+            (HMENU) 5,
             NULL, NULL);
+        HWND hwndLabel = CreateWindow(
+            "STATIC", 
+            "Texto de ejemplo", 
+            WS_VISIBLE | WS_CHILD, 
+            0, 240, 200, 30, 
+            hwnd,
+            NULL, NULL, NULL);
+
 
         return 0;
         
@@ -134,10 +141,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         RECT windowRect;
         GetClientRect(hwnd, &windowRect);
         int windowWidth = windowRect.right - windowRect.left;
-        int windowHeight = windowRect.bottom - windowRect.top;
-      //int buttonWidth = windowWidth * 0.2;  // Porcentaje del ancho de la ventana   //Lo mejor sera trabajar con porcentajes, si se puede xd
-        //int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-        //int windowWidth = static_cast<int>(screenWidth);
+        //int windowHeight = windowRect.bottom - windowRect.top;
+
+
 
         DestroyWindow(hwndButton1);
         DestroyWindow(hwndButton2);
@@ -156,497 +162,359 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 (HMENU) 11, // Identificador del botón
                 NULL, NULL);
 
-            // Crear los demás botones aquí
             hwndButtonServicios2 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Agregar servicio", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 30, windowWidth, 30, // Posición y tamaño del botón     
-                hwnd, // Ventana padre
-                (HMENU) 12, // Identificador del botón, con esto reconoce los casos
+                "BUTTON", 
+                "Agregar servicio", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 30, windowWidth, 30,   
+                hwnd,
+                (HMENU) 12,
                 NULL, NULL);
             hwndButtonServicios3 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Conocer veces pedidas de un servicio en especifico", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 60, windowWidth, 30, // Posición y tamaño del botón                                     //x, y
-                hwnd, // Ventana padre
-                (HMENU) 13, // Identificador del botón, con esto reconoce los casos           
+                "BUTTON",
+                "Conocer veces pedidas de un servicio en especifico",
+                WS_VISIBLE | WS_CHILD,
+                0, 60, windowWidth, 30,                                 
+                hwnd, 
+                (HMENU) 13,          
                 NULL, NULL);
             hwndButtonServicios4 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Conocer veces pedidas de todos los servicios", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 90, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 14, // Identificador del botón, con esto reconoce los casos
+                "BUTTON", 
+                "Conocer veces pedidas de todos los servicios",
+                WS_VISIBLE | WS_CHILD,
+                0, 90, windowWidth, 30, 
+                hwnd, 
+                (HMENU) 14, 
                 NULL, NULL);
             hwndButtonServicios5 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Costo total de todas las areas de servicios en una estadia", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 120, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 15, // Identificador del botón, con esto reconoce los casos
+                "BUTTON",
+                "Costo total de todas las areas de servicios en una estadia",
+                WS_VISIBLE | WS_CHILD, 
+                0, 120, windowWidth, 30, 
+                hwnd, 
+                (HMENU) 15,
                 NULL, NULL);
             hwndButtonServicios6 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Costo total de todos los servicios de una estadia", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 150, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 16, // Identificador del botón, con esto reconoce los casos
+                "BUTTON", 
+                "Costo total de todos los servicios de una estadia", 
+                WS_VISIBLE | WS_CHILD,
+                0, 150, windowWidth, 30,
+                hwnd, 
+                (HMENU) 16,
                 NULL, NULL);
             hwndButtonServicios7 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Generar factura", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 180, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 17, // Identificador del botón, con esto reconoce los casos
+                "BUTTON",
+                "Generar factura",
+                WS_VISIBLE | WS_CHILD,
+                0, 180, windowWidth, 30, 
+                hwnd, 
+                (HMENU) 17, 
                 NULL, NULL);
             hwndButtonServicios8 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Menu principal", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 210, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 18, // Identificador del botón, con esto reconoce los casos
+                "BUTTON", 
+                "Menu principal", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 210, windowWidth, 30, 
+                hwnd,
+                (HMENU) 18, 
                 NULL, NULL);
             
-        }else if (msg == WM_COMMAND) {
-            if(LOWORD(wParam) == 11) {
-                cout<<"hola";
-            }else if(LOWORD(wParam) == 12){
-                cout<<"nel";
-
-            }else if(LOWORD(wParam) == 13){
-                cout<<"xd";
-
-            }else if(LOWORD(wParam) == 14){
-
-
-            }else if(LOWORD(wParam) == 15){
-
-
-            }else if(LOWORD(wParam) == 16){
-
-
-            }else if(LOWORD(wParam) == 17){
-
-
-            }else if(LOWORD(wParam) == 18){
-
+        }else if(msg == WM_COMMAND){
+            if(LOWORD(wParam) == 11){
 
             }
-
         }
-        
+
         if (LOWORD(wParam) == 2) {
             hwndButtonEmpleado1 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Buscar Empleado", // Texto del botón          
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 0, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 21, // Identificador del botón
+                "BUTTON",
+                "Buscar Empleado",         
+                WS_VISIBLE | WS_CHILD, 
+                0, 0, windowWidth, 30, 
+                hwnd, 
+                (HMENU) 21, 
                 NULL, NULL);
 
-            // Crear los demás botones aquí
             hwndButtonEmpleado2 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Agregar Empleado", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 30, windowWidth, 30, // Posición y tamaño del botón     
-                hwnd, // Ventana padre
-                (HMENU) 22, // Identificador del botón, con esto reconoce los casos
+                "BUTTON",
+                "Agregar Empleado", 
+                WS_VISIBLE | WS_CHILD,
+                0, 30, windowWidth, 30,   
+                hwnd, 
+                (HMENU) 22, 
                 NULL, NULL);
             hwndButtonEmpleado3 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Eliminar empleado", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 60, windowWidth, 30, // Posición y tamaño del botón                                     //x, y
-                hwnd, // Ventana padre
-                (HMENU) 23, // Identificador del botón, con esto reconoce los casos           
+                "BUTTON", 
+                "Eliminar empleado",
+                WS_VISIBLE | WS_CHILD, 
+                0, 60, windowWidth, 30,                                
+                hwnd, 
+                (HMENU) 23, 
                 NULL, NULL);
             hwndButtonEmpleado4 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Ver empleados de un area", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 90, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 24, // Identificador del botón, con esto reconoce los casos
+                "BUTTON", 
+                "Ver empleados de un area",
+                WS_VISIBLE | WS_CHILD, 
+                0, 90, windowWidth, 30, 
+                hwnd, 
+                (HMENU) 24, 
                 NULL, NULL);
             hwndButtonEmpleado5 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Ver todos los empleados", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 120, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 25, // Identificador del botón, con esto reconoce los casos
+                "BUTTON",
+                "Ver todos los empleados",
+                WS_VISIBLE | WS_CHILD, 
+                0, 120, windowWidth, 30,
+                hwnd,
+                (HMENU) 25, 
                 NULL, NULL);
             hwndButtonEmpleado6 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Ver sueldo de todos los empleados", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 150, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 26, // Identificador del botón, con esto reconoce los casos
+                "BUTTON", 
+                "Ver sueldo de todos los empleados", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 150, windowWidth, 30,
+                hwnd, 
+                (HMENU) 26, 
                 NULL, NULL);
             hwndButtonEmpleado7 = CreateWindow(
-                "BUTTON", // Clase del control
-                "ver sueldo del empleado", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 180, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 27, // Identificador del botón, con esto reconoce los casos
+                "BUTTON", 
+                "ver sueldo del empleado", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 180, windowWidth, 30,
+                hwnd, 
+                (HMENU) 27,
                 NULL, NULL);
             hwndButtonEmpleado8 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Actualizar informacion del empleado", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 210, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 28, // Identificador del botón, con esto reconoce los casos
+                "BUTTON", 
+                "Actualizar informacion del empleado", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 210, windowWidth, 30,
+                hwnd, 
+                (HMENU) 28,
                 NULL, NULL);            
             hwndButtonEmpleado9 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Aplicar aumento", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 240, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 29, // Identificador del botón, con esto reconoce los casos
+                "BUTTON", 
+                "Aplicar aumento", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 240, windowWidth, 30, 
+                hwnd, 
+                (HMENU) 29, 
                 NULL, NULL);            
             hwndButtonEmpleado10 = CreateWindow(
-                "BUTTON", // Clase del control
-                "ver informacion del empleado", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 270, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 291, // Identificador del botón, con esto reconoce los casos
+                "BUTTON", 
+                "ver informacion del empleado",
+                WS_VISIBLE | WS_CHILD, 
+                0, 270, windowWidth, 30, 
+                hwnd,
+                (HMENU) 291, 
                 NULL, NULL);            
             hwndButtonEmpleado11 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Menu principal", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 300, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 292, // Identificador del botón, con esto reconoce los casos
+                "BUTTON", 
+                "Menu principal", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 300, windowWidth, 30, 
+                hwnd,
+                (HMENU) 292, 
                 NULL, NULL);            
-
-        }else if (msg == WM_COMMAND) {
-            if(LOWORD(wParam) == 21) {
-                cout<<"hola";
-            }else if(LOWORD(wParam) == 22){
-                cout<<"nel";
-
-            }else if(LOWORD(wParam) == 23){
-                cout<<"xd";
-
-            }else if(LOWORD(wParam) == 24){
-
-
-            }else if(LOWORD(wParam) == 25){
-
-
-            }else if(LOWORD(wParam) == 26){
-
-
-            }else if(LOWORD(wParam) == 27){
-
-
-            }else if(LOWORD(wParam) == 28){
-
-
-            }else if(LOWORD(wParam) == 29){
-
-
-            }else if(LOWORD(wParam) == 291){
-
-
-            }else if(LOWORD(wParam) == 292){
-
-
-            }
 
         }
         
         
         if (LOWORD(wParam) == 3) {
             hwndButtonEstadia1 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Buscar huesped", // Texto del botón          
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 0, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 31, // Identificador del botón
+                "BUTTON",
+                "Buscar huesped",         
+                WS_VISIBLE | WS_CHILD, 
+                0, 0, windowWidth, 30, 
+                hwnd,
+                (HMENU) 31, 
                 NULL, NULL);
 
-            // Crear los demás botones aquí
             hwndButtonEstadia2 = CreateWindow(
                 "BUTTON", // Clase del control
-                "Buscar Estadia por parte del DNI del huesped", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 30, windowWidth, 30, // Posición y tamaño del botón     
-                hwnd, // Ventana padre
-                (HMENU) 32, // Identificador del botón, con esto reconoce los casos
+                "Buscar Estadia por parte del DNI del huesped", 
+                WS_VISIBLE | WS_CHILD,
+                0, 30, windowWidth, 30,    
+                hwnd, 
+                (HMENU) 32, 
                 NULL, NULL);
             hwndButtonEstadia3 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Ver todas las estadias", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 60, windowWidth, 30, // Posición y tamaño del botón                                     //x, y
-                hwnd, // Ventana padre
-                (HMENU) 33, // Identificador del botón, con esto reconoce los casos           
+                "BUTTON", 
+                "Ver todas las estadias", 
+                WS_VISIBLE | WS_CHILD,
+                0, 60, windowWidth, 30,
+                hwnd, 
+                (HMENU) 33,            
                 NULL, NULL);
             hwndButtonEstadia4 = CreateWindow(
                 "BUTTON", // Clase del control
-                "Valor de costo de todas las estadias", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 90, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 34, // Identificador del botón, con esto reconoce los casos
+                "Valor de costo de todas las estadias", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 90, windowWidth, 30, 
+                hwnd, 
+                (HMENU) 34,
                 NULL, NULL);
             hwndButtonEstadia5 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Agregar Estadia", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 120, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 35, // Identificador del botón, con esto reconoce los casos
+                "BUTTON", 
+                "Agregar Estadia", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 120, windowWidth, 30,
+                hwnd, 
+                (HMENU) 35,
                 NULL, NULL);
             hwndButtonEstadia6 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Cancelar Estadia", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 150, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 36, // Identificador del botón, con esto reconoce los casos
+                "BUTTON",
+                "Cancelar Estadia", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 150, windowWidth, 30, 
+                hwnd, 
+                (HMENU) 36, 
                 NULL, NULL);
             hwndButtonEstadia7 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Generar Factura de todo", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 180, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 37, // Identificador del botón, con esto reconoce los casos
+                "BUTTON",
+                "Generar Factura de todo", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 180, windowWidth, 30, 
+                hwnd, 
+                (HMENU) 37,
                 NULL, NULL);
             hwndButtonEstadia8 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Obtener tiempo de la estadia", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 210, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 38, // Identificador del botón, con esto reconoce los casos
+                "BUTTON",
+                "Obtener tiempo de la estadia",
+                WS_VISIBLE | WS_CHILD,
+                0, 210, windowWidth, 30,
+                hwnd, 
+                (HMENU) 38,
                 NULL, NULL);            
             hwndButtonEstadia9 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Ver toda la informacion de una estadia", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 240, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 39, // Identificador del botón, con esto reconoce los casos
+                "BUTTON",
+                "Ver toda la informacion de una estadia", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 240, windowWidth, 30, 
+                hwnd, 
+                (HMENU) 39, 
                 NULL, NULL);            
             hwndButtonEstadia10 = CreateWindow(
-                "BUTTON", // Clase del control
-                "ver si la estadia esta ocupada", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 270, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 391, // Identificador del botón, con esto reconoce los casos
+                "BUTTON",
+                "ver si la estadia esta ocupada",
+                WS_VISIBLE | WS_CHILD,
+                0, 270, windowWidth, 30, 
+                hwnd, 
+                (HMENU) 391,
                 NULL, NULL);            
             hwndButtonEstadia11 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Buscar Huesped por parte del numero de la habitacion", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 300, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 392, // Identificador del botón, con esto reconoce los casos
+                "BUTTON", 
+                "Buscar Huesped por parte del numero de la habitacion", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 300, windowWidth, 30,
+                hwnd, 
+                (HMENU) 392,
                 NULL, NULL);   
             hwndButtonEstadia12 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Menu principal", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 330, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 393, // Identificador del botón, con esto reconoce los casos
+                "BUTTON", 
+                "Menu principal", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 330, windowWidth, 30, 
+                hwnd, 
+                (HMENU) 393, 
                 NULL, NULL);   
         
         
         
-        }else if (msg == WM_COMMAND) {
-            if(LOWORD(wParam) == 31) {
-                cout<<"hola";
-            }else if(LOWORD(wParam) == 32){
-                cout<<"nel";
-
-            }else if(LOWORD(wParam) == 33){
-                cout<<"xd";
-
-            }else if(LOWORD(wParam) == 34){
-
-
-            }else if(LOWORD(wParam) == 35){
-
-
-            }else if(LOWORD(wParam) == 36){
-
-
-            }else if(LOWORD(wParam) == 37){
-
-
-            }else if(LOWORD(wParam) == 38){
-
-
-            }else if(LOWORD(wParam) == 39){
-
-
-            }else if(LOWORD(wParam) == 391){
-
-
-            }else if(LOWORD(wParam) == 392){
-
-
-            }else if(LOWORD(wParam) == 393){
-
-
-            }
-
         }
         
         
         if (LOWORD(wParam) == 4) {
             hwndButtonParqueadero1 = CreateWindow(
-                "BUTTON", // Clase del control
-                "verificar disponibilidad", // Texto del botón          
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 0, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 41, // Identificador del botón
+                "BUTTON", 
+                "verificar disponibilidad",       
+                WS_VISIBLE | WS_CHILD, 
+                0, 0, windowWidth, 30, 
+                hwnd,
+                (HMENU) 41, 
                 NULL, NULL);
 
-            // Crear los demás botones aquí
             hwndButtonParqueadero2 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Calcular costo", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 30, windowWidth, 30, // Posición y tamaño del botón     
-                hwnd, // Ventana padre
-                (HMENU) 42, // Identificador del botón, con esto reconoce los casos
+                "BUTTON",
+                "Calcular costo",
+                WS_VISIBLE | WS_CHILD,
+                0, 30, windowWidth, 30,    
+                hwnd,
+                (HMENU) 42,
                 NULL, NULL);
             hwndButtonParqueadero3 = CreateWindow(
-                "BUTTON", // Clase del control
-                "generar reporte", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 60, windowWidth, 30, // Posición y tamaño del botón                                     //x, y
-                hwnd, // Ventana padre
-                (HMENU) 43, // Identificador del botón, con esto reconoce los casos           
+                "BUTTON", 
+                "generar reporte", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 60, windowWidth, 30,                                  
+                hwnd, 
+                (HMENU) 43,          
                 NULL, NULL);
             hwndButtonParqueadero4 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Valor de costo de todas las estadias", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 90, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 44, // Identificador del botón, con esto reconoce los casos
+                "BUTTON",
+                "Valor de costo de todas las estadias",
+                WS_VISIBLE | WS_CHILD,
+                0, 90, windowWidth, 30, 
+                hwnd, 
+                (HMENU) 44,
                 NULL, NULL);
             hwndButtonParqueadero5 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Menu Principal", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 120, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 45, // Identificador del botón, con esto reconoce los casos
+                "BUTTON",
+                "Menu Principal",
+                WS_VISIBLE | WS_CHILD,
+                0, 120, windowWidth, 30, 
+                hwnd,
+                (HMENU) 45, 
                 NULL, NULL);
           
-        }else if (msg == WM_COMMAND) {
-            if(LOWORD(wParam) == 41) {
-                cout<<"hola";
-            }else if(LOWORD(wParam) == 42){
-                cout<<"nel";
-
-            }else if(LOWORD(wParam) == 43){
-                cout<<"xd";
-
-            }else if(LOWORD(wParam) == 44){
-
-
-            }else if(LOWORD(wParam) == 45){
-
-
-            }
-
         }
-        
         
         if (LOWORD(wParam) == 5) {
             hwndButtonHuesped1 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Ver todos los datos del huesped", // Texto del botón          
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 0, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 51, // Identificador del botón
+                "BUTTON",
+                "Ver todos los datos del huesped",     
+                WS_VISIBLE | WS_CHILD,
+                0, 0, windowWidth, 30,
+                hwnd,
+                (HMENU) 51, 
                 NULL, NULL);
 
             // Crear los demás botones aquí
             hwndButtonHuesped2 = CreateWindow(
                 "BUTTON", // Clase del control
-                "Buscar un huesped por su DNI", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 30, windowWidth, 30, // Posición y tamaño del botón     
-                hwnd, // Ventana padre
-                (HMENU) 52, // Identificador del botón, con esto reconoce los casos
+                "Buscar un huesped por su DNI", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 30, windowWidth, 30, 
+                hwnd,
+                (HMENU) 52, 
                 NULL, NULL);
             hwndButtonHuesped3 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Ver a todos los huespedes que se encuentran actualmente en el hotel", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 60, windowWidth, 30, // Posición y tamaño del botón                                     //x, y
+                "BUTTON", 
+                "Ver a todos los huespedes que se encuentran actualmente en el hotel", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 60, windowWidth, 30,                               
                 hwnd, // Ventana padre
-                (HMENU) 53, // Identificador del botón, con esto reconoce los casos           
+                (HMENU) 53,         
                 NULL, NULL);
             hwndButtonHuesped4 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Cambiar datos", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 90, windowWidth, 30, // Posición y tamaño del botón
+                "BUTTON",
+                "Cambiar datos",
+                WS_VISIBLE | WS_CHILD,
+                0, 90, windowWidth, 30, 
                 hwnd, // Ventana padre
-                (HMENU) 54, // Identificador del botón, con esto reconoce los casos
+                (HMENU) 54, 
                 NULL, NULL);
             hwndButtonHuesped5 = CreateWindow(
-                "BUTTON", // Clase del control
-                "Menu principal", // Texto del botón
-                WS_VISIBLE | WS_CHILD, // Estilo del botón
-                0, 120, windowWidth, 30, // Posición y tamaño del botón
-                hwnd, // Ventana padre
-                (HMENU) 55, // Identificador del botón, con esto reconoce los casos
+                "BUTTON",
+                "Menu principal", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 120, windowWidth, 30, 
+                hwnd, 
+                (HMENU) 55, 
                 NULL, NULL);
            
         
         
-        }else if (msg == WM_COMMAND) {
-            if(LOWORD(wParam) == 51) {
-                cout<<"hola";
-            }else if(LOWORD(wParam) == 52){
-                cout<<"nel";
-
-            }else if(LOWORD(wParam) == 53){
-                cout<<"xd";
-
-            }else if(LOWORD(wParam) == 54){
-
-
-            }else if(LOWORD(wParam) == 55){
-
-
-            }
-
         }
-        
-        
-        
-        
         
         return 0;
 
@@ -658,9 +526,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         int windowWidth = rect.right - rect.left;
         int x = windowWidth * ((100.0 / 7) / 100); 
         int xBoton = windowWidth * 0.13;
-        cout<<x<<endl;
-        cout<<xBoton<<endl;
-        
+   
                               //x    y     ancho     alto
         
         //Error del tamano del boton arreglado ya que se superposicionaba uno encima de otro de manera rara: problema(ancho
@@ -749,33 +615,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
             NULL, NULL,             // Ventana padre y menú
             hInstance,              // Instancia de la aplicación
             NULL);
-
-        /*        
-                // Obtener el ancho y alto de la pantalla
-        int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-        int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-
-        // Calcular el ancho y alto de la ventana deseada (por ejemplo, el 80% de la pantalla)
-        int windowWidth = static_cast<int>(screenWidth * 0.8);
-        int windowHeight = static_cast<int>(screenHeight * 0.8);
-
-        // Calcular la posición x e y de la ventana centrada en la pantalla
-        int windowX = (screenWidth - windowWidth) / 2;
-        int windowY = (screenHeight - windowHeight) / 2;
-
-        // Crear la ventana con las dimensiones y posición calculadas
-        HWND hwnd = CreateWindow(
-            "MyWindowClass",
-            "Mi Aplicación",
-            WS_OVERLAPPEDWINDOW,
-            windowX,
-            windowY,
-            windowWidth,
-            windowHeight,
-            NULL, NULL,
-            hInstance,
-            NULL);
-        */
 
         if (!hwnd)
             return 2;
