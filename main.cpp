@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <random>
+#include <list>
 #include <windows.h>
 #include "Hotel.h"
 #include "Empleado.h"
@@ -12,6 +13,10 @@
 #include "Parqueadero.h"
 #include "Habitacion.h"
 
+using namespace std;
+
+
+//CREAR UN EJECUTABLE    g++ main.cpp -o main.exe -lgdi32
 
 
 //buscar con find despues
@@ -22,7 +27,7 @@
 //IDEA
 //GIT
 //PROBLEMA SOLUCIONADO
-using namespace std;
+
 
 // Declaración de variables globales
 HWND hwndButton1;
@@ -77,18 +82,93 @@ HWND hwndButtonHuesped3;
 HWND hwndButtonHuesped4;
 HWND hwndButtonHuesped5;
 //-------------------------
+const int ID_BUTTON = 1001;
+const int ID_INPUT = 1002;
+const int WM_CUSTOM_BUTTON_CLICK = WM_USER + 1;
 
-
-
+LRESULT CALLBACK ButtonWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 // Función de manejo de mensajes
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+    Hotel * nuevoHotel = new Hotel("Carmelo");
+
+    Persona * nuevaPersona1 = new Persona("Carlos", 21, "Masculino", "12");
+    Empleado * nuevoEmpleado1 =  new Empleado(nuevaPersona1,"Servicio a la habitacion",1200000);
+
+    Persona * nuevaPersona2 = new Persona("Juan", 29, "Masculino", "24");
+    Empleado * nuevoEmpleado2 =  new Empleado(nuevaPersona2,"Aseo",900000);
+
+    Persona * nuevaPersona3 = new Persona("Ana", 45, "Femenino", "14");
+    Empleado * nuevoEmpleado3 =  new Empleado(nuevaPersona3,"Aseo", 1300000);
+    nuevoHotel->adiccionarEmpleado(nuevoEmpleado1);
+    nuevoHotel->adiccionarEmpleado(nuevoEmpleado2);
+    nuevoHotel->adiccionarEmpleado(nuevoEmpleado3);
+
+    //--------------------------------------------------------------------------------------------------------------
+
+    //La estadian van desde el P1 hasta el P100 contando el hotel con 100 habitaciones;
+    //SERVICIOS
+    //que obtenga el tiempo de la estadia y lo multiple por el precio del servicio y asi obtenga el valor y le sume el iva
+    Servicios * servicioEstadias1 = new Servicios("Wifi",2000,19);
+    Servicios * servicioEstadias2 = new Servicios("Aseo",3000,19);
+    Servicios * servicioEstadias3 = new Servicios("Cable",4000,21);
+    Servicios * servicioEstadias4 = new Servicios("Refrigerador",2000,19);
+    Servicios * servicioEstadias5 = new Servicios("Piscina",5000,15);
+
+    nuevoHotel->adiccionarServicios(servicioEstadias1);
+    nuevoHotel->adiccionarServicios(servicioEstadias2);
+    nuevoHotel->adiccionarServicios(servicioEstadias3);
+    nuevoHotel->adiccionarServicios(servicioEstadias4);
+    nuevoHotel->adiccionarServicios(servicioEstadias5);
+    //-----------------------------------------------------------------------------------------------------------------
+
+    //ESTADIAS
+    Persona * PersonaHotel1 = new Persona("Rodriguez", 45, "Masculino", "9");
+    Huesped * nuevoHuesped1 = new Huesped(PersonaHotel1);
+    Habitacion * nuevaHabitacion1 = new Habitacion(35000, 72, 2);
+    Parqueadero * nuevoParqueadero1 = new Parqueadero(5000,"A12");
+    Estadia * nuevaEstadia1 =  new Estadia(nuevoHuesped1,nuevaHabitacion1,nuevoParqueadero1,20,"12/07/2003","P90");
+    nuevaEstadia1->adiccionarServicios(servicioEstadias4);
+    nuevaEstadia1->adiccionarServicios(servicioEstadias2);
+    nuevaEstadia1->adiccionarServicios(servicioEstadias5);
+    //Cada objeto de estadia tiene su propia lista de servicios
+    //Bueno aplicando esa logica los dias de que se quede el huesped van a ser tambien los dias que se quede en el parqueadero;
+
+    Persona * PersonaHotel2 = new Persona("Juana", 24, "Femenino", "19");
+    Huesped * nuevoHuesped2 = new Huesped(PersonaHotel2);
+    Habitacion * nuevaHabitacion2 = new Habitacion(95000, 100, 3);
+    Parqueadero * nuevoParqueadero2 = new Parqueadero(3000,"B34");
+    Estadia * nuevaEstadia2 =  new Estadia(nuevoHuesped2,nuevaHabitacion2,nuevoParqueadero2,12,"11/02/2012","P20");
+    nuevaEstadia2->adiccionarServicios(servicioEstadias2);
+    nuevaEstadia2->adiccionarServicios(servicioEstadias5);
+
+    Persona * PersonaHotel3 = new Persona("Carlos", 31, "Masculino", "28");
+    Huesped * nuevoHuesped3 = new Huesped(PersonaHotel3);
+    Habitacion * nuevaHabitacion3 = new Habitacion(40000, 92, 3);
+    Parqueadero * nuevoParqueadero3 = new Parqueadero(3000,"B95");
+    Estadia * nuevaEstadia3 =  new Estadia(nuevoHuesped3,nuevaHabitacion3,nuevoParqueadero3,9,"15/08/2005","P35");
+    nuevaEstadia3->adiccionarServicios(servicioEstadias5);
+    nuevaEstadia3->adiccionarServicios(servicioEstadias1);
+
+    //Estadia vacia sin huesped
+    Persona * PersonaHotel4 = new Persona("", 0, "", "");
+    Huesped * nuevoHuesped4 = new Huesped(PersonaHotel4);
+    Habitacion * nuevaHabitacion4 = new Habitacion(0, 0, 0);
+    Parqueadero * nuevoParqueadero4 = new Parqueadero(0,"0");
+    Estadia * nuevaEstadia4 =  new Estadia(nuevoHuesped4,nuevaHabitacion4,nuevoParqueadero4,0,"","P19");
+
+
+    nuevoHotel->adiccionarEstadia(nuevaEstadia1);
+    nuevoHotel->adiccionarEstadia(nuevaEstadia2);
+    nuevoHotel->adiccionarEstadia(nuevaEstadia3);
+    nuevoHotel->adiccionarEstadia(nuevaEstadia4);
+        
     if (msg == WM_CREATE) {
         // Crear los botones
         hwndButton1 = CreateWindow(
             "BUTTON", // Clase del control
             "Servicios", // Texto del botón          
-            WS_VISIBLE | WS_CHILD, // Estilo del botón
+            WS_VISIBLE | WS_CHILD | WS_TABSTOP | BS_DEFPUSHBUTTON, // Estilo del botón
             50, 10, 200, 30, // Posición y tamaño del botón
             hwnd, // Ventana padre
             (HMENU) 1, // Identificador del botón
@@ -97,7 +177,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         hwndButton2 = CreateWindow(
             "BUTTON", 
             "Empleados", 
-            WS_VISIBLE | WS_CHILD,
+            WS_VISIBLE | WS_CHILD | WS_TABSTOP | BS_DEFPUSHBUTTON,
             300, 10, 200, 30, 
             hwnd, 
             (HMENU) 2, 
@@ -105,7 +185,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         hwndButton3 = CreateWindow(
             "BUTTON",
             "Estadias",
-            WS_VISIBLE | WS_CHILD,
+            WS_VISIBLE | WS_CHILD | WS_TABSTOP | BS_DEFPUSHBUTTON,
             520, 10, 200, 30,                               
             hwnd, 
             (HMENU) 3,          
@@ -113,7 +193,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         hwndButton4 = CreateWindow(
             "BUTTON", 
             "Parqueadero", 
-            WS_VISIBLE | WS_CHILD,
+            WS_VISIBLE | WS_CHILD | WS_TABSTOP | BS_DEFPUSHBUTTON,
             740, 10, 200, 30, 
             hwnd, 
             (HMENU) 4, 
@@ -121,20 +201,15 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         hwndButton5 = CreateWindow(
             "BUTTON",
             "Huesped",
-            WS_VISIBLE | WS_CHILD,
+            WS_VISIBLE | WS_CHILD | WS_TABSTOP | BS_DEFPUSHBUTTON,
             1000, 10, 200, 30, 
             hwnd,
             (HMENU) 5,
             NULL, NULL);
-        HWND hwndLabel = CreateWindow(
-            "STATIC", 
-            "Texto de ejemplo", 
-            WS_VISIBLE | WS_CHILD, 
-            0, 240, 200, 30, 
-            hwnd,
-            NULL, NULL, NULL);
+        //controles de windows para ventana
 
 
+        
         return 0;
         
     } else if (msg == WM_COMMAND) {
@@ -219,10 +294,101 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 (HMENU) 18, 
                 NULL, NULL);
             
+            
+            
         }else if(msg == WM_COMMAND){
             if(LOWORD(wParam) == 11){
+                //PROBLEMA SOLUCIONADO: 
+                /* se estaba creando un bucle infinito, y era por que tenia el objeto hotel fuera de todo y lo meti dentro del LRESULT y se soluciono:
+                 esto se de debe a que: El bucle infinito se produce porque estás creando un nuevo hotel en cada iteración del bucle en la sección else if(msg == WM_COMMAND)*/
+                int yPosicion = 280;
+                HWND hwndLabel = CreateWindow(
+                "STATIC", 
+                "SERVICIOS:", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 240, 200, 30, 
+                hwnd,
+                NULL, NULL, NULL);
+                
+                list<Servicios *> * resultado = new list<Servicios *>();
+                resultado = nuevoHotel->ObtenerListaServiciosHotel();
+                list<Servicios *>::iterator it = resultado->begin();
+
+                Servicios * e;
+                for(; it != resultado->end();it++){
+                    e = *it;
+                    string nombre = e->getNombreServicio();
+                    const char* nombreCStr = nombre.c_str();
+
+                    HWND hwndLabel2 = CreateWindow(
+                        "EDIT", 
+                        nombreCStr, 
+                        WS_VISIBLE | WS_CHILD, 
+                        0, yPosicion, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);
+                    
+                    yPosicion += 50;
+
+                }
+
+            }else if(LOWORD(wParam) == 12){
+                HWND hInput = CreateWindowEx(
+                    0,
+                    "EDIT",
+                    "",
+                    WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL | WS_TABSTOP,
+                    10, 280, 200, 20,
+                    hwnd,
+                    (HMENU)ID_INPUT,
+                    NULL, NULL);
+
+                // Crear el botón
+                HWND hButton = CreateWindowEx(
+                    0,
+                    "BUTTON",
+                    "Enviar",
+                    WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+                    220, 280, 75, 25,
+                    hwnd,
+                    (HMENU)ID_BUTTON,
+                    NULL, NULL);
+
+                SetProp(hButton, "ButtonWindowProc", (HANDLE)GetWindowLongPtr(hButton, GWLP_WNDPROC));
+                SetWindowLongPtr(hButton, GWLP_WNDPROC, (LONG_PTR)ButtonWindowProc);
+
+
+                
+                
+            }else if (LOWORD(wParam) == ID_BUTTON && HIWORD(wParam) == BN_CLICKED) {
+                    cout<<"hola cx";
+                    HWND hInput = GetDlgItem(hwnd, ID_INPUT);
+                    int textLength = GetWindowTextLength(hInput);
+                    char* buffer = new char[textLength + 1];
+                    GetWindowText(hInput, buffer, textLength + 1);
+                    printf("Texto del control de entrada: %s\n", buffer);
+                    delete[] buffer;
+            }else if(LOWORD(wParam) == 13){
+                cout<<"Hola";
+
+            }else if(LOWORD(wParam) == 14){
+                cout<<"xd";
+            }else if(LOWORD(wParam) == 15){
+
+
+            }else if(LOWORD(wParam) == 16){
+
+
+            }else if(LOWORD(wParam) == 17){
+
+
+            }else if(LOWORD(wParam) == 18){
 
             }
+                
+              
+                
+
         }
 
         if (LOWORD(wParam) == 2) {
@@ -582,10 +748,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         MoveWindow(hwndButtonHuesped4, 0 , 90, windowWidth, 30, TRUE);
         MoveWindow(hwndButtonHuesped5, 0 , 120, windowWidth, 30, TRUE);
 
+
         return 0;
-    }
-    
-    else if (msg == WM_DESTROY) {
+    }else if (msg == WM_DESTROY) {
         PostQuitMessage(0);
         return 0;
     }
@@ -599,7 +764,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         WNDCLASS wc = {0};
         wc.lpfnWndProc = WndProc;
         wc.hInstance = hInstance;
-        wc.hbrBackground = (HBRUSH)(COLOR_BACKGROUND);
+        wc.hbrBackground = (HBRUSH)(COLOR_WINDOW);
         wc.lpszClassName = "MyWindowClass";
 
         if (!RegisterClass(&wc))
@@ -630,6 +795,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
+        
+        
 
         return msg.wParam;
 }
@@ -637,7 +804,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 
+LRESULT CALLBACK ButtonWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+    if (uMsg == WM_COMMAND && LOWORD(wParam) == ID_BUTTON && HIWORD(wParam) == BN_CLICKED)
+    {
+        SendMessage(GetParent(hwnd), WM_CUSTOM_BUTTON_CLICK, 0, 0);
+        return 0;
+    }
 
+    return (LRESULT)CallWindowProc((WNDPROC)GetProp(hwnd, "ButtonWindowProc"), hwnd, uMsg, wParam, lParam);
+}
 
 
 

@@ -32,18 +32,6 @@ void Hotel::adiccionarEmpleado(Empleado * empleado){
 }
 
 void Hotel::adiccionarEstadia(Estadia* estadia){
-    list<Estadia *>::iterator it = this->listaEstadias->begin();
-    Estadia * e = NULL;
-    while(it != this->listaEstadias->end()){
-        e = (*it);
-        //en si esta bien para registrar una nueva estadia con el DNI pero no me cuadra del todo;
-        //codigo de la estadia
-        if(estadia->GetNuevoHuesped()->GetNuevaPersona()->GetDNI() == e->GetNuevoHuesped()->GetNuevaPersona()->GetDNI()){
-            throw new Exception("La estadia ya se encuentra registrada");
-        }it++;
-
-        
-    }
     this->listaEstadias->push_back(estadia);
      
 }
