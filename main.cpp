@@ -35,6 +35,9 @@ HWND hwndButton2;
 HWND hwndButton3;
 HWND hwndButton4;    //declaracion de botones, ambito global
 HWND hwndButton5;
+
+list<HWND*> * botonesMenuPrincipal = new list<HWND*>();
+
 //---------------------------
 HWND hwndButtonServicios1;
 HWND hwndButtonServicios2;
@@ -44,6 +47,9 @@ HWND hwndButtonServicios5;
 HWND hwndButtonServicios6;
 HWND hwndButtonServicios7;
 HWND hwndButtonServicios8;
+
+list<HWND*> * botonesServicios = new list<HWND*>();
+
 //---------------------------
 HWND hwndButtonEmpleado1;
 HWND hwndButtonEmpleado2;
@@ -56,6 +62,9 @@ HWND hwndButtonEmpleado8;
 HWND hwndButtonEmpleado9;
 HWND hwndButtonEmpleado10;
 HWND hwndButtonEmpleado11;
+
+list<HWND*> * botonesEmpleado = new list<HWND*>();
+
 //---------------------------
 HWND hwndButtonEstadia1;
 HWND hwndButtonEstadia2;
@@ -69,27 +78,37 @@ HWND hwndButtonEstadia9;
 HWND hwndButtonEstadia10;
 HWND hwndButtonEstadia11;
 HWND hwndButtonEstadia12;
+
+list<HWND*> * botonesEstadia = new list<HWND*>();
+
 //---------------------------
 HWND hwndButtonParqueadero1;
 HWND hwndButtonParqueadero2;
 HWND hwndButtonParqueadero3;
 HWND hwndButtonParqueadero4;
 HWND hwndButtonParqueadero5;
+
+list<HWND*> * botonesParqueadero = new list<HWND*>();
+
 //---------------------------
 HWND hwndButtonHuesped1;
 HWND hwndButtonHuesped2;
 HWND hwndButtonHuesped3;
 HWND hwndButtonHuesped4;
 HWND hwndButtonHuesped5;
+
+list<HWND*> * botonesHuesped= new list<HWND*>();
+
 //-------------------------
 const int ID_BUTTON = 1001;
 const int ID_INPUT = 1002;
 const int WM_CUSTOM_BUTTON_CLICK = WM_USER + 1;
 
-LRESULT CALLBACK ButtonWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
+LRESULT CALLBACK ButtonWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 // Función de manejo de mensajes
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+    
     Hotel * nuevoHotel = new Hotel("Carmelo");
 
     Persona * nuevaPersona1 = new Persona("Carlos", 21, "Masculino", "12");
@@ -120,6 +139,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     nuevoHotel->adiccionarServicios(servicioEstadias3);
     nuevoHotel->adiccionarServicios(servicioEstadias4);
     nuevoHotel->adiccionarServicios(servicioEstadias5);
+
     //-----------------------------------------------------------------------------------------------------------------
 
     //ESTADIAS
@@ -162,14 +182,24 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     nuevoHotel->adiccionarEstadia(nuevaEstadia2);
     nuevoHotel->adiccionarEstadia(nuevaEstadia3);
     nuevoHotel->adiccionarEstadia(nuevaEstadia4);
+    
+
+
+    
         
     if (msg == WM_CREATE) {
+        
+        RECT rect;
+        GetClientRect(hwnd, &rect);
+        int windowWidth = rect.right - rect.left;
+        int x = windowWidth * ((100.0 / 7) / 100); 
+        int xBoton = windowWidth * 0.13;
         // Crear los botones
         hwndButton1 = CreateWindow(
             "BUTTON", // Clase del control
             "Servicios", // Texto del botón          
             WS_VISIBLE | WS_CHILD | WS_TABSTOP | BS_DEFPUSHBUTTON, // Estilo del botón
-            50, 10, 200, 30, // Posición y tamaño del botón
+            x, 10, xBoton, 30, // Posición y tamaño del botón
             hwnd, // Ventana padre
             (HMENU) 1, // Identificador del botón
             NULL, NULL);
@@ -178,7 +208,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             "BUTTON", 
             "Empleados", 
             WS_VISIBLE | WS_CHILD | WS_TABSTOP | BS_DEFPUSHBUTTON,
-            300, 10, 200, 30, 
+            x * 2, 10, xBoton, 30, 
             hwnd, 
             (HMENU) 2, 
             NULL, NULL);
@@ -186,7 +216,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             "BUTTON",
             "Estadias",
             WS_VISIBLE | WS_CHILD | WS_TABSTOP | BS_DEFPUSHBUTTON,
-            520, 10, 200, 30,                               
+            x * 3, 10, xBoton, 30,                               
             hwnd, 
             (HMENU) 3,          
             NULL, NULL);
@@ -194,7 +224,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             "BUTTON", 
             "Parqueadero", 
             WS_VISIBLE | WS_CHILD | WS_TABSTOP | BS_DEFPUSHBUTTON,
-            740, 10, 200, 30, 
+            x * 4, 10, xBoton, 30, 
             hwnd, 
             (HMENU) 4, 
             NULL, NULL);
@@ -202,14 +232,18 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             "BUTTON",
             "Huesped",
             WS_VISIBLE | WS_CHILD | WS_TABSTOP | BS_DEFPUSHBUTTON,
-            1000, 10, 200, 30, 
+            x * 5, 10, xBoton, 30, 
             hwnd,
             (HMENU) 5,
             NULL, NULL);
         //controles de windows para ventana
 
-
-        
+        botonesMenuPrincipal->push_back(&hwndButton1);
+        botonesMenuPrincipal->push_back(&hwndButton2);
+        botonesMenuPrincipal->push_back(&hwndButton3);
+        botonesMenuPrincipal->push_back(&hwndButton4);
+        botonesMenuPrincipal->push_back(&hwndButton5);
+            
         return 0;
         
     } else if (msg == WM_COMMAND) {
@@ -218,15 +252,21 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         int windowWidth = windowRect.right - windowRect.left;
         //int windowHeight = windowRect.bottom - windowRect.top;
 
+        list<HWND *>::iterator it = botonesMenuPrincipal->begin();
+        
+        HWND * e = NULL;
+        for(; it != botonesMenuPrincipal->end();it++){
+            e = *it;
+            DestroyWindow(*e);
+        }
 
-
-        DestroyWindow(hwndButton1);
-        DestroyWindow(hwndButton2);
-        DestroyWindow(hwndButton3);
-        DestroyWindow(hwndButton4);
-        DestroyWindow(hwndButton5);
+        
         
         if (LOWORD(wParam) == 1) {
+            
+            
+
+   
             // Lógica para la acción 1
             hwndButtonServicios1 = CreateWindow(
                 "BUTTON", // Clase del control
@@ -294,6 +334,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 (HMENU) 18, 
                 NULL, NULL);
             
+            botonesServicios->push_back(&hwndButtonServicios1);
+            botonesServicios->push_back(&hwndButtonServicios2);
+            botonesServicios->push_back(&hwndButtonServicios3);
+            botonesServicios->push_back(&hwndButtonServicios4);
+            botonesServicios->push_back(&hwndButtonServicios5);
+            botonesServicios->push_back(&hwndButtonServicios6);
+            botonesServicios->push_back(&hwndButtonServicios7);
+            botonesServicios->push_back(&hwndButtonServicios8);
             
             
         }else if(msg == WM_COMMAND){
@@ -321,7 +369,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                     const char* nombreCStr = nombre.c_str();
 
                     HWND hwndLabel2 = CreateWindow(
-                        "EDIT", 
+                        "STATIC", 
                         nombreCStr, 
                         WS_VISIBLE | WS_CHILD, 
                         0, yPosicion, 200, 30, 
@@ -333,26 +381,85 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 }
 
             }else if(LOWORD(wParam) == 12){
+                HWND hwndLabel = CreateWindow(
+                "STATIC", 
+                "Ingrese los siguientes datos:", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 240, 200, 30, 
+                hwnd,
+                NULL, NULL, NULL);
+           
+                /*------------------------------*/
+                HWND hwndLabel2 = CreateWindow(
+                "STATIC", 
+                "Nombre del servicio:", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 280, 200, 30, 
+                hwnd,
+                NULL, NULL, NULL);
+                
                 HWND hInput = CreateWindowEx(
                     0,
                     "EDIT",
                     "",
                     WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL | WS_TABSTOP,
-                    10, 280, 200, 20,
+                    10, 320, 200, 20,
                     hwnd,
-                    (HMENU)ID_INPUT,
+                    (HMENU)101,
                     NULL, NULL);
 
-                // Crear el botón
+                /*------------------------------*/
+                HWND hwndLabel3 = CreateWindow(
+                "STATIC", 
+                "Precio del servicio:", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 360, 200, 30, 
+                hwnd,
+                NULL, NULL, NULL);
+                
+                HWND hInput2 = CreateWindowEx(
+                    0,
+                    "EDIT",
+                    "",
+                    WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL | WS_TABSTOP,
+                    10, 400, 200, 20,
+                    hwnd,
+                    (HMENU)201,
+                    NULL, NULL);
+
+
+                /*------------------------------*/
+                HWND hwndLabel4 = CreateWindow(
+                "STATIC", 
+                "Iva del servicio:", 
+                WS_VISIBLE | WS_CHILD, 
+                0, 440, 200, 30, 
+                hwnd,
+                NULL, NULL, NULL);
+
+                
+                HWND hInput3 = CreateWindowEx(
+                    0,
+                    "EDIT",
+                    "",
+                    WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL | WS_TABSTOP,
+                    10, 480, 200, 20,
+                    hwnd,
+                    (HMENU)301,
+                    NULL, NULL);
+                /*------------------------------*/
+                //boton de crear
                 HWND hButton = CreateWindowEx(
                     0,
                     "BUTTON",
-                    "Enviar",
+                    "crear nuevo servicio",
                     WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-                    220, 280, 75, 25,
+                    10, 520, 200, 25,
                     hwnd,
-                    (HMENU)ID_BUTTON,
+                    (HMENU)102,
                     NULL, NULL);
+                /*------------------------------*/
+
 
                 SetProp(hButton, "ButtonWindowProc", (HANDLE)GetWindowLongPtr(hButton, GWLP_WNDPROC));
                 SetWindowLongPtr(hButton, GWLP_WNDPROC, (LONG_PTR)ButtonWindowProc);
@@ -360,14 +467,45 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
                 
                 
-            }else if (LOWORD(wParam) == ID_BUTTON && HIWORD(wParam) == BN_CLICKED) {
-                    cout<<"hola cx";
-                    HWND hInput = GetDlgItem(hwnd, ID_INPUT);
+            }else if (LOWORD(wParam) == 102 && HIWORD(wParam) == BN_CLICKED) {
+                    HWND hInput = GetDlgItem(hwnd, 101);
                     int textLength = GetWindowTextLength(hInput);
                     char* buffer = new char[textLength + 1];
                     GetWindowText(hInput, buffer, textLength + 1);
                     printf("Texto del control de entrada: %s\n", buffer);
-                    delete[] buffer;
+                    
+                    HWND hInput2 = GetDlgItem(hwnd, 201);
+                    int textLength1 = GetWindowTextLength(hInput2);
+                    char* buffer1 = new char[textLength1 + 1];
+                    GetWindowText(hInput2, buffer1, textLength1 + 1);
+                    int bufferNumero = std::stoi(buffer1);
+                    printf("Texto del control de entrada (converted to int): %d\n", bufferNumero);
+                    
+                    HWND hInput3 = GetDlgItem(hwnd, 301);
+                    int textLength2 = GetWindowTextLength(hInput3);
+                    char* buffer2 = new char[textLength2 + 1];
+                    GetWindowText(hInput3, buffer2, textLength2 + 1);
+                    buffer2[textLength2] = '\0';  // Ensure the buffer is null-terminated
+                    int bufferNumero1 = std::stoi(buffer2);
+                    printf("Texto del control de entrada (converted to int): %d\n", bufferNumero1);
+                    
+                    
+                    Servicios * servicioAgregar2 = new Servicios("Cerveza",12000,12);
+                    nuevoHotel->adiccionarServicios(servicioAgregar2); 
+                    //Servicios * servicioAgregar = new Servicios(buffer,bufferNumero,bufferNumero1);
+                    //nuevoHotel->adiccionarServicios(servicioAgregar); 
+                    //Hasta un mensaje box podria crear
+                    HWND hwndLabel5 = CreateWindow(
+                    "STATIC", 
+                    "Servicio agregado con exito!", 
+                    WS_VISIBLE | WS_CHILD, 
+                    10, 560, 200, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
+                      
+
+                
+                    
             }else if(LOWORD(wParam) == 13){
                 cout<<"Hola";
 
@@ -383,7 +521,63 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 
             }else if(LOWORD(wParam) == 18){
+                list<HWND *>::iterator it = botonesServicios->begin();
 
+                HWND * e = NULL;
+                for(; it != botonesServicios->end();it++){
+                    e = *it;
+                    DestroyWindow(*e);
+                }
+                
+                RECT rect;
+                GetClientRect(hwnd, &rect);
+                int windowWidth = rect.right - rect.left;
+                int x = windowWidth * ((100.0 / 7) / 100); 
+                int xBoton = windowWidth * 0.13;
+                // Crear los botones
+                hwndButton1 = CreateWindow(
+                    "BUTTON", // Clase del control
+                    "Servicios", // Texto del botón          
+                    WS_VISIBLE | WS_CHILD | WS_TABSTOP | BS_DEFPUSHBUTTON, // Estilo del botón
+                    x, 10, xBoton, 30, // Posición y tamaño del botón
+                    hwnd, // Ventana padre
+                    (HMENU) 1, // Identificador del botón
+                    NULL, NULL);
+
+                hwndButton2 = CreateWindow(
+                    "BUTTON", 
+                    "Empleados", 
+                    WS_VISIBLE | WS_CHILD | WS_TABSTOP | BS_DEFPUSHBUTTON,
+                    x * 2, 10, xBoton, 30, 
+                    hwnd, 
+                    (HMENU) 2, 
+                    NULL, NULL);
+                hwndButton3 = CreateWindow(
+                    "BUTTON",
+                    "Estadias",
+                    WS_VISIBLE | WS_CHILD | WS_TABSTOP | BS_DEFPUSHBUTTON,
+                    x * 3, 10, xBoton, 30,                               
+                    hwnd, 
+                    (HMENU) 3,          
+                    NULL, NULL);
+                hwndButton4 = CreateWindow(
+                    "BUTTON", 
+                    "Parqueadero", 
+                    WS_VISIBLE | WS_CHILD | WS_TABSTOP | BS_DEFPUSHBUTTON,
+                    x * 4, 10, xBoton, 30, 
+                    hwnd, 
+                    (HMENU) 4, 
+                    NULL, NULL);
+                hwndButton5 = CreateWindow(
+                    "BUTTON",
+                    "Huesped",
+                    WS_VISIBLE | WS_CHILD | WS_TABSTOP | BS_DEFPUSHBUTTON,
+                    x * 5, 10, xBoton, 30, 
+                    hwnd,
+                    (HMENU) 5,
+                    NULL, NULL);
+                
+                
             }
                 
               
@@ -480,7 +674,19 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 0, 300, windowWidth, 30, 
                 hwnd,
                 (HMENU) 292, 
-                NULL, NULL);            
+                NULL, NULL);   
+            
+            botonesEmpleado->push_back(&hwndButtonEmpleado1);
+            botonesEmpleado->push_back(&hwndButtonEmpleado2);
+            botonesEmpleado->push_back(&hwndButtonEmpleado3);
+            botonesEmpleado->push_back(&hwndButtonEmpleado4);
+            botonesEmpleado->push_back(&hwndButtonEmpleado5);
+            botonesEmpleado->push_back(&hwndButtonEmpleado6);
+            botonesEmpleado->push_back(&hwndButtonEmpleado7);
+            botonesEmpleado->push_back(&hwndButtonEmpleado8);
+            botonesEmpleado->push_back(&hwndButtonEmpleado9);
+            botonesEmpleado->push_back(&hwndButtonEmpleado10);
+            botonesEmpleado->push_back(&hwndButtonEmpleado11);
 
         }
         
@@ -583,7 +789,19 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 hwnd, 
                 (HMENU) 393, 
                 NULL, NULL);   
-        
+            
+            botonesEstadia->push_back(&hwndButtonEstadia1);
+            botonesEstadia->push_back(&hwndButtonEstadia2);
+            botonesEstadia->push_back(&hwndButtonEstadia3);
+            botonesEstadia->push_back(&hwndButtonEstadia4);
+            botonesEstadia->push_back(&hwndButtonEstadia5);
+            botonesEstadia->push_back(&hwndButtonEstadia6);
+            botonesEstadia->push_back(&hwndButtonEstadia7);
+            botonesEstadia->push_back(&hwndButtonEstadia8);
+            botonesEstadia->push_back(&hwndButtonEstadia9);
+            botonesEstadia->push_back(&hwndButtonEstadia10);
+            botonesEstadia->push_back(&hwndButtonEstadia11);
+            botonesEstadia->push_back(&hwndButtonEstadia12);
         
         
         }
@@ -631,6 +849,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 hwnd,
                 (HMENU) 45, 
                 NULL, NULL);
+            
+            botonesParqueadero->push_back(&hwndButtonParqueadero1);
+            botonesParqueadero->push_back(&hwndButtonParqueadero2);
+            botonesParqueadero->push_back(&hwndButtonParqueadero3);
+            botonesParqueadero->push_back(&hwndButtonParqueadero4);
+            botonesParqueadero->push_back(&hwndButtonParqueadero5);
           
         }
         
@@ -678,7 +902,11 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 (HMENU) 55, 
                 NULL, NULL);
            
-        
+            botonesHuesped->push_back(&hwndButtonHuesped1);
+            botonesHuesped->push_back(&hwndButtonHuesped2);
+            botonesHuesped->push_back(&hwndButtonHuesped3);
+            botonesHuesped->push_back(&hwndButtonHuesped4);
+            botonesHuesped->push_back(&hwndButtonHuesped5);
         
         }
         
