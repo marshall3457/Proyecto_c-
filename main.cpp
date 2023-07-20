@@ -104,11 +104,17 @@ const int ID_BUTTON = 1001;
 const int ID_INPUT = 1002;
 const int WM_CUSTOM_BUTTON_CLICK = WM_USER + 1;
 
-
+int c = 0;
+list <Servicios*> * nuevosServicios = new list<Servicios*>();
 LRESULT CALLBACK ButtonWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-// Función de manejo de mensajes
+// Función de manejo de mensajes    
+
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-    
+
+    //int c = 0;  aca no recibe el valor nuevo afuera si;
+
+
+
     Hotel * nuevoHotel = new Hotel("Carmelo");
 
     Persona * nuevaPersona1 = new Persona("Carlos", 21, "Masculino", "12");
@@ -122,7 +128,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     nuevoHotel->adiccionarEmpleado(nuevoEmpleado1);
     nuevoHotel->adiccionarEmpleado(nuevoEmpleado2);
     nuevoHotel->adiccionarEmpleado(nuevoEmpleado3);
-
     //--------------------------------------------------------------------------------------------------------------
 
     //La estadian van desde el P1 hasta el P100 contando el hotel con 100 habitaciones;
@@ -133,13 +138,23 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     Servicios * servicioEstadias3 = new Servicios("Cable",4000,21);
     Servicios * servicioEstadias4 = new Servicios("Refrigerador",2000,19);
     Servicios * servicioEstadias5 = new Servicios("Piscina",5000,15);
-
+    
+    
     nuevoHotel->adiccionarServicios(servicioEstadias1);
     nuevoHotel->adiccionarServicios(servicioEstadias2);
     nuevoHotel->adiccionarServicios(servicioEstadias3);
     nuevoHotel->adiccionarServicios(servicioEstadias4);
     nuevoHotel->adiccionarServicios(servicioEstadias5);
-
+   /* list<Servicios*>::iterator it = nuevosServicios->begin();
+    
+    Servicios * e = NULL;
+   
+    for(;it != nuevosServicios->end();it++){
+        
+        e = *it;
+        nuevoHotel->adiccionarServicios(e);
+    }*/
+    
     //-----------------------------------------------------------------------------------------------------------------
 
     //ESTADIAS
@@ -185,10 +200,11 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     
 
 
-    
+
         
     if (msg == WM_CREATE) {
-        
+
+
         RECT rect;
         GetClientRect(hwnd, &rect);
         int windowWidth = rect.right - rect.left;
@@ -259,13 +275,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             e = *it;
             DestroyWindow(*e);
         }
-
         
+
+
         
         if (LOWORD(wParam) == 1) {
             
-            
-
    
             // Lógica para la acción 1
             hwndButtonServicios1 = CreateWindow(
@@ -345,6 +360,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             
             
         }else if(msg == WM_COMMAND){
+            //si inicializo la variable fuera de todas las funciones si me la toma y se suma;
+
+             //siempre que se oprime un boton se repite el WM_COMMAND;
             if(LOWORD(wParam) == 11){
                 //PROBLEMA SOLUCIONADO: 
                 /* se estaba creando un bucle infinito, y era por que tenia el objeto hotel fuera de todo y lo meti dentro del LRESULT y se soluciono:
@@ -360,6 +378,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 
                 list<Servicios *> * resultado = new list<Servicios *>();
                 resultado = nuevoHotel->ObtenerListaServiciosHotel();
+                list<Servicios *>::iterator it2 = nuevosServicios->begin();
+                Servicios * a = NULL;
+                for(;it2 != nuevosServicios->end();it2++){
+                    a = *it2;
+                    resultado->push_back(a);
+                }
                 list<Servicios *>::iterator it = resultado->begin();
 
                 Servicios * e;
@@ -367,7 +391,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                     e = *it;
                     string nombre = e->getNombreServicio();
                     const char* nombreCStr = nombre.c_str();
-
+                    cout<<nombre<<endl;
                     HWND hwndLabel2 = CreateWindow(
                         "STATIC", 
                         nombreCStr, 
@@ -489,12 +513,16 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                     int bufferNumero1 = std::stoi(buffer2);
                     printf("Texto del control de entrada (converted to int): %d\n", bufferNumero1);
                     
+        
+                    //PROBLEMA SOLUCIONADO
+                    /*cree la lista afuera y aqui agrege ese objeto que crea el usuario
+                     * esto se debe a que la lista siempre la toma cada vez que entra a la opcion 11;   
+                     */
+                    Servicios * nuevoServicio = new Servicios(buffer, bufferNumero, bufferNumero1);
+                    nuevosServicios->push_back(nuevoServicio);
+
                     
-                    Servicios * servicioAgregar2 = new Servicios("Cerveza",12000,12);
-                    nuevoHotel->adiccionarServicios(servicioAgregar2); 
-                    //Servicios * servicioAgregar = new Servicios(buffer,bufferNumero,bufferNumero1);
-                    //nuevoHotel->adiccionarServicios(servicioAgregar); 
-                    //Hasta un mensaje box podria crear
+                    
                     HWND hwndLabel5 = CreateWindow(
                     "STATIC", 
                     "Servicio agregado con exito!", 
@@ -1042,6 +1070,5 @@ LRESULT CALLBACK ButtonWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
 
     return (LRESULT)CallWindowProc((WNDPROC)GetProp(hwnd, "ButtonWindowProc"), hwnd, uMsg, wParam, lParam);
 }
-
 
 

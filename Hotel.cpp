@@ -164,13 +164,6 @@ list<Estadia *> * Hotel::obtenerListaEstadia(){
 
 
 list<Servicios *> * Hotel::ObtenerListaServiciosHotel(){
-    list<Servicios *> * resultados = new list<Servicios*>();
-    list<Servicios *>::iterator it = this->listaServicios->begin();
-    Servicios * e;
-    for(; it != this->listaServicios->end();it++){
-        e = *it;
-        resultados->push_back(e);
-    }
-    return resultados;
+    return this->listaServicios;
 }
 
