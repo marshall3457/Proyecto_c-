@@ -391,7 +391,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                     e = *it;
                     string nombre = e->getNombreServicio();
                     const char* nombreCStr = nombre.c_str();
-                    cout<<nombre<<endl;
                     HWND hwndLabel2 = CreateWindow(
                         "STATIC", 
                         nombreCStr, 
@@ -496,14 +495,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                     int textLength = GetWindowTextLength(hInput);
                     char* buffer = new char[textLength + 1];
                     GetWindowText(hInput, buffer, textLength + 1);
-                    printf("Texto del control de entrada: %s\n", buffer);
                     
                     HWND hInput2 = GetDlgItem(hwnd, 201);
                     int textLength1 = GetWindowTextLength(hInput2);
                     char* buffer1 = new char[textLength1 + 1];
                     GetWindowText(hInput2, buffer1, textLength1 + 1);
                     int bufferNumero = std::stoi(buffer1);
-                    printf("Texto del control de entrada (converted to int): %d\n", bufferNumero);
                     
                     HWND hInput3 = GetDlgItem(hwnd, 301);
                     int textLength2 = GetWindowTextLength(hInput3);
@@ -511,7 +508,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                     GetWindowText(hInput3, buffer2, textLength2 + 1);
                     buffer2[textLength2] = '\0';  // Ensure the buffer is null-terminated
                     int bufferNumero1 = std::stoi(buffer2);
-                    printf("Texto del control de entrada (converted to int): %d\n", bufferNumero1);
                     
         
                     //PROBLEMA SOLUCIONADO
@@ -535,18 +531,493 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 
                     
             }else if(LOWORD(wParam) == 13){
-                cout<<"Hola";
+                    //IDEA depronto meter otra forma para seleccionar el servicio
+                    
+                    HWND hwndLabel = CreateWindow(
+                    "STATIC", 
+                    "Ingrese los siguientes datos:", 
+                    WS_VISIBLE | WS_CHILD, 
+                    0, 240, 200, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
+                    
+                    
+                    HWND hwndLabel2 = CreateWindow(
+                        "STATIC", 
+                        "Nombre del servicio:", 
+                        WS_VISIBLE | WS_CHILD, 
+                        0, 280, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);
 
-            }else if(LOWORD(wParam) == 14){
-                cout<<"xd";
+                    HWND hInput = CreateWindowEx(
+                        0,
+                        "EDIT",
+                        "",
+                        WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL | WS_TABSTOP,
+                        10, 320, 200, 20,
+                        hwnd,
+                        (HMENU)101,
+                        NULL, NULL);
+                    
+                    
+                    HWND hButton = CreateWindowEx(
+                        0,
+                        "BUTTON",
+                        "Consultar",
+                        WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+                        10, 360, 200, 25,
+                        hwnd,
+                        (HMENU)103,
+                        NULL, NULL);
+
+            }else if (LOWORD(wParam) == 103 && HIWORD(wParam) == BN_CLICKED){
+                int contador = 0;
+                HWND hInput = GetDlgItem(hwnd, 101);
+                int textLength = GetWindowTextLength(hInput);
+                char* buffer = new char[textLength + 1];
+                GetWindowText(hInput, buffer, textLength + 1);
+
+                list<Servicios * > * serviciosUtilizados = new list<Servicios *>();
+                list<Estadia *> * resultado = new list<Estadia *>();
+                resultado = nuevoHotel->obtenerListaEstadia();
+                list<Estadia *>::iterator it = resultado->begin();
+
+                Estadia * e;
+                Servicios * a;
+                for (; it != resultado->end(); it++) {
+                    e = *it;
+                    serviciosUtilizados = e->GetListaServicios();
+                    list<Servicios *>::iterator itServicios = serviciosUtilizados->begin();
+                    for (; itServicios != serviciosUtilizados->end(); itServicios++) {
+                        a = *itServicios;
+                        if (a->getNombreServicio() == buffer) {
+                            contador++;
+                        }
+                    }
+                }
+                
+                string contadorCadena = to_string(contador);
+                const char* nombreCStr2 = contadorCadena.c_str();
+
+                HWND hwndLabel = CreateWindow(
+                    "STATIC", 
+                    "El numero de estadias utilizando el servicio es:", 
+                    WS_VISIBLE | WS_CHILD, 
+                    0, 400, 500, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
+                HWND hwndLabel2 = CreateWindow(
+                    "STATIC", 
+                    nombreCStr2, 
+                    WS_VISIBLE | WS_CHILD, 
+                    320, 400, 10, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
+            }
+            
+            else if(LOWORD(wParam) == 14){
+                int Wifi = 0,Aseo = 0,Piscina = 0, Cable = 0, Refrigerador = 0;
+
+                list<Servicios * > * serviciosUtilizados = new list<Servicios *>();
+                list<Estadia *> * resultado = new list<Estadia *>();
+                resultado = nuevoHotel->obtenerListaEstadia();
+                list<Estadia *>::iterator it = resultado->begin();
+
+                Estadia * e;
+                Servicios * a;
+                for(; it != resultado->end();it++){
+                    e = *it;
+                    serviciosUtilizados = e->GetListaServicios();
+                    list<Servicios *>::iterator itServicios = serviciosUtilizados->begin();                     
+                    for(; itServicios != serviciosUtilizados->end(); itServicios++){
+                        a = *itServicios;
+                        string nombreServicio = a->getNombreServicio();
+                        if (nombreServicio == "Wifi") {
+                            Wifi++;
+                        } else if (nombreServicio == "Aseo") {
+                            Aseo++;
+                        } else if (nombreServicio == "Piscina") {
+                            Piscina++;
+                        } else if (nombreServicio == "Cable") {
+                            Cable++;
+                        } else if (nombreServicio == "Refrigerador") {
+                            Refrigerador++;
+                        }
+                    }
+                }
+
+                string contadorCadena1 = to_string(Wifi);
+                const char* nombreCStr3 = contadorCadena1.c_str();
+
+                HWND hwndLabel = CreateWindow(
+                    "STATIC", 
+                    "El numero de estadias utilizando el servicio wifi es:", 
+                    WS_VISIBLE | WS_CHILD, 
+                    0, 240, 500, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
+                HWND hwndLabel2 = CreateWindow(
+                    "STATIC", 
+                    nombreCStr3, 
+                    WS_VISIBLE | WS_CHILD, 
+                    420, 240, 10, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
+                
+                
+                string contadorCadena2 = to_string(Aseo);
+                const char* nombreCStr4 = contadorCadena2.c_str();
+
+                HWND hwndLabel3 = CreateWindow(
+                    "STATIC", 
+                    "El numero de estadias utilizando el servicio aseo es:", 
+                    WS_VISIBLE | WS_CHILD, 
+                    0, 280, 500, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
+                HWND hwndLabel4 = CreateWindow(
+                    "STATIC", 
+                    nombreCStr4, 
+                    WS_VISIBLE | WS_CHILD, 
+                    420, 280, 10, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
+                
+                
+                string contadorCadena3 = to_string(Piscina);
+                const char* nombreCStr5 = contadorCadena3.c_str();
+
+                HWND hwndLabel5 = CreateWindow(
+                    "STATIC", 
+                    "El numero de estadias utilizando el servicio piscina es:", 
+                    WS_VISIBLE | WS_CHILD, 
+                    0, 320, 500, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
+                HWND hwndLabel6 = CreateWindow(
+                    "STATIC", 
+                    nombreCStr5, 
+                    WS_VISIBLE | WS_CHILD, 
+                    420, 320, 10, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
+                
+                
+                string contadorCadena4 = to_string(Cable);
+                const char* nombreCStr6 = contadorCadena4.c_str();
+
+                HWND hwndLabel7 = CreateWindow(
+                    "STATIC", 
+                    "El numero de estadias utilizando el servicio cable es:", 
+                    WS_VISIBLE | WS_CHILD, 
+                    0, 360, 500, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
+                HWND hwndLabel8 = CreateWindow(
+                    "STATIC", 
+                    nombreCStr6, 
+                    WS_VISIBLE | WS_CHILD, 
+                    420, 360, 10, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
+                
+                
+                string contadorCadena5 = to_string(Refrigerador);
+                const char* nombreCStr7 = contadorCadena5.c_str();
+
+                HWND hwndLabel9 = CreateWindow(
+                    "STATIC", 
+                    "El numero de estadias utilizando el servicio refrigerador es:", 
+                    WS_VISIBLE | WS_CHILD, 
+                    0, 400, 500, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
+                HWND hwndLabel0 = CreateWindow(
+                    "STATIC", 
+                    nombreCStr7, 
+                    WS_VISIBLE | WS_CHILD, 
+                    420, 400, 10, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
+                
+                
+                
             }else if(LOWORD(wParam) == 15){
+                  HWND hwndLabel = CreateWindow(
+                    "STATIC", 
+                    "Ingrese los siguientes datos:", 
+                    WS_VISIBLE | WS_CHILD, 
+                    0, 240, 200, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
+                    
+                    
+                    HWND hwndLabel2 = CreateWindow(
+                        "STATIC", 
+                        "Numero de la estadia:", 
+                        WS_VISIBLE | WS_CHILD, 
+                        0, 280, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);
 
+                    HWND hInput = CreateWindowEx(
+                        0,
+                        "EDIT",
+                        "",
+                        WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL | WS_TABSTOP,
+                        10, 320, 200, 20,
+                        hwnd,
+                        (HMENU)101,
+                        NULL, NULL);
+                    
+                    
+                    HWND hButton = CreateWindowEx(
+                        0,
+                        "BUTTON",
+                        "Consultar",
+                        WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+                        10, 360, 200, 25,
+                        hwnd,
+                        (HMENU)104,
+                        NULL, NULL);
+
+            }else if (LOWORD(wParam) == 104 && HIWORD(wParam) == BN_CLICKED){
+                int contador = 0;
+                int yPosition = 400;
+                HWND hInput = GetDlgItem(hwnd, 101);
+                int textLength = GetWindowTextLength(hInput);
+                char* buffer = new char[textLength + 1];
+                GetWindowText(hInput, buffer, textLength + 1);
+
+                list<Servicios *> * resultado = new list<Servicios *>();
+                resultado = nuevoHotel->BuscarEstadia(buffer)->GetListaServicios();
+                list<Servicios *>::iterator it =  resultado->begin();
+
+                Servicios * e = NULL;
+
+                for(;it != resultado->end();it++){
+                    e = *it;
+                    string servicio = e->getNombreServicio();
+                    const char* nombreServicio = servicio.c_str();
+
+                    int precio = e->getPrecio();
+                    string precioCadena = to_string(precio);
+                    const char* precioTexto = precioCadena.c_str();
+                    
+                    HWND hwndLabel = CreateWindow(
+                        "STATIC", 
+                        nombreServicio, 
+                        WS_VISIBLE | WS_CHILD, 
+                        0, yPosition, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);
+                    
+                    HWND hwndLabel2 = CreateWindow(
+                        "STATIC", 
+                        precioTexto, 
+                        WS_VISIBLE | WS_CHILD, 
+                        280, yPosition, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);  
+                    
+                    yPosition += 40;
+                }
+                
 
             }else if(LOWORD(wParam) == 16){
+               HWND hwndLabel = CreateWindow(
+                    "STATIC", 
+                    "Ingrese los siguientes datos:", 
+                    WS_VISIBLE | WS_CHILD, 
+                    0, 240, 200, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
+                    
+                    
+                    HWND hwndLabel2 = CreateWindow(
+                        "STATIC", 
+                        "Numero de la estadia:", 
+                        WS_VISIBLE | WS_CHILD, 
+                        0, 280, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);
 
+                    HWND hInput = CreateWindowEx(
+                        0,
+                        "EDIT",
+                        "",
+                        WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL | WS_TABSTOP,
+                        10, 320, 200, 20,
+                        hwnd,
+                        (HMENU)101,
+                        NULL, NULL);
+                    
+                    
+                    HWND hButton = CreateWindowEx(
+                        0,
+                        "BUTTON",
+                        "Consultar",
+                        WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+                        10, 360, 200, 25,
+                        hwnd,
+                        (HMENU)105,
+                        NULL, NULL);
 
+            }else if (LOWORD(wParam) == 105 && HIWORD(wParam) == BN_CLICKED){
+                HWND hInput = GetDlgItem(hwnd, 101);
+                int textLength = GetWindowTextLength(hInput);
+                char* buffer3 = new char[textLength + 1];
+                GetWindowText(hInput, buffer3, textLength + 1);
+
+                int servicio = nuevoHotel->BuscarEstadia(buffer3)->costoTotalServicios();
+                string servicio_string = to_string(servicio);
+                const char* nombreServicio = servicio_string.c_str();
+
+                HWND hwndLabel = CreateWindow(
+                    "STATIC", 
+                    "Costo total:", 
+                    WS_VISIBLE | WS_CHILD, 
+                    0, 420, 200, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);  
+                HWND hwndLabel2 = CreateWindow(
+                    "STATIC", 
+                    nombreServicio, 
+                    WS_VISIBLE | WS_CHILD, 
+                    100, 420, 200, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);  
+
+                
             }else if(LOWORD(wParam) == 17){
+                    HWND hwndLabel = CreateWindow(
+                        "STATIC", 
+                        "Ingrese los siguientes datos:", 
+                        WS_VISIBLE | WS_CHILD, 
+                        0, 240, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);
+                    
+                    
+                    HWND hwndLabel2 = CreateWindow(
+                        "STATIC", 
+                        "Numero de la estadia:", 
+                        WS_VISIBLE | WS_CHILD, 
+                        0, 280, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);
 
+                    HWND hInput = CreateWindowEx(
+                        0,
+                        "EDIT",
+                        "",
+                        WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL | WS_TABSTOP,
+                        10, 320, 200, 20,
+                        hwnd,
+                        (HMENU)101,
+                        NULL, NULL);
+                    
+                    
+                    HWND hButton = CreateWindowEx(
+                        0,
+                        "BUTTON",
+                        "Consultar",
+                        WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+                        10, 360, 200, 25,
+                        hwnd,
+                        (HMENU)106,
+                        NULL, NULL);
+
+            }else if(LOWORD(wParam) == 106 && HIWORD(wParam) == BN_CLICKED){
+                    HWND hInput = GetDlgItem(hwnd, 101);
+                    int textLength = GetWindowTextLength(hInput);
+                    char* buffer4 = new char[textLength + 1];
+                    GetWindowText(hInput, buffer4, textLength + 1);
+
+                    HWND hwndLabel = CreateWindow(
+                        "STATIC", 
+                        "Nombre: ", 
+                        WS_VISIBLE | WS_CHILD, 
+                        0, 400, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);
+                    
+                    string nombreInfo = nuevoHotel->BuscarEstadia(buffer4)->GetNuevoHuesped()->GetNuevaPersona()->GetNombre();
+                    const char* nombreUtil = nombreInfo.c_str();
+                    HWND hwndLabel1 = CreateWindow(
+                        "STATIC", 
+                        nombreUtil, 
+                        WS_VISIBLE | WS_CHILD, 
+                        120, 400, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);
+                    HWND hwndLabel2 = CreateWindow(
+                        "STATIC", 
+                        "Edad:", 
+                        WS_VISIBLE | WS_CHILD, 
+                        0, 440, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);
+                    
+                    int edadInfo = nuevoHotel->BuscarEstadia(buffer4)->GetNuevoHuesped()->GetNuevaPersona()->GetEdad();
+                    string edadCadena = to_string(edadInfo);
+                    const char* edadUtil = edadCadena.c_str();
+                    HWND hwndLabel3 = CreateWindow(
+                        "STATIC", 
+                        edadUtil, 
+                        WS_VISIBLE | WS_CHILD, 
+                        120, 440, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);
+
+                    HWND hwndLabel4 = CreateWindow(
+                        "STATIC", 
+                        "Coste Servicio:", 
+                        WS_VISIBLE | WS_CHILD, 
+                        0, 480, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);
+                    int costeInfo = nuevoHotel->BuscarEstadia(buffer4)->costoTotalServicios();
+                    string costeCadena = to_string(costeInfo);
+                    const char* costeUtil = costeCadena.c_str();
+                    HWND hwndLabel5 = CreateWindow(
+                        "STATIC", 
+                        costeUtil, 
+                        WS_VISIBLE | WS_CHILD, 
+                        120, 480, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);
+                    HWND hwndLabel6 = CreateWindow(
+                        "STATIC", 
+                        "Servicios utilizados:", 
+                        WS_VISIBLE | WS_CHILD, 
+                        0, 520, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);
+
+                    int yPosition = 560;
+                    list<Servicios *> * resultado = new list<Servicios *>();
+                    resultado = nuevoHotel->BuscarEstadia(buffer4)->GetListaServicios();
+                    list<Servicios *>::iterator it =  resultado->begin();
+                    
+                    Servicios * e = NULL;
+
+                    for(;it != resultado->end();it++){
+                        e = *it;
+                        string nombreServicio = e->getNombreServicio();
+                        const char* servicioUtilizado = nombreServicio.c_str();
+
+                        HWND hwndLabel = CreateWindow(
+                        "STATIC", 
+                        servicioUtilizado, 
+                        WS_VISIBLE | WS_CHILD, 
+                        0, yPosition, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);
+                        
+                        yPosition += 40;
+                    }
 
             }else if(LOWORD(wParam) == 18){
                 list<HWND *>::iterator it = botonesServicios->begin();
@@ -607,9 +1078,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 
                 
             }
-                
-              
-                
+                     
 
         }
 
