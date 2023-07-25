@@ -141,25 +141,11 @@ list<Empleado *> * Hotel::ObtenerEmpleadosArea(string area){
 
 
 list<Empleado *> * Hotel::obtenerListaEmpleado(){
-    list<Empleado *> * resultados = new list<Empleado*>();
-    list<Empleado *>::iterator it = this->listaEmpleados->begin();
-    Empleado * e;
-    for(; it != this->listaEmpleados->end();it++){
-        e = *it;
-        resultados->push_back(e);
-    }
-    return resultados;
+    return this->listaEmpleados;
 }
 
 list<Estadia *> * Hotel::obtenerListaEstadia(){
-    list<Estadia *> * resultados = new list<Estadia*>();
-    list<Estadia *>::iterator it = this->listaEstadias->begin();
-    Estadia * e;
-    for(; it != this->listaEstadias->end();it++){
-        e = *it;
-        resultados->push_back(e);
-    }
-    return resultados;
+    return this->listaEstadias;
 }
 
 
