@@ -101,6 +101,7 @@ list<HWND*> * botonesHuesped= new list<HWND*>();
 
 list<list<HWND*>*> * listaBotones = new list<list<HWND*>*>();
 
+ std::list<HWND>  ventanasCreadas;
 
 HWND hwndLabel;
 HWND hwndLabel1;
@@ -427,26 +428,37 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 list<Servicios *> * resultado = new list<Servicios *>();
                 resultado = nuevoHotel->ObtenerListaServiciosHotel();
                 list<Servicios *>::iterator it = resultado->begin();
-
+                
                 Servicios * e;
                 for(; it != resultado->end();it++){
                     e = *it;
                     string nombre = e->getNombreServicio();
                     const char* nombreCStr = nombre.c_str();
-                     hwndLabel2 = CreateWindow(
+                    hwndLabel2 = CreateWindow(
                         "STATIC", 
                         nombreCStr, 
                         WS_VISIBLE | WS_CHILD, 
                         0, yPosicion, 200, 30, 
-                        hwnd,
-                        NULL, NULL, NULL);
+                        hwnd,NULL, NULL, NULL);
                     
+                    ventanasCreadas.push_back(hwndLabel2);
                     yPosicion += 50;
+                    cout<<nombreCStr;
+                }
+                
 
+                
+
+
+                // Clear the vector after destroying the labels
+                
+            }else if(LOWORD(wParam) == 12){
+                for (auto itEliminar = ventanasCreadas.begin(); itEliminar != ventanasCreadas.end(); ++itEliminar) {
+                    DestroyWindow(*itEliminar);
                 }
 
-            }else if(LOWORD(wParam) == 12){
-                
+                // Clear the list after destroying the labels
+                ventanasCreadas.clear();
                 list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
 
                 HWND * eliminar;
