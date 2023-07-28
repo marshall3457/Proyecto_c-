@@ -101,7 +101,6 @@ list<HWND*> * botonesHuesped= new list<HWND*>();
 
 list<list<HWND*>*> * listaBotones = new list<list<HWND*>*>();
 
- std::list<HWND>  ventanasCreadas;
 
 HWND hwndLabel;
 HWND hwndLabel1;
@@ -128,10 +127,13 @@ HWND hInput9;
 HWND hInput10;
 
 list<HWND *> * listaDeLabel_Input = new list<HWND *>();
+list<HWND *> * ListaDeBotonesfor = new list<HWND *>();
 //-------------------------
 const int ID_BUTTON = 1001;
 const int ID_INPUT = 1002;
 const int WM_CUSTOM_BUTTON_CLICK = WM_USER + 1;
+
+void limpiarPantalla();
 
 int c = 0;
 list <Servicios*> * nuevosServicios = new list<Servicios*>();
@@ -428,45 +430,34 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 list<Servicios *> * resultado = new list<Servicios *>();
                 resultado = nuevoHotel->ObtenerListaServiciosHotel();
                 list<Servicios *>::iterator it = resultado->begin();
-                
+
                 Servicios * e;
                 for(; it != resultado->end();it++){
                     e = *it;
                     string nombre = e->getNombreServicio();
                     const char* nombreCStr = nombre.c_str();
-                    hwndLabel2 = CreateWindow(
+                    HWND *hwndLabelFor = new HWND;
+
+                    *hwndLabelFor = CreateWindow(
                         "STATIC", 
                         nombreCStr, 
                         WS_VISIBLE | WS_CHILD, 
                         0, yPosicion, 200, 30, 
                         hwnd,NULL, NULL, NULL);
                     
-                    ventanasCreadas.push_back(hwndLabel2);
-                    yPosicion += 50;
-                    cout<<nombreCStr;
-                }
-                
+                ListaDeBotonesfor->push_back(hwndLabelFor);
+                yPosicion += 50;
+            }
+
 
                 
+
 
 
                 // Clear the vector after destroying the labels
                 
             }else if(LOWORD(wParam) == 12){
-                for (auto itEliminar = ventanasCreadas.begin(); itEliminar != ventanasCreadas.end(); ++itEliminar) {
-                    DestroyWindow(*itEliminar);
-                }
-
-                // Clear the list after destroying the labels
-                ventanasCreadas.clear();
-                list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
-
-                HWND * eliminar;
-                for(; ititEliminadorLabel != listaDeLabel_Input->end();ititEliminadorLabel++){
-                    eliminar = *ititEliminadorLabel;
-                    DestroyWindow(*eliminar);
-                }     
-                
+                limpiarPantalla();
                 
                 
                 
@@ -597,14 +588,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 
                     
             }else if(LOWORD(wParam) == 13){
-                    //IDEA depronto meter otra forma para seleccionar el servicio
-                list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
-
-                HWND * eliminar;
-                for(; ititEliminadorLabel != listaDeLabel_Input->end();ititEliminadorLabel++){
-                    eliminar = *ititEliminadorLabel;
-                    DestroyWindow(*eliminar);
-                }     
+                    limpiarPantalla();
+ 
                 
                      hwndLabel = CreateWindow(
                     "STATIC", 
@@ -690,13 +675,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             }
             
             else if(LOWORD(wParam) == 14){
-                list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
-
-                HWND * eliminar;
-                for(; ititEliminadorLabel != listaDeLabel_Input->end();ititEliminadorLabel++){
-                    eliminar = *ititEliminadorLabel;
-                    DestroyWindow(*eliminar);
-                }     
+                limpiarPantalla();
+  
                 
                 int Wifi = 0,Aseo = 0,Piscina = 0, Cable = 0, Refrigerador = 0;
 
@@ -825,13 +805,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 
                 
             }else if(LOWORD(wParam) == 15){
-                list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
+                limpiarPantalla();
 
-                HWND * eliminar;
-                for(; ititEliminadorLabel != listaDeLabel_Input->end();ititEliminadorLabel++){
-                    eliminar = *ititEliminadorLabel;
-                    DestroyWindow(*eliminar);
-                }     
                 
                 hwndLabel = CreateWindow(
                     "STATIC", 
@@ -915,13 +890,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 
 
             }else if(LOWORD(wParam) == 16){
-                list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
+                limpiarPantalla();
 
-                HWND * eliminar;
-                for(; ititEliminadorLabel != listaDeLabel_Input->end();ititEliminadorLabel++){
-                    eliminar = *ititEliminadorLabel;
-                    DestroyWindow(*eliminar);
-                }     
                 
                 
                 hwndLabel = CreateWindow(
@@ -972,14 +942,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 string servicio_string = to_string(servicio);
                 const char* nombreServicio = servicio_string.c_str();
 
-                 hwndLabel = CreateWindow(
+                 hwndLabel3 = CreateWindow(
                     "STATIC", 
                     "Costo total:", 
                     WS_VISIBLE | WS_CHILD, 
                     0, 420, 200, 30, 
                     hwnd,
                     NULL, NULL, NULL);  
-                 hwndLabel2 = CreateWindow(
+                 hwndLabel4 = CreateWindow(
                     "STATIC", 
                     nombreServicio, 
                     WS_VISIBLE | WS_CHILD, 
@@ -989,13 +959,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
                 
             }else if(LOWORD(wParam) == 17){
-                list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
-
-                HWND * eliminar;
-                for(; ititEliminadorLabel != listaDeLabel_Input->end();ititEliminadorLabel++){
-                    eliminar = *ititEliminadorLabel;
-                    DestroyWindow(*eliminar);
-                }                      
+                limpiarPantalla();
+             
                 
                 hwndLabel = CreateWindow(
                         "STATIC", 
@@ -1041,7 +1006,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                     char* buffer4 = new char[textLength + 1];
                     GetWindowText(hInput, buffer4, textLength + 1);
 
-                     hwndLabel = CreateWindow(
+                     hwndLabel3 = CreateWindow(
                         "STATIC", 
                         "Nombre: ", 
                         WS_VISIBLE | WS_CHILD, 
@@ -1051,14 +1016,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                     
                     string nombreInfo = nuevoHotel->BuscarEstadia(buffer4)->GetNuevoHuesped()->GetNuevaPersona()->GetNombre();
                     const char* nombreUtil = nombreInfo.c_str();
-                     hwndLabel1 = CreateWindow(
+                     hwndLabel4 = CreateWindow(
                         "STATIC", 
                         nombreUtil, 
                         WS_VISIBLE | WS_CHILD, 
                         120, 400, 200, 30, 
                         hwnd,
                         NULL, NULL, NULL);
-                     hwndLabel2 = CreateWindow(
+                     hwndLabel5 = CreateWindow(
                         "STATIC", 
                         "Edad:", 
                         WS_VISIBLE | WS_CHILD, 
@@ -1069,7 +1034,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                     int edadInfo = nuevoHotel->BuscarEstadia(buffer4)->GetNuevoHuesped()->GetNuevaPersona()->GetEdad();
                     string edadCadena = to_string(edadInfo);
                     const char* edadUtil = edadCadena.c_str();
-                     hwndLabel3 = CreateWindow(
+                     hwndLabel6 = CreateWindow(
                         "STATIC", 
                         edadUtil, 
                         WS_VISIBLE | WS_CHILD, 
@@ -1077,7 +1042,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                         hwnd,
                         NULL, NULL, NULL);
 
-                     hwndLabel4 = CreateWindow(
+                     hwndLabel7 = CreateWindow(
                         "STATIC", 
                         "Coste Servicio:", 
                         WS_VISIBLE | WS_CHILD, 
@@ -1087,14 +1052,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                     int costeInfo = nuevoHotel->BuscarEstadia(buffer4)->costoTotalServicios();
                     string costeCadena = to_string(costeInfo);
                     const char* costeUtil = costeCadena.c_str();
-                     hwndLabel5 = CreateWindow(
+                     hwndLabel8 = CreateWindow(
                         "STATIC", 
                         costeUtil, 
                         WS_VISIBLE | WS_CHILD, 
                         120, 480, 200, 30, 
                         hwnd,
                         NULL, NULL, NULL);
-                     hwndLabel6 = CreateWindow(
+                     hwndLabel9 = CreateWindow(
                         "STATIC", 
                         "Servicios utilizados:", 
                         WS_VISIBLE | WS_CHILD, 
@@ -1113,8 +1078,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                         e = *it;
                         string nombreServicio = e->getNombreServicio();
                         const char* servicioUtilizado = nombreServicio.c_str();
-
-                         hwndLabel = CreateWindow(
+                        
+                        HWND * hwndLabelfor2 = new HWND;
+                        
+                        *hwndLabelfor2 = CreateWindow(
                         "STATIC", 
                         servicioUtilizado, 
                         WS_VISIBLE | WS_CHILD, 
@@ -1122,18 +1089,13 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                         hwnd,
                         NULL, NULL, NULL);
                         
+                        ListaDeBotonesfor->push_back(hwndLabelfor2);
                         yPosition += 40;
                     }
 
             }else if(LOWORD(wParam) == 18){
-//----------     //DESTRUCTOR DE TODOS LOS BOTONES;
-                list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
-
-                HWND * eliminar;
-                for(; ititEliminadorLabel != listaDeLabel_Input->end();ititEliminadorLabel++){
-                    eliminar = *ititEliminadorLabel;
-                    DestroyWindow(*eliminar);
-                }                
+                limpiarPantalla();
+          
                 
                 list<list<HWND*>*>::iterator it = listaBotones->begin();
                 
@@ -1313,13 +1275,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
              //siempre que se oprime un boton se repite el WM_COMMAND;
             if(LOWORD(wParam) == 21){
-                list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
-
-                HWND * eliminar;
-                for(; ititEliminadorLabel != listaDeLabel_Input->end();ititEliminadorLabel++){
-                    eliminar = *ititEliminadorLabel;
-                    DestroyWindow(*eliminar);
-                }                  
+                limpiarPantalla();
+               
                 
                   hwndLabel = CreateWindow(
                     "STATIC", 
@@ -1335,7 +1292,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                         "STATIC", 
                         "DNI del empleado", 
                         WS_VISIBLE | WS_CHILD, 
-                        500, 380, 200, 30, 
+                        0, 380, 200, 30, 
                         hwnd,
                         NULL, NULL, NULL);
 
@@ -1344,7 +1301,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                         "EDIT",
                         "",
                         WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL | WS_TABSTOP,
-                        500, 420, 200, 20,
+                        10, 420, 200, 20,
                         hwnd,
                         (HMENU)101,
                         NULL, NULL);
@@ -1355,7 +1312,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                         "BUTTON",
                         "Consultar",
                         WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-                        500, 460, 200, 25,
+                        10, 460, 200, 25,
                         hwnd,
                         (HMENU)201,
                         NULL, NULL);
@@ -1368,30 +1325,24 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 string nombre = nuevoHotel->BuscarEmpleado(bufferEmpleado1)->GetNuevaPersona()->GetNombre();
                 const char *nombreUtil = nombre.c_str();
                 
-                 hwndLabel = CreateWindow(
+                 hwndLabel3 = CreateWindow(
                     "STATIC", 
                     "Nombre del empleado: ", 
                     WS_VISIBLE | WS_CHILD, 
                     0, 500, 200, 30, 
                     hwnd,
                     NULL, NULL, NULL);
-                 hwndLabel2 = CreateWindow(
+                 hwndLabel4 = CreateWindow(
                     "STATIC", 
                     nombreUtil, 
                     WS_VISIBLE | WS_CHILD, 
-                    300, 500, 200, 30, 
+                    150, 500, 200, 30, 
                     hwnd,
                     NULL, NULL, NULL);
       
             }else if(LOWORD(wParam) == 22){
-                
-                list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
-
-                HWND * eliminar;
-                for(; ititEliminadorLabel != listaDeLabel_Input->end();ititEliminadorLabel++){
-                    eliminar = *ititEliminadorLabel;
-                    DestroyWindow(*eliminar);
-                }     
+                limpiarPantalla();
+ 
                 
                 hwndLabel = CreateWindow(
                     "STATIC", 
@@ -1509,7 +1460,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 hButton = CreateWindowEx(
                     0,
                     "BUTTON",
-                    "Consultar",
+                    "Agregar empleado",
                     WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
                     10, 860, 200, 25,
                     hwnd,
@@ -1564,90 +1515,53 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
                 Empleado * nuevoEmpleado = new Empleado(nuevaPersonaEmpleado,bufferEmpleadoCrear4 ,bufferEmpleadoCrear6_Num );
                 nuevosEmpleados->push_back(nuevoEmpleado);
-
+                
+                hwndLabel7 = CreateWindow(
+                   "STATIC", 
+                   "Empleado agregado", 
+                   WS_VISIBLE | WS_CHILD, 
+                   0, 900, 200, 30, 
+                   hwnd,
+                   NULL, NULL, NULL);
+                
+                
             
             }else if(LOWORD(wParam) == 23){
-                list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
-
-                HWND * eliminar;
-                for(; ititEliminadorLabel != listaDeLabel_Input->end();ititEliminadorLabel++){
-                    eliminar = *ititEliminadorLabel;
-                    DestroyWindow(*eliminar);
-                }     
+                limpiarPantalla();
+                
            
             }else if(LOWORD(wParam) == 24){
-                list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
+                limpiarPantalla();
 
-                HWND * eliminar;
-                for(; ititEliminadorLabel != listaDeLabel_Input->end();ititEliminadorLabel++){
-                    eliminar = *ititEliminadorLabel;
-                    DestroyWindow(*eliminar);
-                }     
-            
             }else if(LOWORD(wParam) == 25){
-                list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
-
-                HWND * eliminar;
-                for(; ititEliminadorLabel != listaDeLabel_Input->end();ititEliminadorLabel++){
-                    eliminar = *ititEliminadorLabel;
-                    DestroyWindow(*eliminar);
-                }     
+                limpiarPantalla();
+   
             
             }else if(LOWORD(wParam) == 26){
-                list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
-
-                HWND * eliminar;
-                for(; ititEliminadorLabel != listaDeLabel_Input->end();ititEliminadorLabel++){
-                    eliminar = *ititEliminadorLabel;
-                    DestroyWindow(*eliminar);
-                }     
+                limpiarPantalla();
+    
             
             }else if(LOWORD(wParam) == 27){
-                list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
-
-                HWND * eliminar;
-                for(; ititEliminadorLabel != listaDeLabel_Input->end();ititEliminadorLabel++){
-                    eliminar = *ititEliminadorLabel;
-                    DestroyWindow(*eliminar);
-                }     
+                limpiarPantalla();
+   
             
             }else if(LOWORD(wParam) == 28){
-                list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
-
-                HWND * eliminar;
-                for(; ititEliminadorLabel != listaDeLabel_Input->end();ititEliminadorLabel++){
-                    eliminar = *ititEliminadorLabel;
-                    DestroyWindow(*eliminar);
-                }     
+                limpiarPantalla();
+  
             
             }else if(LOWORD(wParam) == 29){
-                list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
-
-                HWND * eliminar;
-                for(; ititEliminadorLabel != listaDeLabel_Input->end();ititEliminadorLabel++){
-                    eliminar = *ititEliminadorLabel;
-                    DestroyWindow(*eliminar);
-                }     
+                limpiarPantalla();
+    
             
             }else if(LOWORD(wParam) == 291){
-                list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
-
-                HWND * eliminar;
-                for(; ititEliminadorLabel != listaDeLabel_Input->end();ititEliminadorLabel++){
-                    eliminar = *ititEliminadorLabel;
-                    DestroyWindow(*eliminar);
-                }     
+                limpiarPantalla();
+   
             
             }else if(LOWORD(wParam) == 292){
 //----------     //DESTRUCTOR DE TODOS LOS BOTONES;
                 
-                list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
-
-                HWND * eliminar;
-                for(; ititEliminadorLabel != listaDeLabel_Input->end();ititEliminadorLabel++){
-                    eliminar = *ititEliminadorLabel;
-                    DestroyWindow(*eliminar);
-                }     
+                limpiarPantalla();
+ 
                 list<list<HWND*>*>::iterator it = listaBotones->begin();
                 
                 list<HWND*> * e = NULL;
@@ -2102,3 +2016,20 @@ LRESULT CALLBACK ButtonWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
 }
 
 
+void limpiarPantalla(){
+            for (std::list<HWND *>::iterator itEliminar = ListaDeBotonesfor->begin(); itEliminar != ListaDeBotonesfor->end(); ++itEliminar) {
+                DestroyWindow(**itEliminar);
+            }
+
+            ListaDeBotonesfor->clear();
+
+            // Clear the list after destroying the labels
+            list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
+
+            HWND * eliminar;
+            for(; ititEliminadorLabel != listaDeLabel_Input->end();ititEliminadorLabel++){
+                eliminar = *ititEliminadorLabel;
+                DestroyWindow(*eliminar);
+            }     
+                
+}
