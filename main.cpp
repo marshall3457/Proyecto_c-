@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <algorithm>
 #include <random>
 #include <list>
 #include <windows.h>
@@ -114,6 +115,11 @@ HWND hwndLabel8;
 HWND hwndLabel9;
 HWND hwndLabel10;
 HWND hButton;
+HWND hButton1;
+HWND hButton2;
+HWND hButton3;
+HWND hButton4;
+HWND hButton5;
 HWND hInput;
 HWND hInput1;
 HWND hInput2;
@@ -134,17 +140,28 @@ const int ID_INPUT = 1002;
 const int WM_CUSTOM_BUTTON_CLICK = WM_USER + 1;
 
 void limpiarPantalla();
+void areaEmpleado(string);
 
-int c = 0;
+struct ModificacionEmpleado {
+    string DNI;
+    string campo;
+    string modificacion;
+};
+
+ModificacionEmpleado modificaEmpleado;
+
 list <Servicios*> * nuevosServicios = new list<Servicios*>();
 list <Empleado*> * nuevosEmpleados = new list<Empleado*>();
+string eliminarEmpleado;
+string modificarEmpleado;
 LRESULT CALLBACK ButtonWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 // Función de manejo de mensajes    
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
     //int c = 0;  aca no recibe el valor nuevo afuera si;
-
+    static int xPos = 0; // Variable para almacenar la posición horizontal
+    static int yPos = 0; // Variable para almacenar la posición vertical
 
     
     Hotel * nuevoHotel = new Hotel("Carmelo");
@@ -178,6 +195,28 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     nuevoHotel->adiccionarServicios(servicioEstadias4);
     nuevoHotel->adiccionarServicios(servicioEstadias5);
     
+    nuevoHotel->EliminarEmpleado(eliminarEmpleado);
+    
+    if(modificaEmpleado.campo == "Nombre"){
+        nuevoHotel->BuscarEmpleado(modificaEmpleado.DNI)->GetNuevaPersona()->SetNombre(modificaEmpleado.modificacion);
+    }else if(modificaEmpleado.campo == "Edad"){
+        int numeroModificada = stoi(modificaEmpleado.modificacion);
+        nuevoHotel->BuscarEmpleado(modificaEmpleado.DNI)->GetNuevaPersona()->SetEdad(numeroModificada);
+        
+    }else if(modificaEmpleado.campo == "Genero"){
+        nuevoHotel->BuscarEmpleado(modificaEmpleado.DNI)->GetNuevaPersona()->SetGenero(modificaEmpleado.modificacion);
+        
+    }else if(modificaEmpleado.campo == "DNI"){
+        nuevoHotel->BuscarEmpleado(modificaEmpleado.DNI)->GetNuevaPersona()->SetDNI(modificaEmpleado.modificacion);
+        
+    }else if(modificaEmpleado.campo == "Sueldo"){
+        int numeroModificada = stoi(modificaEmpleado.modificacion);
+        nuevoHotel->BuscarEmpleado(modificaEmpleado.DNI)->SetSueldo(numeroModificada);
+        
+    }else if(modificaEmpleado.campo == "Cargo"){
+        nuevoHotel->BuscarEmpleado(modificaEmpleado.DNI)->SetCargo(modificaEmpleado.modificacion);
+        
+    }
     
     list<Servicios*>::iterator iteratorNuevo = nuevosServicios->begin();
     
@@ -1528,27 +1567,426 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             
             }else if(LOWORD(wParam) == 23){
                 limpiarPantalla();
+                    hwndLabel = CreateWindow(
+                    "STATIC", 
+                    "Ingrese los siguientes datos:", 
+                    WS_VISIBLE | WS_CHILD, 
+                    0, 340, 200, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
+
+
+
+                    hwndLabel2 = CreateWindow(
+                       "STATIC", 
+                       "DNI del empleado", 
+                       WS_VISIBLE | WS_CHILD, 
+                       0, 380, 200, 30, 
+                       hwnd,
+                       NULL, NULL, NULL);
+
+                    hInput = CreateWindowEx(
+                       0,
+                       "EDIT",
+                       "",
+                       WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL | WS_TABSTOP,
+                       10, 420, 200, 20,
+                       hwnd,
+                       (HMENU)101,
+                       NULL, NULL);
+
+
+                    hButton = CreateWindowEx(
+                       0,
+                       "BUTTON",
+                       "Eliminar",
+                       WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+                       10, 460, 200, 25,
+                       hwnd,
+                       (HMENU)203,
+                       NULL, NULL);
+
+            }else if (LOWORD(wParam) == 203 && HIWORD(wParam) == BN_CLICKED){
+                HWND hInput = GetDlgItem(hwnd, 101);
+                int textLength = GetWindowTextLength(hInput);
+                char* bufferEmpleadoDNI = new char[textLength + 1];
+                GetWindowText(hInput, bufferEmpleadoDNI, textLength + 1);
+                
+                eliminarEmpleado = bufferEmpleadoDNI;                
+                
+
+                hwndLabel3 = CreateWindow(
+                   "STATIC", 
+                   "Empleado fue borrado con exito", 
+                   WS_VISIBLE | WS_CHILD, 
+                   10, 500, 200, 30, 
+                   hwnd,
+                   NULL, NULL, NULL);
+      
+            
                 
            
             }else if(LOWORD(wParam) == 24){
                 limpiarPantalla();
+                
+                hwndLabel = CreateWindow(
+                    "STATIC", 
+                    "Elija el area: ", 
+                    WS_VISIBLE | WS_CHILD, 
+                    0, 340, 200, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
+                
+                hwndLabel2 = CreateWindow(
+                    "COMBOBOX",         
+                    NULL,               
+                    WS_VISIBLE | WS_CHILD | CBS_DROPDOWN | CBS_HASSTRINGS,
+                    10, 380, 180, 200,   
+                    hwnd,              
+                    (HMENU)101,
+                    NULL, NULL);        
 
-            }else if(LOWORD(wParam) == 25){
+                SendMessage(hwndLabel2, CB_ADDSTRING, 0, (LPARAM)"Aseo");
+                SendMessage(hwndLabel2, CB_ADDSTRING, 0, (LPARAM)"Servicio a la habitacion");
+                SendMessage(hwndLabel2, CB_SETCURSEL, 0, 0);
+                
+                hButton = CreateWindowEx(
+                   0,
+                   "BUTTON",
+                   "Consultar",
+                   WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+                   10, 450, 200, 25,
+                   hwnd,
+                   (HMENU)204,
+                   NULL, NULL);
+                    
+            }else if (LOWORD(wParam) == 204 && HIWORD(wParam) == BN_CLICKED){
+                for (std::list<HWND *>::iterator itEliminar = ListaDeBotonesfor->begin(); itEliminar != ListaDeBotonesfor->end(); ++itEliminar) {
+                    DestroyWindow(**itEliminar);
+                }
+
+                HWND hInput = GetDlgItem(hwnd, 101);
+                int textLength = GetWindowTextLength(hInput);
+                char* bufferEmpleadoArea = new char[textLength + 1];
+                GetWindowText(hInput, bufferEmpleadoArea, textLength + 1);
+                
+                int yPosition = 500; 
+                list<Empleado *> * empleadosArea = nuevoHotel->ObtenerEmpleadosArea(bufferEmpleadoArea);
+
+                list<Empleado *>::iterator it = empleadosArea->begin();
+                Empleado * e;
+                for(; it != empleadosArea->end(); it++){
+                    e = *it;
+
+                    string nombreServicio = e->GetNuevaPersona()->GetNombre() ;
+                    const char* servicioUtilizado = nombreServicio.c_str();
+
+                    HWND * hwndLabelfor3 = new HWND;
+
+                    *hwndLabelfor3 = CreateWindow(
+                        "STATIC", 
+                        servicioUtilizado, 
+                        WS_VISIBLE | WS_CHILD, 
+                        0, yPosition, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);
+
+                        ListaDeBotonesfor->push_back(hwndLabelfor3);
+                        yPosition += 40;
+
+                }
+
+      
+            
+                
+           
+            }
+            else if(LOWORD(wParam) == 25){
                 limpiarPantalla();
-   
+                
+                int yPosition = 380;
+                list<Empleado *> * empleadosTotales = nuevoHotel->obtenerListaEmpleado();
+                list<Empleado *>::iterator it = empleadosTotales->begin();
+                Empleado * e;
+                
+                hwndLabel = CreateWindow(
+                        "STATIC", 
+                        "Todos los empleados: ", 
+                        WS_VISIBLE | WS_CHILD, 
+                        0, 340, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);
+                
+                for(; it != empleadosTotales->end(); it++){
+                    e = *it;
+
+                    string nombreEmpleado = e->GetNuevaPersona()->GetNombre() ;
+                    const char* servicioUtilizado = nombreEmpleado.c_str();
+
+                    HWND * hwndLabelfor4 = new HWND;
+
+                    *hwndLabelfor4 = CreateWindow(
+                        "STATIC", 
+                        servicioUtilizado, 
+                        WS_VISIBLE | WS_CHILD, 
+                        0, yPosition, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);
+
+                        ListaDeBotonesfor->push_back(hwndLabelfor4);
+                        yPosition += 40;
+
+                }
             
             }else if(LOWORD(wParam) == 26){
                 limpiarPantalla();
+                
+                int yPosition = 380;
+                list<Empleado *> * empleadosTotales = nuevoHotel->obtenerListaEmpleado();
+                list<Empleado *>::iterator it = empleadosTotales->begin();
+                Empleado * e;
+                
+                hwndLabel = CreateWindow(
+                        "STATIC", 
+                        "Todos los empleados: ", 
+                        WS_VISIBLE | WS_CHILD, 
+                        0, 340, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);
+                
+                for(; it != empleadosTotales->end(); it++){
+                    e = *it;
+
+                    string nombreEmpleado = e->GetNuevaPersona()->GetNombre()  + " :";
+                    int sueldoEmpleado = e->GetSueldo();
+                    
+                    string sueldoEmpleadoCadena = to_string(sueldoEmpleado);
+                    
+                    const char* nombreEmpleadoUtilizado = nombreEmpleado.c_str();
+                    const char* sueldoEmpleadoUtilizado = sueldoEmpleadoCadena.c_str();
+
+                    HWND * hwndLabelfor5 = new HWND;
+                    HWND * hwndLabelfor6 = new HWND;
+
+                    *hwndLabelfor5 = CreateWindow(
+                        "STATIC", 
+                        nombreEmpleadoUtilizado, 
+                        WS_VISIBLE | WS_CHILD, 
+                        0, yPosition, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);
+
+                    *hwndLabelfor6 = CreateWindow(
+                        "STATIC", 
+                        sueldoEmpleadoUtilizado, 
+                        WS_VISIBLE | WS_CHILD, 
+                        100, yPosition, 200, 30, 
+                        hwnd,
+                        NULL, NULL, NULL);
+
+                        ListaDeBotonesfor->push_back(hwndLabelfor5);
+                        ListaDeBotonesfor->push_back(hwndLabelfor6);
+                        yPosition += 40;
+
+                    }
     
             
             }else if(LOWORD(wParam) == 27){
                 limpiarPantalla();
-   
+                 hwndLabel = CreateWindow(
+                    "STATIC", 
+                    "Ingrese los siguientes datos:", 
+                    WS_VISIBLE | WS_CHILD, 
+                    0, 340, 200, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
+
+
+
+                    hwndLabel2 = CreateWindow(
+                       "STATIC", 
+                       "DNI del empleado", 
+                       WS_VISIBLE | WS_CHILD, 
+                       0, 380, 200, 30, 
+                       hwnd,
+                       NULL, NULL, NULL);
+
+                    hInput = CreateWindowEx(
+                       0,
+                       "EDIT",
+                       "",
+                       WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL | WS_TABSTOP,
+                       10, 420, 200, 20,
+                       hwnd,
+                       (HMENU)101,
+                       NULL, NULL);
+
+
+                    hButton = CreateWindowEx(
+                       0,
+                       "BUTTON",
+                       "Consultar",
+                       WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+                       10, 460, 200, 25,
+                       hwnd,
+                       (HMENU)207,
+                       NULL, NULL);
+            
+            }else if (LOWORD(wParam) == 207 && HIWORD(wParam) == BN_CLICKED){
+                HWND hInput = GetDlgItem(hwnd, 101);
+                int textLength = GetWindowTextLength(hInput);
+                char* bufferEmpleadoSueldo = new char[textLength + 1];
+                GetWindowText(hInput, bufferEmpleadoSueldo, textLength + 1);
+                
+                string nombreEmpleado =  nuevoHotel->BuscarEmpleado(bufferEmpleadoSueldo)->GetNuevaPersona()->GetNombre() + " :";
+                int sueldoEmpleado = nuevoHotel->BuscarEmpleado(bufferEmpleadoSueldo)->GetSueldo();
+                
+                string sueldoEmpleadoCadena = to_string(sueldoEmpleado);
+                const char * sueldoEmpleadoUtil = sueldoEmpleadoCadena.c_str();
+                const char * nombreEmpleadoUtil = nombreEmpleado.c_str();
+                
+                hwndLabel3 = CreateWindow(
+                    "STATIC", 
+                    nombreEmpleadoUtil, 
+                    WS_VISIBLE | WS_CHILD, 
+                    0, 500, 200, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
+
+                hwndLabel4 = CreateWindow(
+                    "STATIC", 
+                    sueldoEmpleadoUtil, 
+                    WS_VISIBLE | WS_CHILD, 
+                    100, 500, 200, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
             
             }else if(LOWORD(wParam) == 28){
                 limpiarPantalla();
+                hwndLabel = CreateWindow(
+                    "STATIC", 
+                    "Ingrese los siguientes datos:", 
+                    WS_VISIBLE | WS_CHILD, 
+                    0, 340, 200, 30, 
+                    hwnd,
+                    NULL, NULL, NULL);
+
+
+
+                    hwndLabel2 = CreateWindow(
+                       "STATIC", 
+                       "DNI del empleado", 
+                       WS_VISIBLE | WS_CHILD, 
+                       0, 380, 200, 30, 
+                       hwnd,
+                       NULL, NULL, NULL);
+
+                    hInput2 = CreateWindowEx(
+                       0,
+                       "EDIT",
+                       "",
+                       WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL | WS_TABSTOP,
+                       10, 420, 200, 20,
+                       hwnd,
+                       (HMENU)101,
+                       NULL, NULL);
+
+
+                    
+                    hButton = CreateWindowEx(
+                       0,
+                       "BUTTON",
+                       "Consultar",
+                       WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+                       10, 460, 200, 25,
+                       hwnd,
+                       (HMENU)208,
+                       NULL, NULL);
+                    
+
+                    
+                    
   
             
+            }else if (LOWORD(wParam) == 208 && HIWORD(wParam) == BN_CLICKED){
+                HWND hInput = GetDlgItem(hwnd, 101);
+                int textLength = GetWindowTextLength(hInput);
+                char* bufferEmpleadoSueldo = new char[textLength + 1];
+                GetWindowText(hInput, bufferEmpleadoSueldo, textLength + 1);
+                
+                string nombreEmpleado =  nuevoHotel->BuscarEmpleado(bufferEmpleadoSueldo)->GetNuevaPersona()->GetNombre();
+                const char * nombreEmpleadoUtil = nombreEmpleado.c_str(); 
+                
+                
+                hwndLabel3 = CreateWindow(
+                    "COMBOBOX",         
+                    NULL,               
+                    WS_VISIBLE | WS_CHILD | CBS_DROPDOWN | CBS_HASSTRINGS,
+                    10, 500, 180, 200,   
+                    hwnd,              
+                    (HMENU)102,
+                    NULL, NULL);        
+
+                SendMessage(hwndLabel3, CB_ADDSTRING, 0, (LPARAM)"Nombre");
+                SendMessage(hwndLabel3, CB_ADDSTRING, 0, (LPARAM)"Edad");
+                SendMessage(hwndLabel3, CB_ADDSTRING, 0, (LPARAM)"Genero");
+                SendMessage(hwndLabel3, CB_ADDSTRING, 0, (LPARAM)"DNI");
+                SendMessage(hwndLabel3, CB_ADDSTRING, 0, (LPARAM)"Sueldo");
+                SendMessage(hwndLabel3, CB_ADDSTRING, 0, (LPARAM)"Cargo");
+                SendMessage(hwndLabel3, CB_ADDSTRING, 0, (LPARAM)"Aseo");
+                SendMessage(hwndLabel3, CB_SETCURSEL, 0, 0);
+                
+                hInput3 = CreateWindowEx(
+                    0,
+                    "EDIT",
+                    nombreEmpleadoUtil,
+                    WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL | WS_TABSTOP,
+                    10, 540, 200, 20,
+                    hwnd,
+                    (HMENU)103,
+                    NULL, NULL);
+                
+                hButton2 = CreateWindowEx(
+                    0,
+                    "BUTTON",
+                    "Modificar",
+                    WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+                    10, 580, 200, 25,
+                    hwnd,
+                    (HMENU)218,
+                    NULL, NULL);
+
+            
+            }else if (LOWORD(wParam) == 218 && HIWORD(wParam) == BN_CLICKED){
+                HWND hInput = GetDlgItem(hwnd, 101);
+                int textLength = GetWindowTextLength(hInput);
+                char* bufferEmpleadoSueldo = new char[textLength + 1];
+                GetWindowText(hInput, bufferEmpleadoSueldo, textLength + 1);
+
+                HWND hInput2 = GetDlgItem(hwnd, 102);
+                int textLength2 = GetWindowTextLength(hInput2);
+                char* bufferEmpleadoSueldo2 = new char[textLength2 + 1];
+                GetWindowText(hInput2, bufferEmpleadoSueldo2, textLength2 + 1);
+
+                HWND hInput3 = GetDlgItem(hwnd, 103);
+                int textLength3 = GetWindowTextLength(hInput3);
+                char* bufferEmpleadoSueldo3 = new char[textLength3 + 1];
+                GetWindowText(hInput3, bufferEmpleadoSueldo3, textLength3 + 1);
+                
+
+                modificaEmpleado.DNI = bufferEmpleadoSueldo;
+                modificaEmpleado.campo = bufferEmpleadoSueldo2;
+                modificaEmpleado.modificacion = bufferEmpleadoSueldo3;
+                
+                
+                hwndLabel4 = CreateWindow(
+                   "STATIC", 
+                   "Campo modificado", 
+                   WS_VISIBLE | WS_CHILD, 
+                   0, 620, 200, 30, 
+                   hwnd,
+                   NULL, NULL, NULL);   
+                
             }else if(LOWORD(wParam) == 29){
                 limpiarPantalla();
     
@@ -1868,6 +2306,11 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         listaDeLabel_Input->push_back(&hwndLabel9);
         listaDeLabel_Input->push_back(&hwndLabel10);
         listaDeLabel_Input->push_back(&hButton);
+        listaDeLabel_Input->push_back(&hButton1);
+        listaDeLabel_Input->push_back(&hButton2);
+        listaDeLabel_Input->push_back(&hButton3);
+        listaDeLabel_Input->push_back(&hButton4);
+        listaDeLabel_Input->push_back(&hButton5);
         listaDeLabel_Input->push_back(&hInput);
         listaDeLabel_Input->push_back(&hInput1);
         listaDeLabel_Input->push_back(&hInput2);
@@ -1960,45 +2403,43 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 // Función principal
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow){       
+    WNDCLASS wc = {0};
+    wc.lpfnWndProc = WndProc;
+    wc.hInstance = hInstance;
+    wc.hbrBackground = (HBRUSH)(COLOR_WINDOW);
+    wc.lpszClassName = "MyWindowClass";
 
-        WNDCLASS wc = {0};
-        wc.lpfnWndProc = WndProc;
-        wc.hInstance = hInstance;
-        wc.hbrBackground = (HBRUSH)(COLOR_WINDOW);
-        wc.lpszClassName = "MyWindowClass";
+    if (!RegisterClass(&wc))
+        return 1;
 
-        if (!RegisterClass(&wc))
-            return 1;
-         // Crear la ventana
-        HWND hwnd = CreateWindow(
-            "MyWindowClass",        // Clase de la ventana
-            "Hotel",        // Título de la ventana
-            WS_OVERLAPPEDWINDOW,    // Estilo de la ventana
-            CW_USEDEFAULT,          // Posición x de la ventana
-            CW_USEDEFAULT,          // Posición y de la ventana
-            1280, 720,               // Ancho y alto de la ventana
-            NULL, NULL,             // Ventana padre y menú
-            hInstance,              // Instancia de la aplicación
-            NULL);
+    // Crear la ventana
+    HWND hwnd = CreateWindow(
+        "MyWindowClass",        // Clase de la ventana
+        "Hotel",                // Título de la ventana
+        WS_OVERLAPPEDWINDOW,  // Estilo de la ventana
+        CW_USEDEFAULT,          // Posición x de la ventana
+        CW_USEDEFAULT,          // Posición y de la ventana
+        1280, 720,              // Ancho y alto de la ventana
+        NULL, NULL,             // Ventana padre y menú
+        hInstance,              // Instancia de la aplicación
+        NULL);
 
-        if (!hwnd)
-            return 2;
+    if (!hwnd)
+        return 2;
 
-        // Mostrar y actualizar la ventana
-        ShowWindow(hwnd, nCmdShow);
-        UpdateWindow(hwnd);
+    // Mostrar y actualizar la ventana
+    ShowWindow(hwnd, nCmdShow);
+    UpdateWindow(hwnd);
 
-        // Bucle de mensajes
-        MSG msg;
-        while (GetMessage(&msg, NULL, 0, 0))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-        
-        
+    // Bucle de mensajes
+    MSG msg;
+    while (GetMessage(&msg, NULL, 0, 0))
+    {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
 
-        return msg.wParam;
+    return msg.wParam;
 }
 
 
@@ -2017,19 +2458,20 @@ LRESULT CALLBACK ButtonWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
 
 
 void limpiarPantalla(){
-            for (std::list<HWND *>::iterator itEliminar = ListaDeBotonesfor->begin(); itEliminar != ListaDeBotonesfor->end(); ++itEliminar) {
-                DestroyWindow(**itEliminar);
-            }
+        for (std::list<HWND *>::iterator itEliminar = ListaDeBotonesfor->begin(); itEliminar != ListaDeBotonesfor->end(); ++itEliminar) {
+            DestroyWindow(**itEliminar);
+        }
 
-            ListaDeBotonesfor->clear();
+        ListaDeBotonesfor->clear();
 
-            // Clear the list after destroying the labels
-            list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
+        // Clear the list after destroying the labels
+        list<HWND *>::iterator ititEliminadorLabel = listaDeLabel_Input->begin();
 
-            HWND * eliminar;
-            for(; ititEliminadorLabel != listaDeLabel_Input->end();ititEliminadorLabel++){
-                eliminar = *ititEliminadorLabel;
-                DestroyWindow(*eliminar);
-            }     
-                
+        HWND * eliminar;
+        for(; ititEliminadorLabel != listaDeLabel_Input->end();ititEliminadorLabel++){
+            eliminar = *ititEliminadorLabel;
+            DestroyWindow(*eliminar);
+        }     
+
 }
+
